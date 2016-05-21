@@ -1,0 +1,187 @@
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:10px">    
+    <!-- The Grid -->
+    <div class="w3-row">
+        <!-- Left Column -->
+        <div class="w3-col m2">
+            <!-- Profile -->
+            <div class="w3-card-2 w3-round w3-white w3-margin-top">
+                <div class="w3-container">
+                    {{type}}
+                    <h4 class="w3-center">Discografia</h4> 
+                    <button class="w3-btn-block accent-color w3-tiny" onclick="document.getElementById('newDiscModal').style.display='block'">Agregar</button>         
+                    <p><a href="" ng-click="viewDisc()">Disco1</a></p><!--HREF discID-->
+                    <p><a href="">Disco2</a></p>
+                    <p><a href="">Disco3 </a></p>
+                </div>                    
+            </div>
+            <div class="w3-card-2 w3-round w3-white w3-margin-top">
+                <div class="w3-container">
+                    <h4 class="w3-center">Comentarios</h4>   
+                    <hr class="w3-clear">
+                    <span class="w3-right w3-opacity">12/11/2015</span>
+                    <h2>Por:</h2>
+                    <p>Comentario</p>
+                </div>                    
+            </div>
+        </div>
+        {{discId}}<p></p> 
+        {{bandId}}
+        <div class="w3-col m10" ng-if="type === 'view' && discInfo">
+            <div class="w3-container w3-card-2 w3-white w3-round w3-margin w3-responsive"><br>
+                <div class="w3-right w3-large">Calificacion: <i class="fa fa-star"></i></div>
+                <div class="w3-right"><button class="w3-btn accent-color" onclick="document.getElementById('commentsModal').style.display='block'">Calificar y comentar </button></div>
+                <div class="w3-left">
+                    <p>Nombre Disco</p>
+                    <p>Descripcion</p>
+                    <p>Sello</p>
+                    <p>Genero</p>
+                    <p>Anio</p> 
+                    <div class="w3-left" ng-if="userType==='band'">
+                        <button class="w3-btn w3-red w3-tiny w3-margin" >Eliminar</button> <!--ngClick-->
+                        <a class="w3-btn accent-color w3-tiny w3-margin" href="#/band/{{bandId}}/discos/edit/0">Editar</a> <!--href-->
+                    </div>
+                </div> 
+                <table class="w3-table w3-bordered w3-striped">
+                    <thead class="dark-primary-color text-primary-color">
+                        <tr >
+                            <th>Nombre</th>
+                            <th>Duracion</th>
+                            <th>Link</th>
+                            <th>En vivo</th>
+                            <th>Limitada</th>
+                            <th>Bonus</th>
+                            <th colspan="2" class="w3-center">Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input class="w3-input w3-border" type="text"></td>
+                            <td><input class="w3-input w3-border" type="text"></td>
+                            <td><input class="w3-input w3-border" type="text"></td>
+                            <td><input class="w3-radio " type="radio"></td>
+                            <td><input class="w3-radio" type="radio"></td>
+                            <td><input class="w3-radio" type="radio"></td>
+                            <td><button class="w3-btn w3-green">Agregar</button></td>
+                            <td><button class="w3-btn light-primary-color primary-text-color">Actualizar</button></td>
+                        </tr>
+                        <tr>
+                            <td>Cancion1</td>
+                            <td>hh:mm:ss</td>
+                            <td><a href="">wwww.sdfsdf.com</a></td>
+                            <td><input class="w3-radio" type="radio" checked disabled></td>
+                            <td><input class="w3-radio" type="radio" disabled></td>
+                            <td><input class="w3-radio" type="radio" checked disabled></td>
+                            <td><button class="w3-btn w3-red">Eliminar</button></td>
+                            <td><button class="w3-btn accent-color">Editar</button></td>
+                        </tr>
+                        <tr>
+                            <td>Cancion</td>
+                            <td>hh:mm:ss</td>
+                            <td></td>
+                            <td><input class="w3-radio" type="radio" disabled></td>
+                            <td><input class="w3-radio" type="radio" disabled></td>
+                            <td><input class="w3-radio" type="radio" checked disabled></td>
+                            <td><button class="w3-btn w3-red">Eliminar</button></td>
+                            <td><button class="w3-btn accent-color">Editar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+        
+        <!-- Edicion de discografia -->
+        <div class="w3-col m10" ng-if="type === 'edit'">
+            <div class="w3-container w3-card-2 w3-white w3-round w3-margin w3-responsive"><br>
+                <div class="w3-center">
+                    <form>
+                        <p>Nombre Disco: <input type="text" class="w3-input"></p>
+                        <p>Descripcion <input type="text" class="w3-input"></p>
+                        <p>Sello <input type="text" class="w3-input"></p>
+                        <p>Genero <input type="text" class="w3-input"></p>
+                        <p>Anio <input type="number" class="w3-input"></p> 
+                        <button class="w3-btn-block w3-green w3-margin-bottom">Actualizar</button>
+                    </form>
+                </div>                
+            </div>
+            
+            
+        </div>
+        
+        <!-- End Grid -->
+    </div>
+    <!-- End Page Container -->
+    
+    <!--Modal-->
+    <div id="commentsModal" class="w3-modal">
+        <span onclick="document.getElementById('commentsModal').style.display='none'" class="w3-closebtn w3-hover-red w3-container w3-padding-hor-8 w3-display-topright">&times;</span>
+        <div class="w3-modal-content w3-card-8 w3-animate-zoom" style="max-width:600px">
+            
+            <header class="w3-center w3-container default-primary-color"><br>
+                <h1 class="w3-xxlarge primary-text-color">Agregar Resena</h1>
+            </header>
+            
+            <div class="w3-container">
+                <form class="w3-section">
+                    <label><b>Calificacion</b></label>
+                    <select class="w3-select w3-border">
+                        <option disabled="" selected="">1-5 Estrellas</option>
+                        <option value="5">5 Estrellas</option>
+                        <option value="4">4 Estrellas</option>
+                        <option value="3">3 Estrellas</option>
+                        <option value="2">2 Estrellas</option>
+                        <option value="1">1 Estrella</option>
+                    </select>
+                    
+                    <label><b>Comentario</b></label>
+                    <textarea class="w3-input w3-border" maxlength="100" placeholder="(opcional)"></textarea>
+                    
+                    <button class="w3-btn w3-btn-block w3-green w3-margin-top">Agregar</button>
+                </form>
+            </div>
+            
+            <div class="w3-container w3-border-top w3-padding-hor-16 w3-light-grey">
+                <button onclick="document.getElementById('commentsModal').style.display='none'" type="button" class="w3-btn w3-red">Cancelar</button>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div id="newDiscModal" class="w3-modal">
+        <span onclick="document.getElementById('newDiscModal').style.display='none'" class="w3-closebtn w3-hover-red w3-container w3-padding-hor-8 w3-display-topright">&times;</span>
+        <div class="w3-modal-content w3-card-8 w3-animate-zoom" style="max-width:600px">
+            
+            <header class="w3-center w3-container default-primary-color"><br>
+                <h1 class="w3-xxlarge primary-text-color">Agregar Disco</h1>
+            </header>
+            
+            <div class="w3-container">
+                <form class="w3-section">
+                    <label><b>Nombre Disco</b></label>
+                    <input type="text" class="w3-input"/>
+                    
+                    <label><b>Descripcion</b></label>
+                    <textarea class="w3-input w3-border" maxlength="100" placeholder="(opcional)"></textarea>
+                    
+                    <label><b>Sello</b></label>
+                    <input type="text" class="w3-input" />
+                    
+                    <label><b>Genero</b></label>
+                    <input type="text" class="w3-input"/>
+                    
+                    <label><b>Anio</b></label>
+                    <input type="number" min="0" class="w3-input"/>
+                    
+                    
+                    <button class="w3-btn w3-btn-block w3-green w3-margin-top">Agregar</button>
+                </form>
+            </div>
+            
+            <div class="w3-container w3-border-top w3-padding-hor-16 w3-light-grey">
+                <button onclick="document.getElementById('newDiscModal').style.display='none'" type="button" class="w3-btn w3-red">Cancelar</button>
+            </div>
+            
+        </div>
+    </div>
+    
+</div>

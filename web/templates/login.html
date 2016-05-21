@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<div class="w3-container" ng-cloak>
+    <div class="w3-card-2 w3-round-large w3-white w3-center">
+        <div id="Band" class="w3-container">
+            <form class="w3-container">
+
+                <p>
+                    <label class="w3-margin-top">Nombre Usuario</label>
+                    <input class="w3-input w3-validate" ng-model="logUser.username" type="text" required>
+                </p>
+
+                <p>
+                    <label>Contrasena</label>
+                    <input class="w3-input w3-validate w3-margin-bottom" ng-model="logUser.pass" type="password" required>
+                </p>
+
+                <input type="submit" ng-click="login()" class="w3-btn-block accent-color" value="Ingresar">
+
+            </form>
+            
+            <img src="http://localhost:8080/MyFanServer/uploads/p.jpg" alt="imagen"/>
+        </div>
+    </div>
+
+</div>

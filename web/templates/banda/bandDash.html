@@ -1,0 +1,154 @@
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:10px">    
+    <!-- The Grid -->
+    <div class="w3-row">
+        <!-- Left Column -->
+        <div class="w3-col m3">
+            <!-- Profile -->
+            <div class="w3-card-2 w3-round w3-white w3-margin-top">
+                <div class="w3-container">
+                    <h4 class="w3-center">Mi Perfil</h4>           
+                    <p class="w3-center"><i class="fa fa-user w3-xxlarge secondary-text-color"></i></p>
+                    <p><i class="fa fa-user w3-margin-right secondary-text-color"></i>Usuario</p>
+                    <p><i class="fa fa-music w3-margin-right secondary-text-color"></i>Nombre Banda</p>
+                    <p><i class="fa fa-hashtag w3-margin-right secondary-text-color"></i>Hashtag</p>
+                    <p><i class="fa fa-globe w3-margin-right secondary-text-color"></i>Pais</p>
+                    <p><i class="fa fa-users w3-margin-right secondary-text-color"></i>Seguidres</p>
+                </div>
+            </div>
+            <br>
+            
+            <div class="w3-card-2 w3-round">
+                <a href="#" class="w3-btn-block default-primary-color primary-text-color w3-left-align w3-border"><i class="fa fa-pencil w3-margin-right"></i>Editar Perfil</a>
+                <a href="#/band/discos" class="w3-btn-block light-primary-color primary-text-color w3-left-align w3-border"><i class="fa fa-microphone w3-margin-right"></i>Discografia</a>
+            </div>
+            <br>
+            
+            <div class="w3-card-2 w3-round w3-white w3-hide-small">
+                <div class="w3-container">
+                    <p>Generos</p>
+                    <p>
+                        <span class="w3-tag w3-small w3-theme-d5">News</span>
+                        <span class="w3-tag w3-small w3-theme-d4">W3Schools</span>
+                        <span class="w3-tag w3-small w3-theme-d3">Labels</span>
+                        <span class="w3-tag w3-small w3-theme-d2">Games</span>
+                        <span class="w3-tag w3-small w3-theme-d1">Friends</span>
+                        <span class="w3-tag w3-small w3-theme">Games</span>
+                        <span class="w3-tag w3-small w3-theme-l1">Friends</span>
+                        <span class="w3-tag w3-small w3-theme-l2">Food</span>
+                        <span class="w3-tag w3-small w3-theme-l3">Design</span>
+                        <span class="w3-tag w3-small w3-theme-l4">Art</span>
+                        <span class="w3-tag w3-small w3-theme-l5">Photos</span>
+                    </p>
+                </div>
+            </div>
+            <br>                       
+        </div>
+        
+        <!-- Middle Column -->
+        <div class="w3-right w3-btn-group w3-margin-bottom">
+            <button class="w3-btn w3-border accent-color w3-round-large" onclick="document.getElementById('newsModal').style.display='block'"><i class="fa fa-plus w3-margin-right"></i>Agregar Noticia</button>    
+            <button class="w3-btn w3-border accent-color w3-round-large" onclick="document.getElementById('eventsModal').style.display='block'"><i class="fa fa-calendar-plus-o w3-margin-right"></i>Agregar Evento</button>
+        </div>
+        <div class="w3-col m9">
+            <div class="w3-container w3-card-2 w3-white w3-round w3-margin-left"><br>
+                <!--img src="img_avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px"-->
+                <span class="w3-right w3-opacity">1 min</span>
+                <h4>John Doe</h4><br>
+                <hr class="w3-clear">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+            
+            <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
+                <!--img src="img_avatar5.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px"-->
+                <span class="w3-right w3-opacity">16 min</span>
+                <h4>Jane Doe</h4><br>
+                <hr class="w3-clear">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>  
+            
+            <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
+                <span class="w3-right w3-opacity">32 min</span>
+                <h4>Angie Jane</h4><br>
+                <hr class="w3-clear">
+                <p>Have you seen this?</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <button class="w3-btn accent-color w3-margin-bottom w3-right">Ver</button>
+                <button class="w3-btn w3-red w3-margin-bottom w3-right">Cancelar</button>
+            </div> 
+            
+            <!-- End Middle Column -->
+        </div>
+        
+        <!-- End Grid -->
+    </div>
+    <!-- End Page Container -->
+    
+    <!--modals-->    
+    <div id="newsModal" class="w3-modal">
+        <span onclick="document.getElementById('newsModal').style.display='none'" class="w3-closebtn w3-hover-red w3-container w3-padding-hor-8 w3-display-topright">&times;</span>
+        <div class="w3-modal-content w3-card-8 w3-animate-zoom" style="max-width:600px">
+            
+            <header class="w3-center w3-container default-primary-color"><br>
+                <h1 class="w3-xxlarge primary-text-color">Agregar noticia</h1>
+            </header>
+            
+            <div class="w3-container">
+                <form class="w3-section">
+                    <label><b>Titulo</b></label>
+                    <input class="w3-input w3-border w3-margin-bottom" type="text">
+                    
+                    <label><b>Contenido</b></label>
+                    <textarea class="w3-input w3-border" maxlength="100"></textarea>
+                    
+                    <button class="w3-btn w3-btn-block w3-green w3-margin-top">Agregar</button>
+                </form>
+            </div>
+            
+            <div class="w3-container w3-border-top w3-padding-hor-16 w3-light-grey">
+                <button onclick="document.getElementById('newsModal').style.display='none'" type="button" class="w3-btn w3-red">Cancelar</button>
+            </div>
+                
+        </div>
+    </div>
+        
+    <div id="eventsModal" class="w3-modal">
+        <span onclick="document.getElementById('eventsModal').style.display='none'" class="w3-closebtn w3-hover-red w3-container w3-padding-hor-8 w3-display-topright">&times;</span>
+        <div class="w3-modal-content w3-card-8 w3-animate-zoom" style="max-width:600px">
+            
+            <header class="w3-center w3-container default-primary-color"><br>
+                <h1 class="w3-xxlarge primary-text-color">Agregar evento</h1>
+            </header>
+                
+            <div class="w3-container">
+                <form class="w3-section">
+                    <label><b>Titulo</b></label>
+                    <input class="w3-input w3-border w3-margin-bottom" type="text">
+                        
+                    <label><b>Contenido</b></label>
+                    <textarea class="w3-input w3-border w3-margin-bottom" maxlength="100"></textarea>
+                        
+                    <label><b>Pais</b></label>
+                    <input class="w3-input w3-border w3-margin-bottom" type="text">
+                    
+                    <label><b>Fecha del evento</b></label>
+                    <input class="w3-input w3-border w3-margin-bottom" type="text">
+                    
+                    <label><b>Concierto</b></label><br>
+                    <input class="w3-radio" type="radio" name="concierto" value="S" checked>
+                    <label class="w3-validate">Si</label>
+    
+                    <input class="w3-radio" type="radio" name="concierto" value="N">
+                    <label class="w3-validate">No</label>
+                    
+                    <button class="w3-btn w3-btn-block w3-green w3-margin-top">Crear</button>
+                </form>
+            </div>
+                
+            <div class="w3-container w3-border-top w3-padding-hor-16 w3-light-grey">
+                <button onclick="document.getElementById('eventsModal').style.display='none'" type="button" class="w3-btn w3-red">Cancelar</button>
+            </div>
+                
+        </div>
+    </div>
+        
+</div>
