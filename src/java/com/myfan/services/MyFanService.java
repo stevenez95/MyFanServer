@@ -42,12 +42,14 @@ public class MyFanService {
      * @return an instance of java.lang.String
      */
     @GET
-    @Path("{id}")
+   // @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJson(@HeaderParam("x-access-token") String token,@PathParam("id") int id) {
+    public Response getJson(/*@HeaderParam("x-access-token") String token,@PathParam("id") int id*/) {
         //TODO return proper representation object
-        System.out.println("ID: "+id);
-        return Response.ok("{\"token\":\""+token+"\"}", MediaType.APPLICATION_JSON).build();
+      //  System.out.println("ID: "+id);
+        return Response.ok("{\"token\":\"acdasda"+"\"}", MediaType.APPLICATION_JSON)
+                .header("Access-Control-Allow-Origin", "http://localhost:8383")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
     }
 
     /**
