@@ -10,5 +10,107 @@ package com.myfan.dto;
  * @author Steven
  */
 public class Cancion {
+    private int idCancion, idDisco;
+    private String nombre, link;
+    private boolean enVivo, bonus, limitada;
+
+    /**
+     * @return the idCancion
+     */
+    public int getIdCancion() {
+        return idCancion;
+    }
+
+    /**
+     * @param idCancion the idCancion to set
+     */
+    public void setIdCancion(int idCancion) {
+        this.idCancion = idCancion;
+    }
+
+    /**
+     * @return the idDisco
+     */
+    public int getIdDisco() {
+        return idDisco;
+    }
+
+    /**
+     * @param idDisco the idDisco to set
+     */
+    public void setIdDisco(int idDisco) {
+        this.idDisco = idDisco;
+    }
+
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * @return the link
+     */
+    public String getLink() {
+        return link;
+    }
+
+    /**
+     * @param link the link to set
+     */
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    /**
+     * @return the enVivo
+     */
+    public boolean isEnVivo() {
+        return enVivo;
+    }
+
+    /**
+     * @param enVivo the enVivo to set
+     */
+    public void setEnVivo(boolean enVivo) {
+        this.enVivo = enVivo;
+    }
+
+    /**
+     * @return the bonus
+     */
+    public boolean isBonus() {
+        return bonus;
+    }
+
+    /**
+     * @param bonus the bonus to set
+     */
+    public void setBonus(boolean bonus) {
+        this.bonus = bonus;
+    }
+
+    /**
+     * @return the limitada
+     */
+    public boolean isLimitada() {
+        return limitada;
+    }
+
+    /**
+     * @param limitada the limitada to set
+     */
+    public void setLimitada(boolean limitada) {
+        this.limitada = limitada;
+    }
+    
     
 }
