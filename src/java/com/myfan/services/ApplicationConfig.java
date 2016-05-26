@@ -29,7 +29,11 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(com.myfan.services.MyFanService.class);
+        resources.add(com.myfan.services.AuthService.class);
+        resources.add(com.myfan.services.BandService.class);
+        resources.add(com.myfan.services.ConcertService.class);
+        resources.add(com.myfan.services.EventService.class);
+        resources.add(com.myfan.services.FanService.class);
     }
     
 }

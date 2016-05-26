@@ -23,8 +23,8 @@ import javax.ws.rs.core.Response.Status;
  *
  * @author Steven
  */
-@Path("myfan")
-public class MyFanService {
+@Path("fan")
+public class FanService {
 
     @Context
     private UriInfo context;
@@ -32,7 +32,7 @@ public class MyFanService {
     /**
      * Creates a new instance of WebResource
      */
-    public MyFanService() {
+    public FanService() {
     }
 
     /**
