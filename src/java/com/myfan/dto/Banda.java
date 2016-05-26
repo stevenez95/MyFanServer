@@ -11,4 +11,149 @@ package com.myfan.dto;
  */
 public class Banda {
     
+    private int idBanda,fechaCreacion;
+    private String nombreBanda,username,password,anioCreacion,hashtag,biografia,integrantes;
+    private boolean activo;
+
+    /**
+     * @return the idBanda
+     */
+    public int getIdBanda() {
+        return idBanda;
+    }
+
+    /**
+     * @param idBanda the idBanda to set
+     */
+    public void setIdBanda(int idBanda) {
+        this.idBanda = idBanda;
+    }
+
+    /**
+     * @return the fechaCreacion
+     */
+    public int getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    /**
+     * @param fechaCreacion the fechaCreacion to set
+     */
+    public void setFechaCreacion(int fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    /**
+     * @return the nombreBanda
+     */
+    public String getNombreBanda() {
+        return nombreBanda;
+    }
+
+    /**
+     * @param nombreBanda the nombreBanda to set
+     */
+    public void setNombreBanda(String nombreBanda) {
+        this.nombreBanda = nombreBanda;
+    }
+
+    /**
+     * @return the username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * @return the anioCreacion
+     */
+    public String getAnioCreacion() {
+        return anioCreacion;
+    }
+
+    /**
+     * @param anioCreacion the anioCreacion to set
+     */
+    public void setAnioCreacion(String anioCreacion) {
+        this.anioCreacion = anioCreacion;
+    }
+
+    /**
+     * @return the hashtag
+     */
+    public String getHashtag() {
+        return hashtag;
+    }
+
+    /**
+     * @param hashtag the hashtag to set
+     */
+    public void setHashtag(String hashtag) {
+        this.hashtag = hashtag;
+    }
+
+    /**
+     * @return the biografia
+     */
+    public String getBiografia() {
+        return biografia;
+    }
+
+    /**
+     * @param biografia the biografia to set
+     */
+    public void setBiografia(String biografia) {
+        this.biografia = biografia;
+    }
+
+    /**
+     * @return the integrantes
+     */
+    public String getIntegrantes() {
+        return integrantes;
+    }
+
+    /**
+     * @param integrantes the integrantes to set
+     */
+    public void setIntegrantes(String integrantes) {
+        this.integrantes = integrantes;
+    }
+
+    /**
+     * @return the activo
+     */
+    public boolean isActivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+    
+    
 }
