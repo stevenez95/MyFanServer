@@ -11,8 +11,9 @@ package com.myfan.dto;
  */
 public class Banda {
     
-    private int idBanda,fechaCreacion;
-    private String nombreBanda,username,password,anioCreacion,hashtag,biografia,integrantes;
+    private int idBanda;
+    private double fechaCreacion;
+    private String nombreBanda,username,password,anioCreacion,hashtag,biografia,integrantes, pais;
     private boolean activo;
 
     /**
@@ -32,14 +33,14 @@ public class Banda {
     /**
      * @return the fechaCreacion
      */
-    public int getFechaCreacion() {
+    public double getFechaCreacion() {
         return fechaCreacion;
     }
 
     /**
      * @param fechaCreacion the fechaCreacion to set
      */
-    public void setFechaCreacion(int fechaCreacion) {
+    public void setFechaCreacion(double fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
@@ -153,6 +154,20 @@ public class Banda {
      */
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    /**
+     * @return the pais
+     */
+    public String getPais() {
+        return pais;
+    }
+
+    /**
+     * @param pais the pais to set
+     */
+    public void setPais(String pais) {
+        this.pais = pais;
     }
     
     

@@ -58,7 +58,7 @@ public class JwtManager {
         
         String jwt="";
         try {
-            jwt = "\""+jws.getCompactSerialization()+"\"";
+            jwt = jws.getCompactSerialization();
         } catch (JoseException ex) {
             return "";
         }

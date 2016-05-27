@@ -10,7 +10,8 @@ package com.myfan.dto;
  * @author Steven
  */
 public class Fan {
-    private int idFan,fechaCreacion;
+    private int idFan;
+    private double fechaCreacion;
     private String username,password,nombre,apellido,pais,fotoPerfil,genero,fechaNac; 
     private boolean activo;
 
@@ -31,14 +32,14 @@ public class Fan {
     /**
      * @return the fechaCreacion
      */
-    public int getFechaCreacion() {
+    public double getFechaCreacion() {
         return fechaCreacion;
     }
 
     /**
      * @param fechaCreacion the fechaCreacion to set
      */
-    public void setFechaCreacion(int fechaCreacion) {
+    public void setFechaCreacion(double fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 

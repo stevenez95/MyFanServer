@@ -16,7 +16,7 @@ public class PasswordEncrypt {
     public PasswordEncrypt() {
     }
     
-    public boolean validatePassword(String password,String hashed){
+    public static  final boolean validatePassword(String password,String hashed){
         
         if (BCrypt.checkpw(password, hashed))
             return true;
@@ -25,7 +25,7 @@ public class PasswordEncrypt {
         
     }
     
-    public String hashPassword(String password){
+    public static final String hashPassword(String password){
         String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
         return hashed;
     }
