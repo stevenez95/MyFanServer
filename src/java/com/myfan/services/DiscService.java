@@ -11,7 +11,7 @@ import javax.ws.rs.Path;
  *
  * @author Steven
  */
-@Path("evento")
-public class EventService {
+@Path("disco")
+public class DiscService {
     
 }

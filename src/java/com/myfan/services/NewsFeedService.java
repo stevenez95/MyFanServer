@@ -11,9 +11,7 @@ import javax.ws.rs.Path;
  *
  * @author Steven
  */
-@Path("concierto")
-public class ConcertService {
-    
-    
+@Path("newsFeed")
+public class NewsFeedService {
     
 }

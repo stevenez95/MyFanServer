@@ -13,7 +13,7 @@ public class Banda {
     
     private int idBanda;
     private double fechaCreacion;
-    private String nombreBanda,username,password,anioCreacion,hashtag,biografia,integrantes, pais;
+    private String nombreBanda,username,password,anioCreacion,hashtag,biografia,integrantes, pais,fotoPerfil;
     private boolean activo;
 
     /**
@@ -168,6 +168,20 @@ public class Banda {
      */
     public void setPais(String pais) {
         this.pais = pais;
+    }
+
+    /**
+     * @return the fotoPerfil
+     */
+    public String getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    /**
+     * @param fotoPerfil the fotoPerfil to set
+     */
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
     }
     
     

@@ -5,13 +5,12 @@
  */
 package com.myfan.services;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import com.myfan.dto.Banda;
 import com.myfan.dto.Fan;
 import com.myfan.model.ProjectManager;
 import com.myfan.security.IConstantes;
-import com.myfan.security.JwtManager;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
@@ -19,6 +18,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 /**
  *
@@ -27,9 +27,9 @@ import javax.ws.rs.core.Response;
 @Path("autenticar")
 public class AuthService {
     
-  @POST
+ @POST
  @Path("SignUpBanda")
-  @Consumes(MediaType.APPLICATION_JSON)
+ @Consumes(MediaType.APPLICATION_JSON)
  public Response registrarBanda(Banda banda){
         try {
           ProjectManager projectmanager = new ProjectManager();
@@ -42,9 +42,9 @@ public class AuthService {
       } 
 }
     
-  @POST
+ @POST
  @Path("SignUpFan")
-  @Consumes(MediaType.APPLICATION_JSON)
+ @Consumes(MediaType.APPLICATION_JSON)
  public Response registrarFan(Fan fan){
       try {
           ProjectManager projectmanager = new ProjectManager();
@@ -58,22 +58,27 @@ public class AuthService {
 
 }
  
-  @POST
+ @POST
  @Path("Login")
  @Consumes(MediaType.APPLICATION_JSON)
  public Response login(Fan fan){
+
       try {
-          //     System.out.println("Login es " + fan.getUsername());
-//     JwtManager jwtManager = new JwtManager();
-//     JsonParser json = new JsonParser();
-//     String res = json.parse("{success:true,token:"+jwtManager.jwtGenerate()+"}").toString();
+          JsonParser jp = new JsonParser();
           ProjectManager manager = new ProjectManager();
-          manager.login(fan.getUsername(), fan.getPassword());
-          return Response.ok().build();
+          String token = manager.login(fan.getUsername(), fan.getPassword());
+          String res = jp.parse("{success:true,token:"+token+"}").toString();
+          return Response.ok(res).build();
+      } catch (SQLException ex) {
+          if(ex.getErrorCode()==1){
+              return Response.status(Status.NOT_FOUND).entity(IConstantes.USUARIO_INCORRECTO).build();
+          }
+          return Response.status(403).build();
       } catch (Exception ex) {
           Logger.getLogger(AuthService.class.getName()).log(Level.SEVERE, null, ex);
-          return Response.status(400).build();
+          return Response.status(403).build();
       }
+
 }
  
 }
