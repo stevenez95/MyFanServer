@@ -92,7 +92,7 @@ public class DiscService {
      * @return 
      */
     @POST
-    @Path("newSong")
+    @Path("/newSong")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSong(Cancion cancion){
         return Response.ok().build();

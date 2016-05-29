@@ -1,31 +1,65 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package com.myfan.data;
 
 import com.myfan.dto.Cancion;
 import com.myfan.dto.Discografia;
 import com.myfan.dto.ResenaDisco;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
  * @author Steven
  */
 public class DiscInfo {
-
+    
     public DiscInfo() {
     }
     
-    public void createDisc(Discografia discografia, Connection connection){}
+    public void createDisc(Discografia discografia, Connection connection) throws SQLException{
+        String query = "insert into discografias (nombre,descripcion,generoMusical,anioPublicacion,selloDiscografico,idBanda)\n" +
+                "value (?,?,?,?,?,?);";
+        
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setString(1, discografia.getNombre());
+        ps.setString(2, discografia.getDescripcion());
+        ps.setString(3, discografia.getGeneroMusical());
+        ps.setInt(4, discografia.getAnioPublicacion());
+        ps.setString(5, discografia.getSelloDiscografico());
+        ps.setInt(6, discografia.getIdBanda());
+        
+        ps.execute();
+        
+        ps.close();
+        connection.close();
+    }
     
-    public void getDiscs(int idBanda, Connection connection)throws SQLException{
+    public ArrayList<Discografia> getDiscs(int idBanda, Connection connection)throws SQLException{
         String query = "select idDisco, nombre \n" +
                 "from discografias \n" +
                 "where idBanda = ?;";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idBanda);
+        
+        ResultSet rs = ps.executeQuery();
+        
+        ArrayList<Discografia> discosList = new ArrayList<>();
+        while(rs.next()){
+            Discografia discografia = new Discografia();
+            discografia.setIdBanda(rs.getInt("idDisco"));
+            discografia.setNombre(rs.getString("nombre"));
+            discosList.add(discografia);
+        }
+        connection.close();
+        ps.close();
+        return discosList;
     }
     
     public void getDiscInfo(int idDisco, Connection connection)throws SQLException{
