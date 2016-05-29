@@ -11,9 +11,9 @@ package com.myfan.dto;
  */
 public class Evento {
     
-    private int idEvento, concierto, idBanda;
+    private int idEvento, idBanda;
     private String titulo, contenido, fechaCreacion, fechaEvento, ubicacion;
-
+    private boolean cancelado, concierto;
     /**
      * @return the idEvento
      */
@@ -26,20 +26,6 @@ public class Evento {
      */
     public void setIdEvento(int idEvento) {
         this.idEvento = idEvento;
-    }
-
-    /**
-     * @return the concierto
-     */
-    public int getConcierto() {
-        return concierto;
-    }
-
-    /**
-     * @param concierto the concierto to set
-     */
-    public void setConcierto(int concierto) {
-        this.concierto = concierto;
     }
 
     /**
@@ -124,6 +110,34 @@ public class Evento {
      */
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
+    }
+
+    /**
+     * @return the cancelado
+     */
+    public boolean isCancelado() {
+        return cancelado;
+    }
+
+    /**
+     * @param cancelado the cancelado to set
+     */
+    public void setCancelado(boolean cancelado) {
+        this.cancelado = cancelado;
+    }
+
+    /**
+     * @return the concierto
+     */
+    public boolean isConcierto() {
+        return concierto;
+    }
+
+    /**
+     * @param concierto the concierto to set
+     */
+    public void setConcierto(boolean concierto) {
+        this.concierto = concierto;
     }
     
 }

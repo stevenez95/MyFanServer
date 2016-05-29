@@ -10,7 +10,7 @@ package com.myfan.dto;
  * @author Steven
  */
 public class Fan {
-    private int idFan;
+    private int idFan, edad;
     private double fechaCreacion;
     private String username,password,nombre,apellido,pais,fotoPerfil,genero,fechaNac; 
     private boolean activo;
@@ -167,5 +167,19 @@ public class Fan {
      */
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    /**
+     * @return the edad
+     */
+    public int getEdad() {
+        return edad;
+    }
+
+    /**
+     * @param edad the edad to set
+     */
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
 }

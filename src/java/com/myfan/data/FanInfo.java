@@ -6,6 +6,7 @@
 package com.myfan.data;
 
 import com.myfan.dto.Fan;
+import com.myfan.dto.ResenaBanda;
 import com.myfan.security.PasswordEncrypt;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,15 +25,15 @@ public class FanInfo {
     public FanInfo() {
     }
     
-    public void seguirBanda(int idFan , int idBanda, Connection connection){}
+    public void seguirBanda(int idFan , int idBanda, Connection connection)throws SQLException{}
     
-    public void dejarSeguirBanda(int idFan,  int id, Connection connection){}
+    public void dejarSeguirBanda(int idFan,  int id, Connection connection)throws SQLException{}
     
-    public void desactivarFan(int idFan, Connection connection){
+    public void desactivarFan(int idFan, Connection connection)throws SQLException{
         String query = "update fans set activo = not activo where idFan = ?;";
     }
     
-    public void actualizarFan(Fan fan, Connection connection){}
+    public void actualizarFan(Fan fan, Connection connection)throws SQLException{}
     
     public void registrarFan(Fan fan,Connection connection) throws SQLException{
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -58,7 +59,7 @@ public class FanInfo {
         connection.close();
     }
     
-    public void verMisArtistas(int idFan, Connection connection){
+    public void verMisArtistas(int idFan, Connection connection)throws SQLException{
         String query = "select b.idBanda, b.nombreBanda \n" +
                 "from bandas b \n" +
                 "join seguidos s \n" +
@@ -66,7 +67,10 @@ public class FanInfo {
                 "where s.idFan = ?;";
     }
     
-    public void buscarArtistas(Connection connection){}
+    public void buscarArtistas(String nombre, String pais, String genero, Connection connection)throws SQLException{}
     
+    public void rateBand(ResenaBanda resenaBanda, Connection connection)throws SQLException{
+        String query = "insert into resenasbanda (idBanda,idFan,calificacion,comentario) value (?,?,?,?);";
+    }
     
 }

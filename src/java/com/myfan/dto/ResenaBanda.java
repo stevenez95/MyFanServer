@@ -7,24 +7,24 @@ package com.myfan.dto;
 
 /**
  *
- * @author Steven
+ * @author Daniel
  */
-public class ResenasConcierto {
-    private int idEvento,idFan,calificacion;
+public class ResenaBanda {
+    private int idBanda,idFan,calificacion;
     private String comentario;
 
     /**
-     * @return the idEvento
+     * @return the idBanda
      */
-    public int getIdEvento() {
-        return idEvento;
+    public int getIdBanda() {
+        return idBanda;
     }
 
     /**
-     * @param idEvento the idEvento to set
+     * @param idBanda the idBanda to set
      */
-    public void setIdEvento(int idEvento) {
-        this.idEvento = idEvento;
+    public void setIdBanda(int idBanda) {
+        this.idBanda = idBanda;
     }
 
     /**

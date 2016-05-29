@@ -16,7 +16,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 /**
  * REST Web Service
@@ -40,14 +39,14 @@ public class FanService {
      * @param token
      * @param id
      * @return an instance of java.lang.String
+     *          informacion personal del fan
      */
     @GET
-   // @Path("{id}")
+    @Path("/me/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJson(/*@HeaderParam("x-access-token") String token,@PathParam("id") int id*/) {
-        //TODO return proper representation object
-      //  System.out.println("ID: "+id);
-        return Response.ok("{\"token\":\"acdasda"+"\"}", MediaType.APPLICATION_JSON)
+    public Response getJson(@HeaderParam("x-access-token") String token,@PathParam("id") int id) {
+        if(token==null)return Response.status(403).build();
+        return Response.ok()
                 .header("Access-Control-Allow-Origin", "http://localhost:8383")
                 .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
     }

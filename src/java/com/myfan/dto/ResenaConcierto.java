@@ -9,24 +9,9 @@ package com.myfan.dto;
  *
  * @author Steven
  */
-public class ResenaEvento {
-    
-    private int idFan, idEvento, calificacion;
+public class ResenaConcierto {
+    private int idEvento,idFan,calificacion;
     private String comentario;
-
-    /**
-     * @return the idFan
-     */
-    public int getIdFan() {
-        return idFan;
-    }
-
-    /**
-     * @param idFan the idFan to set
-     */
-    public void setIdFan(int idFan) {
-        this.idFan = idFan;
-    }
 
     /**
      * @return the idEvento
@@ -40,6 +25,20 @@ public class ResenaEvento {
      */
     public void setIdEvento(int idEvento) {
         this.idEvento = idEvento;
+    }
+
+    /**
+     * @return the idFan
+     */
+    public int getIdFan() {
+        return idFan;
+    }
+
+    /**
+     * @param idFan the idFan to set
+     */
+    public void setIdFan(int idFan) {
+        this.idFan = idFan;
     }
 
     /**
@@ -69,5 +68,4 @@ public class ResenaEvento {
     public void setComentario(String comentario) {
         this.comentario = comentario;
     }
-    
 }

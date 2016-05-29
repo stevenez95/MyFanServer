@@ -21,7 +21,7 @@ public class BandInfo {
     }
     
     public void registrarBanda(Banda banda,Connection connection) throws SQLException{
-        String query = "Insert into Bandas (username,password,nombreBanda,anioCreacion,hashtag,biografia,fechaCreacion,pais,integrantes,fotoPerfil) value (?,?,?,?,?,?,?,?,?,?);";
+        String query = "insert into Bandas (username,password,nombreBanda,anioCreacion,hashtag,biografia,fechaCreacion,pais,integrantes,fotoPerfil) value (?,?,?,?,?,?,?,?,?,?);";
         String password = PasswordEncrypt.hashPassword(banda.getPassword());
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, banda.getUsername());
@@ -35,16 +35,17 @@ public class BandInfo {
         ps.setString(9, banda.getIntegrantes());
         ps.setString(10, banda.getFotoPerfil());
         ps.execute();
+        ps.close();
         connection.close();
     }
     
-    public void actualizarBanda(Banda banda, Connection connection){}
+    public void actualizarBanda(Banda banda, Connection connection)throws SQLException{}
     
-    public void desactivarBanda(int idBanda,Connection connection){
+    public void desactivarBanda(int idBanda,Connection connection)throws SQLException{
         String query = "update bandas set activo = not activo where idBanda = ?;";
     }
     
-    public void getCantidadSeguidores(int idBanda, Connection connection){
+    public void getCantidadSeguidores(int idBanda, Connection connection)throws SQLException{
         String query ="select count(*) as total\n" +
                 "from seguidos s \n" +
                 "join fans f\n" +
@@ -52,4 +53,16 @@ public class BandInfo {
                 "where s.idBanda = ? and f.activo = 1;";
     }
     
+    public void getBandComments(int idBanda, Connection connection)throws SQLException{
+        String query = "select comentario  \n" +
+                "from resenasbanda \n" +
+                "where idBanda = ?";
+    }
+    
+    public void getBandRate(int idBanda, Connection connection)throws SQLException{
+        String query = "select avg(calificacion) as promedio, idBanda \n" +
+                "from resenasbanda \n" +
+                "where idBanda = ? \n" +
+                "group by idBanda;";
+    }
 }
