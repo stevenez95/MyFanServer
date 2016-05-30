@@ -90,6 +90,8 @@ public class NewsInfo {
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idNoticia);
         ps.execute();
+        ps.close();
+        connection.close();
     }
     
     

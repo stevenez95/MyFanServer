@@ -30,7 +30,7 @@ public class FanInfo {
     
     public void seguirBanda(int idFan , int idBanda, Connection connection)throws SQLException{}
     
-    public void dejarSeguirBanda(int idFan,  int id, Connection connection)throws SQLException{}
+    public void dejarSeguirBanda(int idFan,  int idBanda, Connection connection)throws SQLException{}
     
     public void desactivarFan(int idFan, Connection connection)throws SQLException{
         String query = "update fans set activo = not activo where idFan = ?;";
@@ -64,6 +64,7 @@ public class FanInfo {
         ps.setString(8, fan.getPais());
         ps.setString(9, fan.getFotoPerfil());
         ps.execute();
+        ps.close();
         connection.close();
     }
     
@@ -100,6 +101,7 @@ public class FanInfo {
         ps.setString(4, resenaBanda.getComentario()); 
         ps.execute();
         connection.close();
+        ps.close();
     }
     
 }

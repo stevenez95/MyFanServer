@@ -20,8 +20,7 @@ import java.util.ArrayList;
  */
 public class BandInfo {
     
-    public BandInfo() {
-    }
+    public BandInfo() {}
     
     public void registrarBanda(Banda banda,Connection connection) throws SQLException{
         String query = "insert into Bandas (username,password,nombreBanda,anioCreacion,hashtag,biografia,fechaCreacion,pais,integrantes,fotoPerfil) value (?,?,?,?,?,?,?,?,?,?);";
@@ -53,14 +52,24 @@ public class BandInfo {
         connection.close();
     }
     
-    public void getCantidadSeguidores(int idBanda, Connection connection)throws SQLException{
+    public int getCantidadSeguidores(int idBanda, Connection connection)throws SQLException{
         String query ="select count(*) as total\n" +
                 "from seguidos s \n" +
                 "join fans f\n" +
                 "on s.idFan = f.idFan\n" +
                 "where s.idBanda = ? and f.activo = 1;";
         
-//         FALTA UNA TABLA SEGUIDOS
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idBanda);
+        
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        int seguidores = rs.getInt("total");
+        
+        ps.close();
+        connection.close();
+        return seguidores;
+        
     }
     
     public ArrayList<ResenaBanda> getBandComments(int idBanda, Connection connection)throws SQLException{
@@ -81,7 +90,7 @@ public class BandInfo {
         return bandaComentList;
     }
     
-    public ArrayList<ResenaBanda> getBandRate(int idBanda, Connection connection)throws SQLException{
+    public int getBandRate(int idBanda, Connection connection)throws SQLException{
         String query = "select avg(calificacion) as promedio, idBanda \n" +
                 "from resenasbanda \n" +
                 "where idBanda = ? \n" +
@@ -89,15 +98,10 @@ public class BandInfo {
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idBanda);
         ResultSet rs = ps.executeQuery();
-        ArrayList<ResenaBanda> bandaPromList = new ArrayList<>();
-        while(rs.next()){
-            ResenaBanda resenabanda = new ResenaBanda();
-            resenabanda.setCalificacion(rs.getInt("promedio"));
-            resenabanda.setIdBanda(rs.getInt("idBanda"));
-            bandaPromList.add(resenabanda);
-        }
+        rs.next();
+        int promedio = rs.getInt("promedio");
         connection.close();
         ps.close();
-        return bandaPromList;
+        return promedio;
     }
 }

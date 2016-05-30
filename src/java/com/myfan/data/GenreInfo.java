@@ -22,11 +22,10 @@ public class GenreInfo {
     public GenreInfo() {
     }
     
-    public ArrayList<Genero> verGeneros(int idGenero,Connection connection ) throws SQLException{
+    public ArrayList<Genero> verGeneros(Connection connection ) throws SQLException{
         String query = "select idGenero,nombre \n" +
                 "from generos;";
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, idGenero);
         ResultSet rs = ps.executeQuery();
         ArrayList<Genero> generosList = new ArrayList<>();
         while(rs.next()){
@@ -44,7 +43,8 @@ public class GenreInfo {
         String query = "update genero set nombre = ? \n" +
                 "where idGenero = ?; ";
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, idGenero);
+        ps.setString(1, nombre);
+        ps.setInt(2, idGenero);
         ps.executeUpdate();
         ps.close();
         connection.close();
@@ -56,6 +56,8 @@ public class GenreInfo {
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idGenero);
         ps.execute();
+        ps.close();
+        connection.close();
     }
     
     public void crearGenero(Genero genero , Connection connection) throws SQLException{
@@ -64,6 +66,7 @@ public class GenreInfo {
         ps.setInt(1, genero.getIdGenero());
         ps.setString(2, genero.getNombre());
         ps.execute();
+        ps.close();
         connection.close();
     }
     

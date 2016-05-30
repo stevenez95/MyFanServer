@@ -20,8 +20,7 @@ import java.util.ArrayList;
  */
 public class DiscInfo {
     
-    public DiscInfo() {
-    }
+    public DiscInfo() {}
     
     public void createDisc(Discografia discografia, Connection connection) throws SQLException{
         String query = "insert into discografias (nombre,descripcion,generoMusical,anioPublicacion,selloDiscografico,idBanda)\n" +
@@ -87,7 +86,12 @@ public class DiscInfo {
                 "set nombre=?,descripcion=?,generoMusical=?,anioPublicacion=?,selloDiscografico=? \n" +
                 "where idDisco = ?;";
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, idDisco);
+        ps.setString(1, discografia.getNombre());
+        ps.setString(2, discografia.getDescripcion());
+        ps.setString(3, discografia.getGeneroMusical());
+        ps.setInt(4, discografia.getAnioPublicacion());
+        ps.setString(5, discografia.getSelloDiscografico());
+        ps.setInt(6, idDisco);
         ps.executeUpdate();
         ps.close();
         connection.close();
@@ -99,11 +103,11 @@ public class DiscInfo {
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idDisco);
         ps.execute();
+        ps.close();
+        connection.close();
     }
     
-    public void createSong(Cancion cancion, Connection connection){
-        
-    }
+    public void createSong(Cancion cancion, Connection connection){   }
     
     public ArrayList<Cancion> getSongs(int idDisco, Connection connection)throws SQLException{
         String query = "select nombre, enVivo,bonus,limitada,link \n" +
@@ -133,7 +137,12 @@ public class DiscInfo {
                 "set nombre=?,enVivo=?,bonus=?,limitada=?,link=? \n" +
                 "where idCancion = ?;";
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, idCancion);
+        ps.setString(1, cancion.getNombre());
+        ps.setBoolean(2, cancion.isEnVivo());
+        ps.setBoolean(3, cancion.isBonus());
+        ps.setBoolean(4, cancion.isLimitada());
+        ps.setString(5, cancion.getLink());
+        ps.setInt(6, idCancion);
         ps.executeUpdate();
         ps.close();
         connection.close();
@@ -145,6 +154,8 @@ public class DiscInfo {
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idCancion);
         ps.execute();
+        ps.close();
+        connection.close();
     }
     
     public void rateDisc(ResenaDisco resenaDisco, Connection connection)throws SQLException{
@@ -177,7 +188,7 @@ public class DiscInfo {
         return comentariosList;
     }
     
-    public ArrayList<ResenaDisco> getDiscRate(int  idDisco, Connection connection)throws SQLException{
+    public int getDiscRate(int  idDisco, Connection connection)throws SQLException{
         String query = "select avg(calificacion) as promedio, idDisco \n" +
                 "from resenasdisco \n" +
                 "where idDisco = ? \n" +
@@ -186,16 +197,11 @@ public class DiscInfo {
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idDisco);
         ResultSet rs = ps.executeQuery();
-        ArrayList<ResenaDisco> promedioList = new ArrayList<>();
-        while(rs.next()){
-            ResenaDisco resenaDisco = new ResenaDisco();
-            resenaDisco.setCalificacion(rs.getInt("promedio"));
-            resenaDisco.setIdDisco(rs.getInt("idDisco"));
-            promedioList.add(resenaDisco);
-        }
+        rs.next();
+        int promedio = rs.getInt("promedio");
         connection.close();
         ps.close();
-        return promedioList;
+        return promedio;
     }
     
 }
