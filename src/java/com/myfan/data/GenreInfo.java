@@ -6,6 +6,12 @@
 package com.myfan.data;
 
 import com.myfan.dto.Genero;
+import com.myfan.dto.ResenaBanda;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,23 +22,49 @@ public class GenreInfo {
     public GenreInfo() {
     }
     
-    public void verGeneros(){
+    public ArrayList<Genero> verGeneros(int idGenero,Connection connection ) throws SQLException{
         String query = "select idGenero,nombre \n" +
                 "from generos;";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idGenero);
+        ResultSet rs = ps.executeQuery();
+        ArrayList<Genero> generosList = new ArrayList<>();
+        while(rs.next()){
+            Genero genero = new Genero();
+            genero.setIdGenero(rs.getInt("idGenero"));
+            genero.setNombre(rs.getString("nombre"));
+            generosList.add(genero);
+        }
+        connection.close();
+        ps.close();
+        return generosList;
     }
     
-    public void editarGenero(String nombre,int idGenero){
+    public void editarGenero(String nombre,int idGenero,Connection connection ) throws SQLException{
         String query = "update genero set nombre = ? \n" +
                 "where idGenero = ?; ";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idGenero);
+        ps.executeUpdate();
+        ps.close();
+        connection.close();
     }
     
-    public void borrarGenero(int idGenero){
+    public void borrarGenero(int idGenero, Connection connection) throws SQLException{
         String query = "delete from generos \n" +
                 "where idGenero = ?;";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idGenero);
+        ps.execute();
     }
     
-    public void crearGenero(Genero genero){
+    public void crearGenero(Genero genero , Connection connection) throws SQLException{
         String query = "insert into generos (idGenero,nombre) value (?,?);";
+         PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, genero.getIdGenero());
+        ps.setString(2, genero.getNombre());
+        ps.execute();
+        connection.close();
     }
     
 }

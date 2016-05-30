@@ -5,14 +5,17 @@
 */
 package com.myfan.data;
 
+import com.myfan.dto.Banda;
 import com.myfan.dto.Fan;
 import com.myfan.dto.ResenaBanda;
 import com.myfan.security.PasswordEncrypt;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +34,11 @@ public class FanInfo {
     
     public void desactivarFan(int idFan, Connection connection)throws SQLException{
         String query = "update fans set activo = not activo where idFan = ?;";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idFan);
+        ps.executeUpdate();
+        ps.close();
+        connection.close();
     }
     
     public void actualizarFan(Fan fan, Connection connection)throws SQLException{}
@@ -59,18 +67,39 @@ public class FanInfo {
         connection.close();
     }
     
-    public void verMisArtistas(int idFan, Connection connection)throws SQLException{
+    public ArrayList<Banda> verMisArtistas(int idFan, Connection connection)throws SQLException{
         String query = "select b.idBanda, b.nombreBanda \n" +
                 "from bandas b \n" +
                 "join seguidos s \n" +
                 "on s.idBanda = b.idBanda \n" +
                 "where s.idFan = ?;";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idFan);
+        ResultSet rs = ps.executeQuery();
+        ArrayList<Banda> artistasList = new ArrayList<>();
+        while(rs.next()){
+            Banda banda = new Banda();
+            banda.setIdBanda(rs.getInt("idBanda"));
+            banda.setNombreBanda(rs.getString("nombreBanda"));
+            artistasList.add(banda);
+        }
+        connection.close();
+        ps.close();
+        return artistasList;
+        
     }
     
     public void buscarArtistas(String nombre, String pais, String genero, Connection connection)throws SQLException{}
     
     public void rateBand(ResenaBanda resenaBanda, Connection connection)throws SQLException{
         String query = "insert into resenasbanda (idBanda,idFan,calificacion,comentario) value (?,?,?,?);";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, resenaBanda.getIdBanda());
+        ps.setInt(2, resenaBanda.getIdFan());
+        ps.setInt(3, resenaBanda.getCalificacion());
+        ps.setString(4, resenaBanda.getComentario()); 
+        ps.execute();
+        connection.close();
     }
     
 }
