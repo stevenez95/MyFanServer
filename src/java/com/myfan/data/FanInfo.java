@@ -41,7 +41,7 @@ public class FanInfo {
         connection.close();
     }
     
-    public void actualizarFan(Fan fan, Connection connection)throws SQLException{}
+    public void actualizarFan(Fan fan,int idFan, Connection connection)throws SQLException{}
     
     public void registrarFan(Fan fan,Connection connection) throws SQLException{
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");

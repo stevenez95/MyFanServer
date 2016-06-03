@@ -5,8 +5,13 @@
  */
 package com.myfan.services;
 
+import com.google.gson.Gson;
 import com.myfan.dto.Cancion;
 import com.myfan.dto.Discografia;
+import com.myfan.model.ProjectManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -34,8 +39,16 @@ public class DiscService {
     @GET
     @Path("/banda/{idBanda}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDiscs(/*@HeaderParam("x-access-token") String token*/@PathParam("idBanda")int idBanda){
-        return Response.ok().build();
+    public Response getDiscs(@PathParam("idBanda")int idBanda){
+        try {
+            ProjectManager pm = new ProjectManager();
+            Gson gson = new Gson();
+            return Response.ok(gson.toJson(pm.getDiscs(idBanda))).build();
+        } catch (SQLException ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+           return Response.status(Status.NOT_FOUND).build();
+        }
     }
     
     /**
@@ -46,8 +59,15 @@ public class DiscService {
     @GET
     @Path("/{idDisco}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDiscsInfo(/*@HeaderParam("x-access-token") String token*/@PathParam("idDisco")int idDisco){
-        return Response.ok().build();
+    public Response getDiscsInfo(@PathParam("idDisco")int idDisco){
+       try {
+            ProjectManager pm = new ProjectManager();
+            Gson gson = new Gson();
+            return Response.ok(gson.toJson(pm.getDiscInfo(idDisco))).build();
+        } catch (SQLException ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+            return Response.status(Status.NOT_FOUND).build();        }
     }
     
     /**
@@ -59,7 +79,15 @@ public class DiscService {
     @Path("/new")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createNewDisc(Discografia discografia){
-        return Response.ok().build();
+        try {
+            ProjectManager pm = new ProjectManager();
+            pm.createDisc(discografia);
+            return Response.ok().build();
+        } catch (SQLException ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
     }
     
     /**
@@ -72,7 +100,15 @@ public class DiscService {
     @Path("edit/{idDisco}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response editDisc(Discografia discografia, @PathParam("idDisco")int idDisco){
-        return Response.ok().build();
+        try {
+            ProjectManager pm = new ProjectManager();
+            pm.editDisc(discografia, idDisco);
+            return Response.ok().build();
+        } catch (SQLException ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
     }
     
     /**
@@ -83,7 +119,15 @@ public class DiscService {
     @DELETE
     @Path("delete/{idDisco}")
     public Response deleteDisc(@PathParam("idDisco")int idDisco){
-        return Response.ok().build();
+        try {
+            ProjectManager pm = new ProjectManager();
+            pm.deleteDisc(idDisco);
+            return Response.ok().build();
+        } catch (SQLException ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
     }
     
     /**
@@ -95,7 +139,15 @@ public class DiscService {
     @Path("/newSong")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSong(Cancion cancion){
-        return Response.ok().build();
+        try {
+            ProjectManager pm = new ProjectManager();
+            pm.createSong(cancion);
+            return Response.ok().build();
+        } catch (SQLException ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
     }
     
     /**
@@ -107,18 +159,54 @@ public class DiscService {
     @PUT
     @Path("editSong/{idCancion}")
     public Response editSong(Cancion cancion, @PathParam("idCancion")int idCancion){
-        return Response.ok().build();
+        try {
+            ProjectManager pm = new ProjectManager();
+            pm.editSong(cancion, idCancion);
+            return Response.ok().build();
+        } catch (SQLException ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
     }
     
+    /**
+     * Borra una cancion de la discografia
+     * @param idCancion
+     * @return 
+     */
     @DELETE
     @Path("deleteSong/{idCancion}")
     public Response deleteSong(@PathParam("idCancion")int idCancion){
-        return Response.ok().build();
+        try {
+            ProjectManager pm = new ProjectManager();
+            pm.deleteSong(idCancion);
+            return Response.ok().build();
+        } catch (SQLException ex) {
+            return Response.status(404).build();
+        } catch (Exception ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
+    }
+    
+    @GET
+    @Path("getSongs/{idDisco}")
+    public Response getSongs(@PathParam("idDisco")int idDisco){
+        try {
+            ProjectManager pm = new ProjectManager();
+            Gson gson = new Gson();
+            return Response.ok(gson.toJson(pm.getSongs(idDisco))).build();
+        } catch (SQLException ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
     }
     
     /*
     Calificar
     obtener calificacion
+    OBTENER COMENTARIOS
     */
     
 }

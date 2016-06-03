@@ -5,7 +5,6 @@
 */
 package com.myfan.services;
 
-import com.google.gson.JsonParser;
 import com.myfan.dto.Banda;
 import com.myfan.dto.Fan;
 import com.myfan.model.ProjectManager;
@@ -18,7 +17,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 /**
  *
@@ -39,11 +37,9 @@ public class AuthService {
         try {
             ProjectManager projectmanager = new ProjectManager();
             projectmanager.registrarBanda(banda);
-            //System.out.println("user name es" + banda.getFechaCreacion());
             return Response.ok(IConstantes.SUCCESS).build();
         } catch (Exception ex) {
-            ex.printStackTrace();
-            return Response.status(403).build();
+            return Response.status(404).build();
         }
     }
     
@@ -62,8 +58,7 @@ public class AuthService {
             System.out.println("user name es" + fan.getFechaCreacion());
             return Response.ok(IConstantes.SUCCESS).build();
         } catch (Exception ex) {
-            ex.printStackTrace();
-            return Response.status(400).entity(IConstantes.NOT_FOUND).build();
+            return Response.status(404).entity(IConstantes.NOT_FOUND).build();
         }
         
     }
@@ -77,23 +72,16 @@ public class AuthService {
     @Path("login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response login(Fan fan){
-        
         try {
-            JsonParser jp = new JsonParser();
-            ProjectManager manager = new ProjectManager();
-            String token = manager.login(fan.getUsername(), fan.getPassword());
-            String res = jp.parse("{success:true,token:"+token+"}").toString();
-            return Response.ok(res).build();
+            ProjectManager pm = new ProjectManager();
+            String token = pm.login(fan.getUsername(), fan.getPassword());
+            return Response.ok("{\"token\":" + "\"" + token + "\"" + "}").build();
         } catch (SQLException ex) {
-            if(ex.getErrorCode()==1){
-                return Response.status(Status.NOT_FOUND).entity(IConstantes.USUARIO_INCORRECTO).build();
-            }
-            return Response.status(403).build();
+            if(ex.getErrorCode()==1)return Response.status(Response.Status.NOT_FOUND).entity(IConstantes.USUARIO_INCORRECTO).build();
+            else return Response.serverError().build();
         } catch (Exception ex) {
-            Logger.getLogger(AuthService.class.getName()).log(Level.SEVERE, null, ex);
-            return Response.status(403).build();
+            return Response.serverError().build();
         }
-        
     }
     
 }

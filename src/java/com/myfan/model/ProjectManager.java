@@ -43,39 +43,45 @@ public class ProjectManager {
         }
     }
     
-    public void dejarSeguirBanda(int idFan,  int idBanda){
-        DataBaseConnect database = new DataBaseConnect();
-        FanInfo fanInfo = new FanInfo();
+    public void dejarSeguirBanda(int idFan,  int idBanda) throws SQLException{
         try {
+            DataBaseConnect database = new DataBaseConnect();
+            FanInfo fanInfo = new FanInfo();
             fanInfo.dejarSeguirBanda(idFan, idBanda, database.getConnection());
         } catch (Exception ex) {
             Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public void desactivarFan(int idFan){
-        DataBaseConnect database = new DataBaseConnect();
-        FanInfo fanInfo = new FanInfo();
+    public void desactivarFan(int idFan) throws SQLException{
         try {
-            fanInfo.desactivarFan(idFan, database.getConnection());
+            DataBaseConnect database = new DataBaseConnect();
+            FanInfo fanInfo = new FanInfo();
+            fanInfo.desactivarFan(idFan, database.getConnection());            
         } catch (Exception ex) {
             Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
-        }}
+        }
+    }
+        
     
-    public void actualizarFan(Fan fan){
-        DataBaseConnect database = new DataBaseConnect();
-        FanInfo fanInfo = new FanInfo();
+    public void actualizarFan(Fan fan,int idFan) throws SQLException{
         try {
-            fanInfo.actualizarFan(fan, database.getConnection());
+            DataBaseConnect database = new DataBaseConnect();
+            FanInfo fanInfo = new FanInfo();
+            fanInfo.actualizarFan(fan,idFan, database.getConnection());
         } catch (Exception ex) {
             Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public ArrayList<Banda> verMisArtistas(int idFan) throws SQLException, Exception{
-        DataBaseConnect database = new DataBaseConnect();
-        FanInfo fanInfo = new FanInfo();
-        return  fanInfo.verMisArtistas(idFan, database.getConnection());
+    public ArrayList<Banda> verMisArtistas(int idFan) throws SQLException{
+        try {
+            DataBaseConnect database = new DataBaseConnect();
+            FanInfo fanInfo = new FanInfo();
+            return  fanInfo.verMisArtistas(idFan, database.getConnection());
+        } catch (Exception ex) {
+            return null;
+        }
     }
     
     public void buscarArtistas(String nombre, String pais, String genero){
