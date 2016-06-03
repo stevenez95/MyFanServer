@@ -5,6 +5,9 @@
  */
 package com.myfan.services;
 
+import com.myfan.dto.Genero;
+import com.myfan.model.ProjectManager;
+import java.sql.SQLException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
@@ -25,22 +28,46 @@ public class MyFestService {
     @PUT
     @Path("edit/{idGenero}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editGenero(@PathParam("idGenero")int idGenero){
-       return Response.ok().build();
+    public Response editGenero(Genero genero ,@PathParam("idGenero")int idGenero){
+          try {
+            ProjectManager pm = new ProjectManager();
+            pm.editarGenero(genero.getNombre(),idGenero);
+            return Response.ok().build();
+        } catch (SQLException ex) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+           return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
     
     @DELETE
     @Path("delete/{idGenero}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteGenero(@PathParam("idGenero")int idGenero){
-       return Response.ok().build();
+         try {
+            ProjectManager pm = new ProjectManager();
+            pm.borrarGenero(idGenero);
+            return Response.ok().build();
+        } catch (SQLException ex) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+           return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
     
     @POST
     @Path("new")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response newGenero(){
-       return Response.ok().build();
+    public Response newGenero(Genero genero){
+         try {
+            ProjectManager pm = new ProjectManager();
+            pm.crearGenero(genero);
+            return Response.ok().build();
+        } catch (SQLException ex) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+           return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
     
 }
