@@ -39,7 +39,7 @@ public class DiscInfo {
     }
     
     public ArrayList<Discografia> getDiscs(int idBanda, Connection connection)throws SQLException{
-        String query = "select idDisco, nombre \n" +
+        String query = "select idDiscografia, nombre \n" +
                 "from discografias \n" +
                 "where idBanda = ?;";
         PreparedStatement ps = connection.prepareStatement(query);

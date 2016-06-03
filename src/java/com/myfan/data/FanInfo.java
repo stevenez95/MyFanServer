@@ -28,9 +28,25 @@ public class FanInfo {
     public FanInfo() {
     }
     
-    public void seguirBanda(int idFan , int idBanda, Connection connection)throws SQLException{}
+    public void seguirBanda(int idFan , int idBanda, Connection connection)throws SQLException{
+        String query = "insert into seguidos (idFan, idBanda) value (?,?);";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idFan);
+        ps.setInt(2, idBanda);
+        ps.execute();
+        ps.close();
+        connection.close();
+    }
     
-    public void dejarSeguirBanda(int idFan,  int idBanda, Connection connection)throws SQLException{}
+    public void dejarSeguirBanda(int idFan,  int idBanda, Connection connection)throws SQLException{
+        String query = "delete from seguidos where idFan = ? and idBanda = ?;";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idFan);
+        ps.setInt(2, idBanda);
+        ps.execute();
+        ps.close();
+        connection.close();
+    }
     
     public void desactivarFan(int idFan, Connection connection)throws SQLException{
         String query = "update fans set activo = not activo where idFan = ?;";
@@ -41,7 +57,28 @@ public class FanInfo {
         connection.close();
     }
     
-    public void actualizarFan(Fan fan,int idFan, Connection connection)throws SQLException{}
+    public void actualizarFan(Fan fan,int idFan, Connection connection)throws SQLException{
+        String query = "update fans set password = '',nombre= '',apellido= '',fechaNac= '',genero= '',pais= '',fotoPerfil= '' where idFan = ?;";
+        PreparedStatement ps = connection.prepareStatement(query);
+        String pass = PasswordEncrypt.hashPassword(fan.getPassword());
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        java.sql.Date fecha = null;
+        try {
+            fecha = new java.sql.Date(format.parse(fan.getFechaNac()).getTime());
+        } catch (ParseException ex) {
+            Logger.getLogger(UserInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ps.setString(1,pass);
+        ps.setString(2, fan.getNombre());
+        ps.setString(3, fan.getApellido());
+        ps.setDate(4, fecha);
+        ps.setString(5, fan.getGenero());
+        ps.setString(6, fan.getPais());
+        ps.setString(7, fan.getFotoPerfil());
+        ps.executeUpdate();
+        ps.close();
+        connection.close();
+    }
     
     public void registrarFan(Fan fan,Connection connection) throws SQLException{
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");

@@ -6,6 +6,7 @@
 package com.myfan.services;
 
 import com.myfan.dto.Fan;
+import com.myfan.dto.ResenaBanda;
 import com.myfan.model.ProjectManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -101,6 +102,12 @@ public class FanService {
     
     //public Response buscarArtistas(){}
     
-    //public Response rateBand(){}
+    @POST
+    @Path("rateBand")
+    public Response rateBand(ResenaBanda resenaBanda){
+        ProjectManager manager = new ProjectManager();
+        manager.rateBand(resenaBanda);
+        return Response.ok().build();
+    }
 
 }

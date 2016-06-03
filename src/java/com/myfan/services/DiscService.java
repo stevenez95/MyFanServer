@@ -10,8 +10,6 @@ import com.myfan.dto.Cancion;
 import com.myfan.dto.Discografia;
 import com.myfan.model.ProjectManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -45,8 +43,10 @@ public class DiscService {
             Gson gson = new Gson();
             return Response.ok(gson.toJson(pm.getDiscs(idBanda))).build();
         } catch (SQLException ex) {
+            ex.printStackTrace();
             return Response.status(Status.NOT_FOUND).build();
         } catch (Exception ex) {
+            ex.printStackTrace();
            return Response.status(Status.NOT_FOUND).build();
         }
     }
