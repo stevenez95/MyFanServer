@@ -5,7 +5,10 @@
  */
 package com.myfan.services;
 
+import com.google.gson.Gson;
 import com.myfan.dto.Noticia;
+import com.myfan.model.ProjectManager;
+import java.sql.SQLException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
@@ -32,7 +35,15 @@ public class NewsService {
     @Path("/fan/{idFan}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFanNews(@PathParam("idFan")int idFan){
-        return Response.ok().build();
+        try {
+            ProjectManager pm = new ProjectManager();
+            Gson gson = new Gson();
+            return Response.ok(gson.toJson(pm.getNoticiasFan(idFan))).build();
+        } catch (SQLException ex) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+           return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
     
     /**
@@ -44,7 +55,15 @@ public class NewsService {
     @Path("/banda/{idBanda}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBandNews(@PathParam("idBanda")int idBanda){
-        return Response.ok().build();
+         try {
+            ProjectManager pm = new ProjectManager();
+            Gson gson = new Gson();
+            return Response.ok(gson.toJson(pm.getNoticiasBanda(idBanda))).build();
+        } catch (SQLException ex) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+           return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
     
     /**
@@ -56,7 +75,15 @@ public class NewsService {
     @Path("/newNews")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createNews(Noticia noticia){
-        return Response.ok().build();
+        try {
+            ProjectManager pm = new ProjectManager();
+            pm.crearNoticia(noticia);
+            return Response.ok().build();
+        } catch (SQLException ex) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+           return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
     
     /**
@@ -67,7 +94,15 @@ public class NewsService {
     @DELETE
     @Path("delete/{idNoticia}")
     public Response deleteNews(@PathParam("idNoticia")int idNoticia){
-        return Response.ok().build();
+        try {
+            ProjectManager pm = new ProjectManager();
+            pm.deleteNews(idNoticia);
+            return Response.ok().build();
+        } catch (SQLException ex) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+           return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
     
 }

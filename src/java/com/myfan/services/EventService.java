@@ -5,7 +5,10 @@
  */
 package com.myfan.services;
 
+import com.google.gson.Gson;
 import com.myfan.dto.Evento;
+import com.myfan.model.ProjectManager;
+import java.sql.SQLException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
@@ -15,6 +18,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 /**
  *
@@ -32,7 +36,15 @@ public class EventService {
     @Path("/fan/{idFan}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFanEvents(@PathParam("idFan")int idFan){
-        return Response.ok().build();
+        try {
+            ProjectManager pm = new ProjectManager();
+            Gson gson = new Gson();
+            return Response.ok(gson.toJson(pm.getEventosFan(idFan))).build();
+        } catch (SQLException ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+           return Response.status(Status.NOT_FOUND).build();
+        }
     }
     
     /**
@@ -44,7 +56,15 @@ public class EventService {
     @Path("/banda/{idBanda}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBandEvents(@PathParam("idBanda")int idBanda){
-        return Response.ok().build();
+        try {
+            ProjectManager pm = new ProjectManager();
+            Gson gson = new Gson();
+            return Response.ok(gson.toJson(pm.getEventosBanda(idBanda))).build();
+        } catch (SQLException ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+           return Response.status(Status.NOT_FOUND).build();
+        }
     }
     
     /**
@@ -56,7 +76,15 @@ public class EventService {
     @Path("/newEvent")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createEvent(Evento evento){
-        return Response.ok().build();
+        try {
+            ProjectManager pm = new ProjectManager();
+            pm.crearEvento(evento);
+            return Response.ok().build();
+        } catch (SQLException ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+           return Response.status(Status.NOT_FOUND).build();
+        }
     }
     
     /**
@@ -67,7 +95,15 @@ public class EventService {
     @DELETE
     @Path("cancel/{idEvent}")
     public Response cancelEvent(@PathParam("idEvent")int idEvent){
-        return Response.ok().build();
+        try {
+            ProjectManager pm = new ProjectManager();
+            pm.cancelEvent(idEvent);
+            return Response.ok().build();
+        } catch (SQLException ex) {
+            return Response.status(Status.NOT_FOUND).build();
+        } catch (Exception ex) {
+           return Response.status(Status.NOT_FOUND).build();
+        }
     }
     
     /*
