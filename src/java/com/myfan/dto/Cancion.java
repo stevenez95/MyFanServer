@@ -11,7 +11,7 @@ package com.myfan.dto;
  */
 public class Cancion {
     private int idCancion, idDisco;
-    private String nombre, link;
+    private String nombre, link,duracion;
     private boolean enVivo, bonus, limitada;
 
     /**
@@ -110,6 +110,20 @@ public class Cancion {
      */
     public void setLimitada(boolean limitada) {
         this.limitada = limitada;
+    }
+
+    /**
+     * @return the duracion
+     */
+    public String getDuracion() {
+        return duracion;
+    }
+
+    /**
+     * @param duracion the duracion to set
+     */
+    public void setDuracion(String duracion) {
+        this.duracion = duracion;
     }
     
     

@@ -11,7 +11,7 @@ package com.myfan.dto;
  */
 public class Banda {
     
-    private int idBanda;
+    private int idBanda,seguidores;
     private double fechaCreacion;
     private String nombreBanda,username,password,anioCreacion,hashtag,biografia,integrantes, pais,fotoPerfil;
     private boolean activo;
@@ -182,6 +182,20 @@ public class Banda {
      */
     public void setFotoPerfil(String fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
+    }
+
+    /**
+     * @return the seguidores
+     */
+    public int getSeguidores() {
+        return seguidores;
+    }
+
+    /**
+     * @param seguidores the seguidores to set
+     */
+    public void setSeguidores(int seguidores) {
+        this.seguidores = seguidores;
     }
     
     
