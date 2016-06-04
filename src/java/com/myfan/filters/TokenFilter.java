@@ -16,9 +16,9 @@ import javax.ws.rs.ext.Provider;
  *
  * @author Steven
  */
-@Provider
-public class TokenFilter implements ContainerRequestFilter{
-
+//@Provider
+public class TokenFilter /*implements ContainerRequestFilter*/{
+/*
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         JwtManager jwtManager = new JwtManager();
@@ -32,5 +32,5 @@ public class TokenFilter implements ContainerRequestFilter{
             requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
         }
     }
-    
+    */
 }

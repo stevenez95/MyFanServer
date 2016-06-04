@@ -105,8 +105,10 @@ public class DiscService {
             pm.editDisc(discografia, idDisco);
             return Response.ok().build();
         } catch (SQLException ex) {
+            ex.printStackTrace();
             return Response.status(Status.NOT_FOUND).build();
         } catch (Exception ex) {
+            ex.printStackTrace();
             return Response.status(Status.NOT_FOUND).build();
         }
     }
@@ -124,6 +126,7 @@ public class DiscService {
             pm.deleteDisc(idDisco);
             return Response.ok().build();
         } catch (SQLException ex) {
+            ex.printStackTrace();
             return Response.status(Status.NOT_FOUND).build();
         } catch (Exception ex) {
             return Response.status(Status.NOT_FOUND).build();
@@ -193,14 +196,24 @@ public class DiscService {
     @Path("getSongs/{idDisco}")
     public Response getSongs(@PathParam("idDisco")int idDisco){
         try {
+            System.out.println("dsfsd");
             ProjectManager pm = new ProjectManager();
             Gson gson = new Gson();
             return Response.ok(gson.toJson(pm.getSongs(idDisco))).build();
         } catch (SQLException ex) {
+            ex.printStackTrace();
             return Response.status(Status.NOT_FOUND).build();
         } catch (Exception ex) {
             return Response.status(Status.NOT_FOUND).build();
         }
+    }
+    
+    @GET
+    @Path("getSong/{idCancion}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getSong(@PathParam("idCancion")int idCancion){
+        ProjectManager pm = new  ProjectManager();
+        return Response.ok(pm.getSong(idCancion)).build();
     }
     
     /*

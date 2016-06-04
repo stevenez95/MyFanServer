@@ -5,10 +5,12 @@
 */
 package com.myfan.services;
 
+import com.google.gson.JsonParser;
 import com.myfan.dto.Banda;
 import com.myfan.dto.Fan;
 import com.myfan.model.ProjectManager;
 import com.myfan.security.IConstantes;
+import com.myfan.security.JwtManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,11 +75,17 @@ public class AuthService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response login(Fan fan){
         try {
+            JwtManager jm = new JwtManager();
+            
             ProjectManager pm = new ProjectManager();
             String token = pm.login(fan.getUsername(), fan.getPassword());
-            return Response.ok("{\"token\":" + "\"" + token + "\"" + "}").build();
+            String type = jm.getType(token);
+            System.out.println(type);
+            String res = "{success:true,token:"+token+"type:"+type+"}";
+            JsonParser jp = new JsonParser();
+            return Response.ok(jp.parse(res).toString()).build();
         } catch (SQLException ex) {
-            if(ex.getErrorCode()==1)return Response.status(Response.Status.NOT_FOUND).entity(IConstantes.USUARIO_INCORRECTO).build();
+            if(ex.getErrorCode()==1)return Response.ok(IConstantes.USUARIO_INCORRECTO).build();
             else return Response.serverError().build();
         } catch (Exception ex) {
             return Response.serverError().build();

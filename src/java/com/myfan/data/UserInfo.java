@@ -34,7 +34,7 @@ public class UserInfo {
                 Banda banda = new Banda();
                 banda.setUsername(rs.getString("username"));
                 connection.close();
-                return jwtManager.jwtGenerate();
+                return jwtManager.jwtGenerate("banda");
             }
             else{
                 System.out.println("contrasena no es valida");
@@ -53,7 +53,7 @@ public class UserInfo {
                     Fan fan = new Fan();
                     fan.setUsername(rs2.getString("username"));
                     connection.close();
-                    return jwtManager.jwtGenerate();
+                    return jwtManager.jwtGenerate("fan");
                 }
                 else{
                     System.out.println("contrasena no es valida");

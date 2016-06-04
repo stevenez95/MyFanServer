@@ -261,7 +261,7 @@ public class ProjectManager {
         return discInfo.getDiscs(idBanda,database.getConnection());
     }
     
-    public ArrayList<Discografia> getDiscInfo(int idDisco)throws SQLException, Exception{
+    public Discografia getDiscInfo(int idDisco)throws SQLException, Exception{
         DataBaseConnect database = new DataBaseConnect();
         DiscInfo discInfo = new DiscInfo();
         return discInfo.getDiscInfo(idDisco,database.getConnection());  
@@ -279,10 +279,14 @@ public class ProjectManager {
         discInfo.deleteDisc(idDisco,database.getConnection());
     }
     
-    public void createSong(Cancion cancion) throws Exception{ 
-    DataBaseConnect database = new DataBaseConnect();
-        DiscInfo discInfo = new DiscInfo();
-        discInfo.createSong(cancion,database.getConnection());
+    public void createSong(Cancion cancion) throws SQLException{ 
+        try {
+            DataBaseConnect database = new DataBaseConnect();
+            DiscInfo discInfo = new DiscInfo();
+            discInfo.createSong(cancion,database.getConnection());
+        } catch (Exception ex) {
+            Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public ArrayList<Cancion> getSongs(int idDisco)throws SQLException, Exception{
@@ -323,6 +327,26 @@ public class ProjectManager {
         return discInfo.getDiscRate(idDisco,database.getConnection());
     }
     
+    public Cancion getSong(int idCancion){
+        DiscInfo di = new DiscInfo();
+        DataBaseConnect baseConnect = new DataBaseConnect();
+        try {
+            return di.getSong(idCancion, baseConnect.getConnection());
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+    
+    public Fan getFanInfo(int idFan)throws SQLException{
+        try {
+            FanInfo fanInfo = new FanInfo();
+            DataBaseConnect baseConnect = new DataBaseConnect();
+            return fanInfo.getFanInfo(idFan, baseConnect.getConnection());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
     
     
 }

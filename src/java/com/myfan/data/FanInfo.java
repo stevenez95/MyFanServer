@@ -141,4 +141,29 @@ public class FanInfo {
         ps.close();
     }
     
+    public Fan getFanInfo(int idFan, Connection connection)throws SQLException{
+        String query = "select f.idFan,f.username, f.genero, floor(datediff(now(),f.fechaNac)/365) as age, count(s.idFan) as total, f.activo, f.pais \n" +
+                "from fans f \n" +
+                "join seguidos s \n" +
+                "on s.idFan = f.idFan \n" +
+                "where f.idFan = ?;";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idFan);
+        ResultSet rs = ps.executeQuery();
+        Fan fan = new Fan();
+        while(rs.next()){
+            fan.setIdFan(rs.getInt("idFan"));
+            fan.setUsername(rs.getString("username"));
+            fan.setGenero(rs.getString("genero"));
+            fan.setEdad(rs.getInt("age"));
+            fan.setSiguiendo(rs.getInt("total"));
+            fan.setActivo(rs.getBoolean("activo"));
+            fan.setPais(rs.getString("pais"));
+        }
+        connection.close();
+        ps.close();
+        return fan;
+        
+    }
+    
 }

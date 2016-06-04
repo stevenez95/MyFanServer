@@ -6,11 +6,12 @@
 package com.myfan.security;
 
 import java.security.Key;
-import java.util.Arrays;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jose4j.jws.AlgorithmIdentifiers;
 import org.jose4j.jws.JsonWebSignature;
 import org.jose4j.jwt.JwtClaims;
+import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.consumer.InvalidJwtException;
 import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
@@ -29,13 +30,13 @@ public class JwtManager {
     public JwtManager() {
     }
     
-    public String jwtGenerate(){      
+    public String jwtGenerate(String type){      
         JwtClaims claims = new JwtClaims();
         claims.setIssuer("MyFan");  // who creates the token and signs it
         claims.setGeneratedJwtId(); // a unique identifier for the token
         claims.setIssuedAtToNow();  // when the token was issued/created (now)
         claims.setSubject("subject"); // the subject/principal is whom the token is about
-        claims.setClaim("email","mail@example.com"); // additional claims/attributes about the subject can be added
+        claims.setClaim("type",type); // additional claims/attributes about the subject can be added
         
         // A JWT is a JWS and/or a JWE with JSON claims as the payload.
         // In this example it is a JWS so we create a JsonWebSignature object.
@@ -59,6 +60,26 @@ public class JwtManager {
         }
         
         return jwt;
+    }
+    
+    public String getType(String jwt){
+        try {
+            JwtConsumer jwtConsumer = new JwtConsumerBuilder()
+                    .setAllowedClockSkewInSeconds(30) // allow some leeway in validating time based claims to account for clock skew
+                    .setRequireSubject() // the JWT must have a subject claim
+                    .setExpectedIssuer("MyFan") // whom the JWT needs to have been issued by
+                    .setVerificationKey(k) // verify the signature with the public key
+                    .build(); // create the JwtConsumer instance
+            JwtClaims jwtClaims=null;
+            jwtClaims = jwtConsumer.processToClaims(jwt);
+            return jwtClaims.getClaimValue("type", String.class);
+        } catch (InvalidJwtException ex) {
+            Logger.getLogger(JwtManager.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } catch (MalformedClaimException ex) {
+            Logger.getLogger(JwtManager.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
     public boolean jwtValidate(String jwt){

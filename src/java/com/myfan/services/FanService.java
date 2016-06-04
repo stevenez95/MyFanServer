@@ -5,12 +5,11 @@
  */
 package com.myfan.services;
 
+import com.google.gson.Gson;
 import com.myfan.dto.Fan;
 import com.myfan.dto.ResenaBanda;
 import com.myfan.model.ProjectManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -108,6 +107,20 @@ public class FanService {
         ProjectManager manager = new ProjectManager();
         manager.rateBand(resenaBanda);
         return Response.ok().build();
+    }
+    
+    @GET
+    @Path("me/{idFan}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getFanInfo(@PathParam("idFan")int idFan){
+        try {
+            ProjectManager manager = new ProjectManager();
+            Gson g = new Gson();
+            return Response.ok(g.toJson(manager.getFanInfo(idFan))).build();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return Response.serverError().build();
+        }
     }
 
 }
