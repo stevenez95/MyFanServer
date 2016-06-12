@@ -107,7 +107,7 @@ public class EventInfo {
         ArrayList<Evento> eventosFanList = new ArrayList<>();
         while(rs.next()){
             Evento evento = new Evento();
-            evento.setIdBanda(rs.getInt("idEvento"));
+            evento.setIdEvento(rs.getInt("idEvento"));
             evento.setTitulo(rs.getString("titulo"));
             evento.setContenido(rs.getString("contenido"));
             evento.setFechaCreacion(rs.getDouble("fechaCreacion"));

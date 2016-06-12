@@ -6,7 +6,6 @@
 package com.myfan.dao;
 
 import com.myfan.dto.Banda;
-import com.myfan.dto.Fan;
 import com.myfan.dto.Resena;
 import com.myfan.security.PasswordEncrypt;
 import java.sql.Connection;
@@ -30,7 +29,7 @@ public class BandInfo {
         ps.setString(1, banda.getUsername());
         ps.setString(2, password);
         ps.setString(3, banda.getNombreBanda());
-        ps.setString(4, banda.getAnioCreacion());
+        ps.setInt(4, banda.getAnioCreacion());
         ps.setString(5, banda.getHashtag());
         ps.setString(6, banda.getBiografia());
         ps.setDouble(7, banda.getFechaCreacion());
@@ -42,7 +41,42 @@ public class BandInfo {
         connection.close();
     }
     
-    public void actualizarBanda(Banda banda,int idBanda, Connection connection)throws SQLException{}
+    public void actualizarBanda(Banda banda,int idBanda, Connection connection)throws SQLException{
+        String query1 = "update bandas set password = ?,nombreBanda= ?,hashtag= ?,biografia= ?,integrantes= ?,pais= ?,fotoPerfil= ?, anioCreacion=? where idBanda = ?;";
+        String query2 = "update bandas set nombreBanda= ?,hashtag= ?,biografia= ?,integrantes= ?,pais= ?,fotoPerfil= ?, anioCreacion=? where idBanda = ?;";
+        PreparedStatement ps;
+        String pass="";
+        if(banda.getPassword()==null){
+            System.out.println("entreeeee");
+            ps = connection.prepareStatement(query2);
+            ps.setString(1, banda.getNombreBanda());
+            ps.setString(2, banda.getHashtag());
+            ps.setString(3, banda.getBiografia());
+            ps.setString(4, banda.getIntegrantes());
+            ps.setString(5, banda.getPais());
+            ps.setString(6, banda.getFotoPerfil());
+            ps.setInt(7, banda.getAnioCreacion());
+            ps.setInt(8, idBanda);
+        }
+        else{
+            ps = connection.prepareStatement(query1);
+            pass = PasswordEncrypt.hashPassword(banda.getPassword());
+            ps.setString(1, pass);
+            ps.setString(2, banda.getNombreBanda());
+            ps.setString(3, banda.getHashtag());
+            ps.setString(4, banda.getBiografia());
+            ps.setString(5, banda.getIntegrantes());
+            ps.setString(6, banda.getPais());
+            ps.setString(7, banda.getFotoPerfil());
+            ps.setInt(8, banda.getAnioCreacion());
+            ps.setInt(9, idBanda);
+        }
+
+        ps.executeUpdate();
+        
+        ps.close();
+        connection.close();
+    }
     
     public void desactivarBanda(int idBanda,Connection connection)throws SQLException{
         String query = "update bandas set activo = not activo where idBanda = ?;";
@@ -107,7 +141,7 @@ public class BandInfo {
     }
 
     public Banda getBandInfo(int idBanda, Connection connection) throws SQLException {
-        String query = "select b.idBanda, b.username, b.nombreBanda, b.hashtag, b.pais, b.activo\n" +
+        String query = "select b.idBanda, b.username, b.nombreBanda, b.hashtag, b.pais, b.activo, b.anioCreacion,b.integrantes, b.biografia, b.fotoPerfil \n" +
                 "from bandas b\n" +
                 "where b.idBanda = ?;";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -121,6 +155,10 @@ public class BandInfo {
             banda.setHashtag(rs.getString("hashtag"));
             banda.setActivo(rs.getBoolean("activo"));
             banda.setPais(rs.getString("pais"));
+            banda.setAnioCreacion(rs.getInt("anioCreacion"));
+            banda.setIntegrantes(rs.getString("integrantes"));
+            banda.setBiografia(rs.getString("biografia"));
+            banda.setFotoPerfil(rs.getString("fotoPerfil"));
         }
         connection.close();
         ps.close();

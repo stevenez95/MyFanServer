@@ -10,10 +10,10 @@ import com.myfan.dto.Fan;
 import com.myfan.dto.Resena;
 import com.myfan.model.ProjectManager;
 import java.sql.SQLException;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -63,7 +63,7 @@ public class FanService {
         }
     }
     
-    @PUT
+    @DELETE
     @Path("desactivar/{idFan}")
     public Response desactivarFan(@PathParam("idFan")int idFan){
         try {
@@ -76,7 +76,7 @@ public class FanService {
     }
     
     @PUT
-    @Path("actualizarFan/{idFan}")
+    @Path("actualizar/{idFan}")
     public Response actualizarFan(Fan fan, @PathParam("idFan")int idFan){
         try {
             ProjectManager pm = new ProjectManager();

@@ -11,9 +11,9 @@ package com.myfan.dto;
  */
 public class Banda {
     
-    private int idBanda,seguidores;
+    private int idBanda,seguidores,anioCreacion;
     private double fechaCreacion;
-    private String nombreBanda,username,password,anioCreacion,hashtag,biografia,integrantes, pais,fotoPerfil;
+    private String nombreBanda,username,password,hashtag,biografia,integrantes, pais,fotoPerfil;
     private boolean activo;
 
     /**
@@ -89,14 +89,14 @@ public class Banda {
     /**
      * @return the anioCreacion
      */
-    public String getAnioCreacion() {
+    public int getAnioCreacion() {
         return anioCreacion;
     }
 
     /**
      * @param anioCreacion the anioCreacion to set
      */
-    public void setAnioCreacion(String anioCreacion) {
+    public void setAnioCreacion(int anioCreacion) {
         this.anioCreacion = anioCreacion;
     }
 

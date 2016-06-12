@@ -58,23 +58,40 @@ public class FanInfo {
     }
     
     public void actualizarFan(Fan fan,int idFan, Connection connection)throws SQLException{
-        String query = "update fans set password = '',nombre= '',apellido= '',fechaNac= '',genero= '',pais= '',fotoPerfil= '' where idFan = ?;";
-        PreparedStatement ps = connection.prepareStatement(query);
-        String pass = PasswordEncrypt.hashPassword(fan.getPassword());
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String query1 = "update fans set password = ?,nombre= ?,apellido= ?,fechaNac= ?,genero= ?,pais= ?,fotoPerfil= ? where idFan = ?;";
+        String query2 = "update fans set nombre= ?,apellido= ?,fechaNac= ?,genero= ?,pais= ?,fotoPerfil= ? where idFan = ?;";
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.sql.Date fecha = null;
         try {
             fecha = new java.sql.Date(format.parse(fan.getFechaNac()).getTime());
         } catch (ParseException ex) {
             Logger.getLogger(UserInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ps.setString(1,pass);
-        ps.setString(2, fan.getNombre());
-        ps.setString(3, fan.getApellido());
-        ps.setDate(4, fecha);
-        ps.setString(5, fan.getGenero());
-        ps.setString(6, fan.getPais());
-        ps.setString(7, fan.getFotoPerfil());
+        PreparedStatement ps;
+        String pass="";
+        if(fan.getPassword()==null){
+            ps = connection.prepareStatement(query2);
+            ps.setString(1, fan.getNombre());
+            ps.setString(2, fan.getApellido());
+            ps.setDate(3, fecha);
+            ps.setString(4, fan.getGenero());
+            ps.setString(5, fan.getPais());
+            ps.setString(6, fan.getFotoPerfil());
+            ps.setInt(7, idFan);
+        }
+        else{
+            ps = connection.prepareStatement(query1);
+            pass = PasswordEncrypt.hashPassword(fan.getPassword());
+            ps.setString(1, pass);
+            ps.setString(2, fan.getNombre());
+            ps.setString(3, fan.getApellido());
+            ps.setDate(4, fecha);
+            ps.setString(5, fan.getGenero());
+            ps.setString(6, fan.getPais());
+            ps.setString(7, fan.getFotoPerfil());
+            ps.setInt(8, idFan);
+        }
+        
         ps.executeUpdate();
         ps.close();
         connection.close();
@@ -142,7 +159,7 @@ public class FanInfo {
     }
     
     public Fan getFanInfo(int idFan, Connection connection)throws SQLException{
-        String query = "select f.idFan,f.username, f.genero, floor(datediff(now(),f.fechaNac)/365) as age, count(s.idFan) as total, f.activo, f.pais \n" +
+        String query = "select f.idFan,f.username, f.genero, floor(datediff(now(),f.fechaNac)/365) as age, count(s.idFan) as total, f.activo, f.pais,f.nombre,f.apellido,f.fechaNac,f.fotoPerfil \n" +
                 "from fans f \n" +
                 "join seguidos s \n" +
                 "on s.idFan = f.idFan \n" +
@@ -159,6 +176,10 @@ public class FanInfo {
             fan.setSiguiendo(rs.getInt("total"));
             fan.setActivo(rs.getBoolean("activo"));
             fan.setPais(rs.getString("pais"));
+            fan.setNombre(rs.getString("nombre"));
+            fan.setApellido(rs.getString("apellido"));
+            fan.setFechaNac(rs.getDate("fechaNac").toString());
+            fan.setFotoPerfil(rs.getString("fotoPerfil"));
         }
         connection.close();
         ps.close();

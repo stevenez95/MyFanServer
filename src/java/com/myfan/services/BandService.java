@@ -5,13 +5,12 @@
  */
 package com.myfan.services;
 
-import com.google.gson.Gson;
 import com.myfan.dto.Banda;
-import com.myfan.dto.Fan;
 import com.myfan.model.ProjectManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -49,7 +48,7 @@ public class BandService {
         }
     }
     
-    @PUT
+    @DELETE
     @Path("desactivar/{idBanda}")
     public Response desactivarFan(@PathParam("idBanda")int idBanda){
         try {
@@ -62,8 +61,8 @@ public class BandService {
     }
     
     @PUT
-    @Path("actualizarFan/{idBanda}")
-    public Response actualizarFan(Banda banda, @PathParam("idBanda")int idBanda){
+    @Path("actualizar/{idBanda}")
+    public Response actualizarBanda(Banda banda, @PathParam("idBanda")int idBanda){
         try {
             ProjectManager pm = new ProjectManager();
             pm.actualizarBanda(banda,idBanda);
