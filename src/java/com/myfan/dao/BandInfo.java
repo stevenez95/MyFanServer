@@ -3,10 +3,11 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
 */
-package com.myfan.data;
+package com.myfan.dao;
 
 import com.myfan.dto.Banda;
-import com.myfan.dto.ResenaBanda;
+import com.myfan.dto.Fan;
+import com.myfan.dto.Resena;
 import com.myfan.security.PasswordEncrypt;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,7 +42,7 @@ public class BandInfo {
         connection.close();
     }
     
-    public void actualizarBanda(Banda banda, Connection connection)throws SQLException{}
+    public void actualizarBanda(Banda banda,int idBanda, Connection connection)throws SQLException{}
     
     public void desactivarBanda(int idBanda,Connection connection)throws SQLException{
         String query = "update bandas set activo = not activo where idBanda = ?;";
@@ -72,16 +73,16 @@ public class BandInfo {
         
     }
     
-    public ArrayList<ResenaBanda> getBandComments(int idBanda, Connection connection)throws SQLException{
+    public ArrayList<Resena> getBandComments(int idBanda, Connection connection)throws SQLException{
         String query = "select comentario  \n" +
                 "from resenasbanda \n" +
                 "where idBanda = ?";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idBanda);
         ResultSet rs = ps.executeQuery();
-        ArrayList<ResenaBanda> bandaComentList = new ArrayList<>();
+        ArrayList<Resena> bandaComentList = new ArrayList<>();
         while(rs.next()){
-            ResenaBanda resenabanda = new ResenaBanda();
+            Resena resenabanda = new Resena();
             resenabanda.setComentario(rs.getString("comentario"));
             bandaComentList.add(resenabanda);
         }
@@ -104,4 +105,27 @@ public class BandInfo {
         ps.close();
         return promedio;
     }
+
+    public Banda getBandInfo(int idBanda, Connection connection) throws SQLException {
+        String query = "select b.idBanda, b.username, b.nombreBanda, b.hashtag, b.pais, b.activo\n" +
+                "from bandas b\n" +
+                "where b.idBanda = ?;";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idBanda);
+        ResultSet rs = ps.executeQuery();
+        Banda banda = new Banda();
+        while(rs.next()){
+            banda.setIdBanda(rs.getInt("idBanda"));
+            banda.setUsername(rs.getString("username"));
+            banda.setNombreBanda(rs.getString("nombreBanda"));
+            banda.setHashtag(rs.getString("hashtag"));
+            banda.setActivo(rs.getBoolean("activo"));
+            banda.setPais(rs.getString("pais"));
+        }
+        connection.close();
+        ps.close();
+        return banda;
+        
+    }
+        
 }

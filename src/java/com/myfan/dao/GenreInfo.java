@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.myfan.data;
+package com.myfan.dao;
 
 import com.myfan.dto.Genero;
-import com.myfan.dto.ResenaBanda;
+import com.myfan.dto.Resena;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -81,6 +81,7 @@ public class EventService {
             pm.crearEvento(evento);
             return Response.ok().build();
         } catch (SQLException ex) {
+            ex.printStackTrace();
             return Response.status(Status.NOT_FOUND).build();
         } catch (Exception ex) {
            return Response.status(Status.NOT_FOUND).build();
@@ -93,7 +94,7 @@ public class EventService {
      * @return 
      */
     @DELETE
-    @Path("cancel/{idEvent}")
+    @Path("{idEvent}")
     public Response cancelEvent(@PathParam("idEvent")int idEvent){
         try {
             ProjectManager pm = new ProjectManager();

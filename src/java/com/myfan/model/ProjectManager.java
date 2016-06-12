@@ -5,8 +5,14 @@
 */
 package com.myfan.model;
 
+import com.myfan.dao.UserInfo;
+import com.myfan.dao.DiscInfo;
+import com.myfan.dao.GenreInfo;
+import com.myfan.dao.EventInfo;
+import com.myfan.dao.NewsInfo;
+import com.myfan.dao.BandInfo;
+import com.myfan.dao.FanInfo;
 import com.myfan.connection.DataBaseConnect;
-import com.myfan.data.*;
 import com.myfan.dto.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -93,7 +99,7 @@ public class ProjectManager {
             Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
         }}
     
-    public void rateBand(ResenaBanda resenaBanda){
+    public void rateBand(Resena resenaBanda){
         DataBaseConnect database = new DataBaseConnect();
         FanInfo fanInfo = new FanInfo();
         try {
@@ -110,7 +116,7 @@ public class ProjectManager {
         return eventInfo.getEventosFan(idFan, database.getConnection());
     }
     
-    public void rateEvent(ResenaConcierto resenaConcierto) throws Exception{
+    public void rateEvent(Resena resenaConcierto) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         EventInfo eventInfo  = new EventInfo();
         eventInfo.rateEvent(resenaConcierto, database.getConnection());
@@ -135,10 +141,14 @@ public class ProjectManager {
         }
     }
     
-    public void actualizarBanda(Banda banda) throws Exception{
-        DataBaseConnect database = new DataBaseConnect();
-        BandInfo bandInfo   = new BandInfo();
-        bandInfo.actualizarBanda(banda, database.getConnection());
+    public void actualizarBanda(Banda banda, int idBanda) throws SQLException{
+        try {
+            DataBaseConnect database = new DataBaseConnect();
+            BandInfo bandInfo   = new BandInfo();
+            bandInfo.actualizarBanda(banda,idBanda, database.getConnection());
+        } catch (Exception ex) {
+            Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void desactivarBanda(int idBanda) throws Exception{
@@ -153,7 +163,7 @@ public class ProjectManager {
         return bandInfo.getCantidadSeguidores(idBanda, database.getConnection());
     }
     
-    public ArrayList<ResenaBanda> getBandComments(int idBanda) throws Exception{
+    public ArrayList<Resena> getBandComments(int idBanda) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         BandInfo bandInfo   = new BandInfo();
         return bandInfo.getBandComments(idBanda, database.getConnection());
@@ -184,7 +194,7 @@ public class ProjectManager {
         eventInfo.cancelEvent(idEvento, database.getConnection());
     }
     
-    public ArrayList<ResenaConcierto> getEventComments(int idEvento) throws Exception{
+    public ArrayList<Resena> getEventComments(int idEvento) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         EventInfo eventInfo = new EventInfo();
         return eventInfo.getEventComments(idEvento, database.getConnection());
@@ -309,13 +319,13 @@ public class ProjectManager {
         discInfo.deleteSong(idCancion,database.getConnection());
     }
     
-    public void rateDisc(ResenaDisco resenaDisco)throws SQLException, Exception{
+    public void rateDisc(Resena resenaDisco)throws SQLException, Exception{
         DataBaseConnect database = new DataBaseConnect();
         DiscInfo discInfo = new DiscInfo();
         discInfo.rateDisc(resenaDisco,database.getConnection());
     }
     
-    public ArrayList<ResenaDisco> getDiscComments(int idDisco)throws SQLException, Exception{
+    public ArrayList<Resena> getDiscComments(int idDisco)throws SQLException, Exception{
         DataBaseConnect database = new DataBaseConnect();
         DiscInfo discInfo = new DiscInfo();
         return discInfo.getDiscComments(idDisco,database.getConnection());
@@ -347,6 +357,18 @@ public class ProjectManager {
             return null;
         }
     }
+
+    public Banda getBandInfo(int idBanda){
+        try {
+            BandInfo  bandInfo = new BandInfo();
+            DataBaseConnect baseConnect = new DataBaseConnect();
+            return bandInfo.getBandInfo(idBanda, baseConnect.getConnection());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     
     
 }

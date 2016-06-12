@@ -3,15 +3,19 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
 */
-package com.myfan.data;
+package com.myfan.dao;
 
 import com.myfan.dto.Evento;
-import com.myfan.dto.ResenaConcierto;
+import com.myfan.dto.Resena;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,12 +29,14 @@ public class EventInfo {
     
     /*FAN*/
     public ArrayList<Evento> getEventosFan(int idFan, Connection connection)throws SQLException{
-        String query = "select e.idEvento, e.titulo, e.contenido, e.fechaCreacion,e.fechaEvento,e.concierto,e.ubicacion \n" +
+        String query = "select e.idEvento, e.titulo, e.contenido, e.fechaCreacion,e.fechaEvento,e.concierto,e.ubicacion,b.nombreBanda \n" +
                 "from eventos e \n" +
                 "join seguidos s \n" +
                 "on s.idBanda = e.idBanda \n" +
+                "join bandas b \n" +
+                "on b.idBanda = e.idBanda \n"+
                 "where s.idFan = ? and e.cancelado = 0 \n" +
-                "order by e.fechaCreacion;";
+                "order by e.fechaCreacion asc;";
         
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idFan);
@@ -41,10 +47,11 @@ public class EventInfo {
             evento.setIdBanda(rs.getInt("idEvento"));
             evento.setTitulo(rs.getString("titulo"));
             evento.setContenido(rs.getString("contenido"));
-            evento.setFechaCreacion(rs.getString("fechaCreacion"));
-            evento.setFechaEvento(rs.getString("fechaEvento"));
+            evento.setFechaCreacion(rs.getDouble("fechaCreacion"));
+            evento.setFechaEvento(rs.getDate("fechaEvento").toString());
             evento.setConcierto(rs.getBoolean("concierto"));
             evento.setUbicacion(rs.getString("ubicacion"));
+            evento.setCreadoPor(rs.getString("nombreBanda"));
             eventosFanList.add(evento);
         }
         connection.close();
@@ -52,10 +59,10 @@ public class EventInfo {
         return eventosFanList;
     }
     
-    public void rateEvent(ResenaConcierto resenaConcierto, Connection connection)throws SQLException{
+    public void rateEvent(Resena resenaConcierto, Connection connection)throws SQLException{
         String query = "insert into resenasconcierto (idEvento,idFan,calificacion,comentario) value (?,?,?,?);";
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, resenaConcierto.getIdEvento());
+        ps.setInt(1, resenaConcierto.getId());
         ps.setInt(2, resenaConcierto.getIdFan());
         ps.setInt(3, resenaConcierto.getCalificacion());
         ps.setString(4, resenaConcierto.getComentario());
@@ -66,15 +73,23 @@ public class EventInfo {
     
     /*BANDA*/
     public void crearEvento(Evento evento, Connection connection)throws SQLException{
-        String query = "insert into eventos (titulo,contenido,fechaCreacion,fechaEvento,concierto,ubicacion)\n" +
-                "value (?,?,?,?,?,?)";
+        String query = "insert into eventos (titulo,contenido,fechaCreacion,fechaEvento,concierto,ubicacion,idBanda)\n" +
+                "value (?,?,?,?,?,?,?)";
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        java.sql.Date fecha = null;
+        try {
+            fecha = new java.sql.Date(format.parse(evento.getFechaEvento()).getTime());
+        } catch (ParseException ex) {
+            Logger.getLogger(UserInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, evento.getTitulo());
         ps.setString(2, evento.getContenido());
-        ps.setString(3, evento.getFechaCreacion());
-        ps.setString(4, evento.getFechaEvento());
-        ps.setString(5, evento.getFechaEvento());
-        ps.setBoolean(6, evento.isConcierto());
+        ps.setDouble(3, evento.getFechaCreacion());
+        ps.setDate(4, fecha);
+        ps.setBoolean(5, evento.isConcierto());
+        ps.setString(6, evento.getUbicacion());
+        ps.setInt(7, evento.getIdBanda());
         ps.execute();
         ps.close();
         connection.close();
@@ -84,7 +99,7 @@ public class EventInfo {
         String query = "select idEvento, titulo, contenido, fechaCreacion,fechaEvento,concierto,ubicacion,cancelado \n" +
                 "from eventos \n" +
                 "where idBanda = ? \n" +
-                "order by fechaCreacion;";
+                "order by fechaCreacion asc;";
         
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idBanda);
@@ -95,8 +110,8 @@ public class EventInfo {
             evento.setIdBanda(rs.getInt("idEvento"));
             evento.setTitulo(rs.getString("titulo"));
             evento.setContenido(rs.getString("contenido"));
-            evento.setFechaCreacion(rs.getString("fechaCreacion"));
-            evento.setFechaEvento(rs.getString("fechaEvento"));
+            evento.setFechaCreacion(rs.getDouble("fechaCreacion"));
+            evento.setFechaEvento(rs.getDate("fechaEvento").toString());
             evento.setConcierto(rs.getBoolean("concierto"));
             evento.setUbicacion(rs.getString("ubicacion"));
             evento.setCancelado(rs.getBoolean("cancelado"));
@@ -118,16 +133,16 @@ public class EventInfo {
         connection.close();
     }
     
-    public ArrayList<ResenaConcierto> getEventComments(int idEvento, Connection connection)throws SQLException{
+    public ArrayList<Resena> getEventComments(int idEvento, Connection connection)throws SQLException{
         String query = "select comentario \n" +
                 "from resenasconcierto \n" +
                 "where idEvento = ?";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idEvento);
         ResultSet rs = ps.executeQuery();
-        ArrayList<ResenaConcierto> comentariosList = new ArrayList<>();
+        ArrayList<Resena> comentariosList = new ArrayList<>();
         while(rs.next()){
-            ResenaConcierto  resenaConcierto = new ResenaConcierto();
+            Resena  resenaConcierto = new Resena();
             resenaConcierto.setComentario(rs.getString("comentario"));
             comentariosList.add(resenaConcierto);
         }

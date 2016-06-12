@@ -3,11 +3,11 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
 */
-package com.myfan.data;
+package com.myfan.dao;
 
 import com.myfan.dto.Cancion;
 import com.myfan.dto.Discografia;
-import com.myfan.dto.ResenaDisco;
+import com.myfan.dto.Resena;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -194,10 +194,10 @@ public class DiscInfo {
         connection.close();
     }
     
-    public void rateDisc(ResenaDisco resenaDisco, Connection connection)throws SQLException{
+    public void rateDisc(Resena resenaDisco, Connection connection)throws SQLException{
         String query = "insert into resenasdisco (idDisco,idFan,calificacion,comentario) value (?,?,?,?);";
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, resenaDisco.getIdDisco());
+        ps.setInt(1, resenaDisco.getId());
         ps.setInt(2, resenaDisco.getIdFan());
         ps.setInt(3, resenaDisco.getCalificacion());
         ps.setString(4, resenaDisco.getComentario());
@@ -206,16 +206,16 @@ public class DiscInfo {
         connection.close();
     }
     
-    public ArrayList<ResenaDisco> getDiscComments(int idDisco, Connection connection)throws SQLException{
+    public ArrayList<Resena> getDiscComments(int idDisco, Connection connection)throws SQLException{
         String query = "select comentario \n" +
                 "from resenasdisco \n" +
                 "where idDiscografia = ?";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idDisco);
         ResultSet rs = ps.executeQuery();
-        ArrayList<ResenaDisco> comentariosList = new ArrayList<>();
+        ArrayList<Resena> comentariosList = new ArrayList<>();
         while(rs.next()){
-            ResenaDisco resenaDisco = new ResenaDisco();
+            Resena resenaDisco = new Resena();
             resenaDisco.setComentario(rs.getString("comentario"));
             comentariosList.add(resenaDisco);
         }

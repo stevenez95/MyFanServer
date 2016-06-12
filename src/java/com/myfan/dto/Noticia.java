@@ -10,8 +10,9 @@ package com.myfan.dto;
  * @author Steven
  */
 public class Noticia {
-    private int idNoticia, fechaCreacion, idBanda;
-    private String contenido, titulo;
+    private int idNoticia, idBanda;
+    private double fechaCreacion;
+    private String contenido, titulo, creadoPor;
 
     /**
      * @return the idNoticia
@@ -30,14 +31,14 @@ public class Noticia {
     /**
      * @return the fechaCreacion
      */
-    public int getFechaCreacion() {
+    public double getFechaCreacion() {
         return fechaCreacion;
     }
 
     /**
      * @param fechaCreacion the fechaCreacion to set
      */
-    public void setFechaCreacion(int fechaCreacion) {
+    public void setFechaCreacion(double fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
@@ -81,5 +82,19 @@ public class Noticia {
      */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    /**
+     * @return the creadoPor
+     */
+    public String getCreadoPor() {
+        return creadoPor;
+    }
+
+    /**
+     * @param creadoPor the creadoPor to set
+     */
+    public void setCreadoPor(String creadoPor) {
+        this.creadoPor = creadoPor;
     }
 }

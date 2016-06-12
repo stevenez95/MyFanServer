@@ -3,10 +3,9 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
 */
-package com.myfan.data;
+package com.myfan.dao;
 
 import com.myfan.dto.Noticia;
-import com.myfan.dto.ResenaBanda;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,12 +23,14 @@ public class NewsInfo {
     
     /*FAN*/
     public ArrayList<Noticia> getNoticiasFan(int idFan, Connection connection)throws SQLException{
-        String query = "select n.idNoticia , n.titulo, n.contenido, n.fechaCreacion \n" +
+        String query = "select n.idNoticia , n.titulo, n.contenido, n.fechaCreacion, b.nombreBanda \n" +
                 "from noticias n \n" +
                 "join seguidos s \n" +
-                "	on s.idBanda = n.idBanda \n" +
+                "on s.idBanda = n.idBanda \n" +
+                "join bandas b \n" +
+                "on b.idBanda = n.idBanda \n"+
                 "where s.idFan = ? \n" +
-                "order by n.fechaCreacion;";
+                "order by n.fechaCreacion asc;";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idFan);
         ResultSet rs = ps.executeQuery();
@@ -39,7 +40,8 @@ public class NewsInfo {
             noticia.setIdNoticia(rs.getInt("idNoticia"));
             noticia.setTitulo(rs.getString("titulo"));
             noticia.setContenido(rs.getString("contenido"));
-            noticia.setFechaCreacion(rs.getInt("fechaCreacion"));
+            noticia.setFechaCreacion(rs.getDouble("fechaCreacion"));
+            noticia.setCreadoPor(rs.getString("nombreBanda"));
             noticiasFanList.add(noticia);
         }
         connection.close();
@@ -54,7 +56,7 @@ public class NewsInfo {
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, noticia.getTitulo());
         ps.setString(2, noticia.getContenido());
-        ps.setInt(3, noticia.getFechaCreacion());
+        ps.setDouble(3, noticia.getFechaCreacion());
         ps.setInt(4, noticia.getIdBanda());
         ps.execute();
         ps.close();
@@ -65,7 +67,7 @@ public class NewsInfo {
         String query = "select idNoticia , titulo, contenido, fechaCreacion \n" +
                 "from noticias \n" +
                 "where idBanda = ? \n" +
-                "order by fechaCreacion;";
+                "order by fechaCreacion desc;";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idBanda);
         ResultSet rs = ps.executeQuery();
@@ -75,7 +77,7 @@ public class NewsInfo {
             noticia.setIdNoticia(rs.getInt("idNoticia"));
             noticia.setTitulo(rs.getString("titulo"));
             noticia.setContenido(rs.getString("contenido"));
-            noticia.setFechaCreacion(rs.getInt("fechaCreacion"));
+            noticia.setFechaCreacion(rs.getDouble("fechaCreacion"));
             noticiasBandaList.add(noticia);
         }
         connection.close();

@@ -3,7 +3,7 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
 */
-package com.myfan.data;
+package com.myfan.dao;
 import com.myfan.dto.Banda;
 import com.myfan.dto.Fan;
 import com.myfan.security.JwtManager;

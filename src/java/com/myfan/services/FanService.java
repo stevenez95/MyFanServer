@@ -7,7 +7,7 @@ package com.myfan.services;
 
 import com.google.gson.Gson;
 import com.myfan.dto.Fan;
-import com.myfan.dto.ResenaBanda;
+import com.myfan.dto.Resena;
 import com.myfan.model.ProjectManager;
 import java.sql.SQLException;
 import javax.ws.rs.core.Context;
@@ -103,7 +103,7 @@ public class FanService {
     
     @POST
     @Path("rateBand")
-    public Response rateBand(ResenaBanda resenaBanda){
+    public Response rateBand(Resena resenaBanda){
         ProjectManager manager = new ProjectManager();
         manager.rateBand(resenaBanda);
         return Response.ok().build();

@@ -12,7 +12,8 @@ package com.myfan.dto;
 public class Evento {
     
     private int idEvento, idBanda;
-    private String titulo, contenido, fechaCreacion, fechaEvento, ubicacion;
+    private String titulo, contenido, fechaEvento, ubicacion, creadoPor;
+    private double fechaCreacion;
     private boolean cancelado, concierto;
     /**
      * @return the idEvento
@@ -73,14 +74,14 @@ public class Evento {
     /**
      * @return the fechaCreacion
      */
-    public String getFechaCreacion() {
+    public double getFechaCreacion() {
         return fechaCreacion;
     }
 
     /**
      * @param fechaCreacion the fechaCreacion to set
      */
-    public void setFechaCreacion(String fechaCreacion) {
+    public void setFechaCreacion(double fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
@@ -138,6 +139,20 @@ public class Evento {
      */
     public void setConcierto(boolean concierto) {
         this.concierto = concierto;
+    }
+
+    /**
+     * @return the creadoPor
+     */
+    public String getCreadoPor() {
+        return creadoPor;
+    }
+
+    /**
+     * @param creadoPor the creadoPor to set
+     */
+    public void setCreadoPor(String creadoPor) {
+        this.creadoPor = creadoPor;
     }
     
 }

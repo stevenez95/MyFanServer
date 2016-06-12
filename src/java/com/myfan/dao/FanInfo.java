@@ -3,11 +3,11 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
 */
-package com.myfan.data;
+package com.myfan.dao;
 
 import com.myfan.dto.Banda;
 import com.myfan.dto.Fan;
-import com.myfan.dto.ResenaBanda;
+import com.myfan.dto.Resena;
 import com.myfan.security.PasswordEncrypt;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -129,10 +129,10 @@ public class FanInfo {
     
     public void buscarArtistas(String nombre, String pais, String genero, Connection connection)throws SQLException{}
     
-    public void rateBand(ResenaBanda resenaBanda, Connection connection)throws SQLException{
+    public void rateBand(Resena resenaBanda, Connection connection)throws SQLException{
         String query = "insert into resenasbanda (idBanda,idFan,calificacion,comentario) value (?,?,?,?);";
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, resenaBanda.getIdBanda());
+        ps.setInt(1, resenaBanda.getId());
         ps.setInt(2, resenaBanda.getIdFan());
         ps.setInt(3, resenaBanda.getCalificacion());
         ps.setString(4, resenaBanda.getComentario()); 

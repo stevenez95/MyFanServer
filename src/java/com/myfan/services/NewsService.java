@@ -92,15 +92,17 @@ public class NewsService {
      * @return 
      */
     @DELETE
-    @Path("delete/{idNoticia}")
+    @Path("{idNoticia}")
     public Response deleteNews(@PathParam("idNoticia")int idNoticia){
         try {
             ProjectManager pm = new ProjectManager();
             pm.deleteNews(idNoticia);
             return Response.ok().build();
         } catch (SQLException ex) {
+            ex.printStackTrace();
             return Response.status(Response.Status.NOT_FOUND).build();
         } catch (Exception ex) {
+            ex.printStackTrace();
            return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
