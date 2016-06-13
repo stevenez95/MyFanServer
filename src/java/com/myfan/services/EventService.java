@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 import com.myfan.dto.Evento;
 import com.myfan.model.ProjectManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
@@ -104,6 +106,19 @@ public class EventService {
             return Response.status(Status.NOT_FOUND).build();
         } catch (Exception ex) {
            return Response.status(Status.NOT_FOUND).build();
+        }
+    }
+    
+    
+    @GET
+    @Path("{idEvent}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEventInfo(@PathParam("idEvent") int idevent){
+        try {
+            ProjectManager manager = new ProjectManager();
+            return Response.ok(manager.getEventInfo(idevent)).build();
+        } catch (Exception ex) {
+           return Response.serverError().build();
         }
     }
     

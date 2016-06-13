@@ -6,12 +6,14 @@
 package com.myfan.dao;
 
 import com.myfan.dto.Banda;
+import com.myfan.dto.Genero;
 import com.myfan.dto.Resena;
 import com.myfan.security.PasswordEncrypt;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -25,7 +27,7 @@ public class BandInfo {
     public void registrarBanda(Banda banda,Connection connection) throws SQLException{
         String query = "insert into Bandas (username,password,nombreBanda,anioCreacion,hashtag,biografia,fechaCreacion,pais,integrantes,fotoPerfil) value (?,?,?,?,?,?,?,?,?,?);";
         String password = PasswordEncrypt.hashPassword(banda.getPassword());
-        PreparedStatement ps = connection.prepareStatement(query);
+        PreparedStatement ps = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, banda.getUsername());
         ps.setString(2, password);
         ps.setString(3, banda.getNombreBanda());
@@ -35,8 +37,13 @@ public class BandInfo {
         ps.setDouble(7, banda.getFechaCreacion());
         ps.setString(8, banda.getPais());
         ps.setString(9, banda.getIntegrantes());
-        ps.setString(10, banda.getFotoPerfil());
+        ps.setString(10, "http://localhost:8080/MyFanServer/uploads/"+banda.getFotoPerfil());
         ps.execute();
+        
+        ResultSet rs = ps.getGeneratedKeys();
+        rs.next();
+        ingresarGenerosBanda(banda.getGeneros(), rs.getInt(1), connection);
+        
         ps.close();
         connection.close();
     }
@@ -73,9 +80,30 @@ public class BandInfo {
         }
 
         ps.executeUpdate();
+        ingresarGenerosBanda(banda.getGeneros(), idBanda, connection);
         
         ps.close();
         connection.close();
+    }
+    
+     private void ingresarGenerosBanda(int[] generos, int idBanda, Connection c)throws SQLException{
+        String delete = "delete from bandageneros where idBanda = ?;";
+        PreparedStatement ps1 = c.prepareStatement(delete);
+        ps1.setInt(1, idBanda);
+        ps1.execute();
+        
+        String insert = "insert into bandageneros (idGenero, idBanda) value (?,?);";
+        for (int i = 0; i < generos.length; i++) {
+            PreparedStatement ps2 = c.prepareStatement(insert);
+            ps2.setInt(1, generos[i]);
+            ps2.setInt(2, idBanda);
+            ps2.execute();
+            ps2.close();
+        }
+        
+        ps1.close();
+        c.close();
+        
     }
     
     public void desactivarBanda(int idBanda,Connection connection)throws SQLException{
@@ -164,6 +192,32 @@ public class BandInfo {
         ps.close();
         return banda;
         
+    }
+    
+    public ArrayList<Genero> getBandGeneros (int idBanda, Connection connection)throws SQLException{
+        String query = "select g.nombre,g.idGenero\n" +
+                "from bandageneros bg\n" +
+                "join bandas b\n" +
+                "on bg.idBanda = b.idBanda\n" +
+                "join generos g\n" +
+                "on g.idGenero = bg.idGenero\n" +
+                "where bg.idBanda = ?;";
+        
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idBanda);
+        
+        ResultSet rs = ps.executeQuery();
+        ArrayList<Genero> generosList = new ArrayList<>();
+        while(rs.next()){
+            Genero genero = new Genero();
+            genero.setIdGenero(rs.getInt("idGenero"));
+            genero.setNombre(rs.getString("nombre"));
+            generosList.add(genero);
+        }
+        
+        connection.close();
+        ps.close();
+        return generosList;
     }
         
 }

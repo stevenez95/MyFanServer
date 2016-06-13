@@ -16,21 +16,21 @@ import javax.ws.rs.ext.Provider;
  *
  * @author Steven
  */
-//@Provider
-public class TokenFilter /*implements ContainerRequestFilter*/{
-/*
+@Provider
+public class TokenFilter implements ContainerRequestFilter{
+
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        JwtManager jwtManager = new JwtManager();
-        String path = requestContext.getUriInfo().getPath();
-        if (path.equals("autenticar/login") || path.equals("autenticar/signUpBanda") || path.equals("autenticar/signUpFan")) {
-            System.out.println("LOGGGGG");
-            return;
-        }
-        String token = requestContext.getHeaderString("x-access-token");
-        if(jwtManager.jwtValidate(token)){
-            requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
-        }
+//        JwtManager jwtManager = new JwtManager();
+//        String path = requestContext.getUriInfo().getPath();
+//        if (path.equals("autenticar/login") || path.equals("autenticar/signUpBanda") || path.equals("autenticar/signUpFan")) {
+//            System.out.println("LOGGGGG");
+//            return;
+//        }
+//        String token = requestContext.getHeaderString("x-access-token");
+//        if(!jwtManager.jwtValidate(token)){
+//            requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
+//        }
     }
-    */
+    
 }

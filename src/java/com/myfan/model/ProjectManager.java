@@ -29,14 +29,10 @@ public class ProjectManager {
     
     /*fan*/
     
-    public void registrarFan(Fan fan) throws SQLException{
-        try {
+    public void registrarFan(Fan fan) throws SQLException, Exception{
             DataBaseConnect database = new DataBaseConnect();
             FanInfo fanInfo = new FanInfo();
             fanInfo.registrarFan(fan, database.getConnection());
-        } catch (Exception ex) {
-            Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     public void seguirBanda(int idFan , int idBanda) throws SQLException{
@@ -238,17 +234,6 @@ public class ProjectManager {
         return genreInfo.verGeneros(database.getConnection());
         }
     
-    public void editarGenero(String nombre,int idGenero) throws Exception{
-        DataBaseConnect database = new DataBaseConnect();
-        GenreInfo genreInfo = new GenreInfo();
-        genreInfo.editarGenero(nombre,idGenero,database.getConnection());
-    }
-    
-    public void borrarGenero(int idGenero) throws Exception{
-        DataBaseConnect database = new DataBaseConnect();
-        GenreInfo genreInfo = new GenreInfo();
-        genreInfo.borrarGenero(idGenero,database.getConnection());
-    }
     
     public void crearGenero(Genero genero) throws Exception{
     DataBaseConnect database = new DataBaseConnect();
@@ -369,6 +354,18 @@ public class ProjectManager {
         }
     }
 
+    public Evento getEventInfo(int idEvento) throws SQLException, Exception{
+        EventInfo ei = new EventInfo();
+        DataBaseConnect baseConnect = new DataBaseConnect();
+        
+        return ei.getEventInfo(idEvento, baseConnect.getConnection());
+    }
     
-    
+    public ArrayList<Genero> getGenerosBanda(int idBanda) throws SQLException, Exception{
+        DataBaseConnect baseConnect = new DataBaseConnect();
+        BandInfo bandInfo = new BandInfo();
+        
+        return bandInfo.getBandGeneros(idBanda, baseConnect.getConnection());
+        
+    }
 }

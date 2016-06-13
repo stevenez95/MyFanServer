@@ -25,35 +25,6 @@ import javax.ws.rs.core.Response;
 @Path("generos")
 public class MyFestService {
     
-    @PUT
-    @Path("edit/{idGenero}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response editGenero(Genero genero ,@PathParam("idGenero")int idGenero){
-          try {
-            ProjectManager pm = new ProjectManager();
-            pm.editarGenero(genero.getNombre(),idGenero);
-            return Response.ok().build();
-        } catch (SQLException ex) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } catch (Exception ex) {
-           return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
-    
-    @DELETE
-    @Path("delete/{idGenero}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteGenero(@PathParam("idGenero")int idGenero){
-         try {
-            ProjectManager pm = new ProjectManager();
-            pm.borrarGenero(idGenero);
-            return Response.ok().build();
-        } catch (SQLException ex) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } catch (Exception ex) {
-           return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
     
     @POST
     @Path("new")

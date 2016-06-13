@@ -15,6 +15,7 @@ public class Banda {
     private double fechaCreacion;
     private String nombreBanda,username,password,hashtag,biografia,integrantes, pais,fotoPerfil;
     private boolean activo;
+    private int[] generos;
 
     /**
      * @return the idBanda
@@ -196,6 +197,20 @@ public class Banda {
      */
     public void setSeguidores(int seguidores) {
         this.seguidores = seguidores;
+    }
+
+    /**
+     * @return the generos
+     */
+    public int[] getGeneros() {
+        return generos;
+    }
+
+    /**
+     * @param generos the generos to set
+     */
+    public void setGeneros(int[] generos) {
+        this.generos = generos;
     }
     
     

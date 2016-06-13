@@ -165,4 +165,27 @@ public class EventInfo {
         ps.close();
         return promedio;
     }
+    
+    public Evento getEventInfo(int idEvento, Connection connection)throws SQLException{
+        String query = "select idEvento, titulo, contenido,fechaEvento,ubicacion \n" +
+                "from eventos \n" +
+                "where idEvento = ?;";
+        
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idEvento);
+        
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        Evento evento = new Evento();
+        
+        evento.setIdEvento(rs.getInt("idEvento"));
+        evento.setTitulo(rs.getString("titulo"));
+        evento.setContenido(rs.getString("contenido"));
+        evento.setFechaEvento(rs.getDate("fechaEvento").toString());
+        evento.setUbicacion(rs.getString("ubicacion"));
+        
+        ps.close();
+        connection.close();
+        return evento;
+    }
 }

@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -92,6 +93,8 @@ public class FanInfo {
             ps.setInt(8, idFan);
         }
         
+        ingresarGenerosFan(fan.getGeneros(), idFan, connection);
+        
         ps.executeUpdate();
         ps.close();
         connection.close();
@@ -107,7 +110,7 @@ public class FanInfo {
         }
         String query = "Insert into fans (username,password,nombre,apellido,fechaNac,fechaCreacion,genero,pais,fotoPerfil) value (?,?,?,?,?,?,?,?,?);";
         String password = PasswordEncrypt.hashPassword(fan.getPassword());
-        PreparedStatement ps = connection.prepareStatement(query);
+        PreparedStatement ps = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, fan.getUsername());
         ps.setString(2, password);
         ps.setString(3, fan.getNombre());
@@ -116,10 +119,35 @@ public class FanInfo {
         ps.setDouble(6, fan.getFechaCreacion());
         ps.setString(7, fan.getGenero());
         ps.setString(8, fan.getPais());
-        ps.setString(9, fan.getFotoPerfil());
+        ps.setString(9, "http://localhost:8080/MyFanServer/uploads/"+fan.getFotoPerfil());
         ps.execute();
+        
+        ResultSet rs = ps.getGeneratedKeys();
+        rs.next();
+        ingresarGenerosFan(fan.getGeneros(), rs.getInt(1), connection);
+        
         ps.close();
         connection.close();
+    }
+    
+    private void ingresarGenerosFan(int[] generos, int idFan, Connection c)throws SQLException{
+        String delete = "delete from fangeneros where idFan = ?;";
+        PreparedStatement ps1 = c.prepareStatement(delete);
+        ps1.setInt(1, idFan);
+        ps1.execute();
+        
+        String insert = "insert into fangeneros (idGenero, idFan) value (?,?);";
+        for (int i = 0; i < generos.length; i++) {
+            PreparedStatement ps2 = c.prepareStatement(insert);
+            ps2.setInt(1, generos[i]);
+            ps2.setInt(2, idFan);
+            ps2.execute();
+            ps2.close();
+        }
+        
+        ps1.close();
+        c.close();
+        
     }
     
     public ArrayList<Banda> verMisArtistas(int idFan, Connection connection)throws SQLException{

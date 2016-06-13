@@ -51,7 +51,7 @@ public class FanService {
         }
     }
     
-    @POST
+    @DELETE
     @Path("dejarSeguir/{idFan}/{idBanda}")
     public Response dejarSeguirBanda(@PathParam("idFan")int idFan, @PathParam("idBanda")int idBanda){
         try {
@@ -92,8 +92,8 @@ public class FanService {
     public Response verMisArtistas(@PathParam("idFan")int idFan){
         try {
             ProjectManager pm = new ProjectManager();
-            pm.verMisArtistas(idFan);
-            return Response.ok().build();
+            Gson g = new Gson();
+            return Response.ok(g.toJson(pm.verMisArtistas(idFan))).build();
         } catch (SQLException ex) {
             return Response.serverError().build();
         }

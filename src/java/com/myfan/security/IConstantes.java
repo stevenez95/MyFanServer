@@ -21,10 +21,11 @@ public interface IConstantes {
     JsonParser jsonParser = new JsonParser();
     public static final String NOT_FOUND = jsonParser.parse("{success:false, error:notFound}").toString();
     
-    public static final String USUARIO_EXISTE="{success:false, error:Usuario ya existe}";
+    public static final String USUARIO_EXISTE=jsonParser.parse("{success:false, error:Usuario_ya_existe}").toString();
     public static final String USUARIO_INCORRECTO=jsonParser.parse("{success:false, error:usuario_o_contrasena_incorrecto}").toString();
     public static final String MYFEST_URL="";
     public static final String SUCCESS= jsonParser.parse("{success:true}").toString();
+    public static final String ERROR = jsonParser.parse("{error:Ocurrio_un_errror_en_el_servidor}").toString();
     
     /****** TWITTER *********************/
     public static final String ACCESS_TOKEN = "723371134947749889-A1iGcS04t6Pi8jgiRdmV4FBY6U96zbH";

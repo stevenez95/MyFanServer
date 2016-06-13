@@ -5,6 +5,7 @@
  */
 package com.myfan.services;
 
+import com.google.gson.Gson;
 import com.myfan.dto.Banda;
 import com.myfan.model.ProjectManager;
 import java.sql.SQLException;
@@ -69,6 +70,19 @@ public class BandService {
             return Response.ok().build();
         } catch (SQLException ex) {
             return Response.serverError().build();
+        }
+    }
+    
+    @GET
+    @Path("generos/{idBanda}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getGenerosBanda(@PathParam("idBanda") int idBanda){
+        try {
+            ProjectManager manager = new ProjectManager();
+            Gson g = new Gson();
+            return Response.ok(g.toJson(manager.getGenerosBanda(idBanda))).build();
+        } catch (Exception ex) {
+           return Response.serverError().build();
         }
     }
     

@@ -6,7 +6,6 @@
 package com.myfan.dao;
 
 import com.myfan.dto.Genero;
-import com.myfan.dto.Resena;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,27 +36,6 @@ public class GenreInfo {
         connection.close();
         ps.close();
         return generosList;
-    }
-    
-    public void editarGenero(String nombre,int idGenero,Connection connection ) throws SQLException{
-        String query = "update genero set nombre = ? \n" +
-                "where idGenero = ?; ";
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1, nombre);
-        ps.setInt(2, idGenero);
-        ps.executeUpdate();
-        ps.close();
-        connection.close();
-    }
-    
-    public void borrarGenero(int idGenero, Connection connection) throws SQLException{
-        String query = "delete from generos \n" +
-                "where idGenero = ?;";
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, idGenero);
-        ps.execute();
-        ps.close();
-        connection.close();
     }
     
     public void crearGenero(Genero genero , Connection connection) throws SQLException{

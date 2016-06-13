@@ -5,6 +5,8 @@
  */
 package com.myfan.dto;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Steven
@@ -14,6 +16,7 @@ public class Fan {
     private double fechaCreacion;
     private String username,password,nombre,apellido,pais,fotoPerfil,genero,fechaNac; 
     private boolean activo;
+    private int[] generos;
 
     /**
      * @return the idFan
@@ -195,5 +198,19 @@ public class Fan {
      */
     public void setSiguiendo(int siguiendo) {
         this.siguiendo = siguiendo;
+    }
+
+    /**
+     * @return the generos
+     */
+    public int[] getGeneros() {
+        return generos;
+    }
+
+    /**
+     * @param generos the generos to set
+     */
+    public void setGeneros(int[] generos) {
+        this.generos = generos;
     }
 }

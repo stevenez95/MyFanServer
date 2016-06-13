@@ -6,15 +6,19 @@
 package com.myfan.services;
 
 import com.google.gson.JsonParser;
+import com.myfan.connection.ImageSaver;
 import com.myfan.dto.Banda;
 import com.myfan.dto.Fan;
+import com.myfan.dto.Genero;
 import com.myfan.model.ProjectManager;
 import com.myfan.security.IConstantes;
 import com.myfan.security.JwtManager;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
@@ -38,8 +42,20 @@ public class AuthService {
     public Response registrarBanda(Banda banda){
         try {
             ProjectManager projectmanager = new ProjectManager();
+            
+            
+            ImageSaver imageSaver = new ImageSaver();
+            String foto = imageSaver.saveImage(banda.getFotoPerfil());
+            
+            banda.setFotoPerfil(foto);
             projectmanager.registrarBanda(banda);
+            
+            if(foto==null) return Response.status(500).entity(IConstantes.ERROR).build();
             return Response.ok(IConstantes.SUCCESS).build();
+            
+        } catch(SQLException ex){
+            if(ex.getErrorCode() == 1048 || ex.getErrorCode() == 1062) return Response.status(500).entity(IConstantes.USUARIO_EXISTE).build();
+            return Response.status(500).entity(IConstantes.ERROR).build();
         } catch (Exception ex) {
             return Response.status(404).build();
         }
@@ -56,11 +72,22 @@ public class AuthService {
     public Response registrarFan(Fan fan){
         try {
             ProjectManager projectmanager = new ProjectManager();
+            
+            
+            //System.out.println("foto " + fan.getFotoPerfil());
+            ImageSaver imageSaver = new ImageSaver();
+            String foto = imageSaver.saveImage(fan.getFotoPerfil());
+           if(foto==null) return Response.status(500).entity(IConstantes.ERROR).build();
+            
+           fan.setFotoPerfil(foto);
             projectmanager.registrarFan(fan);
-            System.out.println("user name es" + fan.getFechaCreacion());
+            
             return Response.ok(IConstantes.SUCCESS).build();
+        } catch(SQLException ex){
+            if(ex.getErrorCode() == 1048 || ex.getErrorCode() == 1062) return Response.status(500).entity(IConstantes.USUARIO_EXISTE).build();
+            return Response.status(500).entity(IConstantes.ERROR).build();
         } catch (Exception ex) {
-            return Response.status(404).entity(IConstantes.NOT_FOUND).build();
+            return Response.status(500).entity(IConstantes.ERROR).build();
         }
         
     }
@@ -85,12 +112,13 @@ public class AuthService {
             JsonParser jp = new JsonParser();
             return Response.ok(jp.parse(res).toString()).build();
         } catch (SQLException ex) {
-            if(ex.getErrorCode()==1)return Response.ok(IConstantes.USUARIO_INCORRECTO).build();
-            else return Response.serverError().build();
+            if(ex.getErrorCode()==1)return Response.status(403).entity(IConstantes.USUARIO_INCORRECTO).build();
+            else return Response.serverError().entity("{\"error\":\"Ocurrio un errror en el servidor\"}").build();
         } catch (Exception ex) {
-            return Response.serverError().build();
+            return Response.serverError().entity("{\"error\":\"Ocurrio un errror en el servidor\"}").build();
         }
     }
+    
     
 }
 
