@@ -344,11 +344,19 @@ public class ProjectManager {
         return discInfo.getDiscRate(idDisco,database.getConnection());
     }
     
-    public float getDiscsRate()throws SQLException, Exception{
+    public float getAllDiscRate(int idBanda)throws SQLException, Exception{
        DataBaseConnect database = new DataBaseConnect();
-       DiscInfo discInfo = new DiscInfo();
-       return discInfo.getDiscsRate(database.getConnection());
+       BandInfo bandInfo = new BandInfo();
+       return bandInfo.getAllDiscRate(idBanda, database.getConnection());
     }
+    
+    public float getConcertRate(int idBanda)throws SQLException, Exception{
+       DataBaseConnect database = new DataBaseConnect();
+       BandInfo bandInfo = new BandInfo();
+       return bandInfo.getConcertRate(idBanda, database.getConnection());
+    }
+    
+    
     
     public Cancion getSong(int idCancion){
         DiscInfo di = new DiscInfo();
@@ -359,6 +367,16 @@ public class ProjectManager {
             return null;
         }
     }
+    
+//    public void esSeguidor(int idFan, int idBanda) throws SQLException{
+//        DataBaseConnect database = new DataBaseConnect();
+//        FanInfo fanInfo = new FanInfo();
+//        try {
+//            fanInfo.esSeguidor(idFan, idBanda, database.getConnection());
+//        } catch (Exception ex) {
+//            Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
     
     public Fan getFanInfo(int idFan)throws SQLException{
         try {

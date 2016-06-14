@@ -24,7 +24,7 @@ import javax.ws.rs.core.Response;
  *
  * @author steve_000
  */
-@Path("generos")
+@Path("myfest")
 public class MyFestService {
     
     
@@ -51,6 +51,31 @@ public class MyFestService {
         ProjectManager pm = new  ProjectManager();        
         return Response.ok(pm.getCantidadEventos(idBanda)).build();
     } 
+    
+      @GET
+    @Path("getAllDiscRate/{idBanda}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllDiscRate(@PathParam("idBanda")int idBanda) throws Exception{
+        ProjectManager pm = new  ProjectManager();
+        String res = "";
+        Gson gson = new Gson();  
+        res = gson.toJson(pm.getAllDiscRate(idBanda));
+        return Response.ok(res).build();
+    }
+    
+    
+      @GET
+    @Path("getConcertRate/{idBanda}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getConcertRate(@PathParam("idBanda")int idBanda) throws Exception{
+        ProjectManager pm = new  ProjectManager();
+        String res = "";
+        Gson gson = new Gson();  
+        res = gson.toJson(pm.getConcertRate(idBanda));
+        return Response.ok(res).build();
+    }
+    
+    
     
     /*
     @GET

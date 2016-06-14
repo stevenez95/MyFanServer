@@ -243,19 +243,6 @@ public class DiscInfo {
         return promedio;
     }
     
-    public float getDiscsRate(Connection connection)throws SQLException{
-        String query = "select avg(calificacion) as promedio \n" +
-                "from resenasdisco;";
-        
-        PreparedStatement ps = connection.prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
-        float promedio = 0;
-        while(rs.next()){
-            promedio= rs.getFloat("promedio");
-        }
-        connection.close();
-        ps.close();
-        return promedio;
-    }
+    
     
 }

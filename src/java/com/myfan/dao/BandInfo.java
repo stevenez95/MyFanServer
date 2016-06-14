@@ -78,7 +78,7 @@ public class BandInfo {
             ps.setInt(8, banda.getAnioCreacion());
             ps.setInt(9, idBanda);
         }
-
+        
         ps.executeUpdate();
         ingresarGenerosBanda(banda.getGeneros(), idBanda, connection);
         
@@ -86,7 +86,7 @@ public class BandInfo {
         connection.close();
     }
     
-     private void ingresarGenerosBanda(int[] generos, int idBanda, Connection c)throws SQLException{
+    private void ingresarGenerosBanda(int[] generos, int idBanda, Connection c)throws SQLException{
         String delete = "delete from bandageneros where idBanda = ?;";
         PreparedStatement ps1 = c.prepareStatement(delete);
         ps1.setInt(1, idBanda);
@@ -135,7 +135,7 @@ public class BandInfo {
         
     }
     
-        public int getCantidadEventos(int idBanda, Connection connection)throws SQLException{
+    public int getCantidadEventos(int idBanda, Connection connection)throws SQLException{
         String query ="select count(*) as total\n" +
                 "from eventos e \n" +
                 "join bandas b \n" +
@@ -154,7 +154,7 @@ public class BandInfo {
         return eventos;
         
     }
-        
+    
     public ArrayList<Resena> getBandComments(int idBanda, Connection connection)throws SQLException{
         String query = "select comentario, idFan  \n" +
                 "from resenasbanda \n" +
@@ -166,7 +166,7 @@ public class BandInfo {
         while(rs.next()){
             Resena resenabanda = new Resena();
             resenabanda.setComentario(rs.getString("comentario"));
-              resenabanda.setIdFan(rs.getInt("idFan"));
+            resenabanda.setIdFan(rs.getInt("idFan"));
             bandaComentList.add(resenabanda);
         }
         connection.close();
@@ -209,7 +209,7 @@ public class BandInfo {
         ps.close();
         return promedio;
     }
-
+    
     public Banda getBandInfo(int idBanda, Connection connection) throws SQLException {
         String query = "select b.idBanda, b.username, b.nombreBanda, b.hashtag, b.pais, b.activo, b.anioCreacion,b.integrantes, b.biografia, b.fotoPerfil \n" +
                 "from bandas b\n" +
@@ -261,5 +261,43 @@ public class BandInfo {
         ps.close();
         return generosList;
     }
-        
+    
+    public float getAllDiscRate(int idBanda, Connection connection)throws SQLException{
+        String query = "SELECT avg(resenasdisco.calificacion) as promedio, idBanda \n" +
+                " FROM discografias \n" +
+                "INNER JOIN resenasdisco \n" +
+                "ON discografias.idDiscografia = resenasdisco.idDisco \n" +
+                "where idBanda = ? \n" +
+                "group by idBanda; ";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idBanda);
+        ResultSet rs = ps.executeQuery();
+        float promedio = 0;
+        while(rs.next()){
+            promedio= rs.getFloat("promedio");
+        }
+        connection.close();
+        ps.close();
+        return promedio;
+    }
+    
+    public float getConcertRate(int idBanda, Connection connection)throws SQLException{
+        String query = "SELECT avg(resenasconcierto.calificacion) as promedio, idBanda \n" +
+                "FROM eventos \n" +
+                "INNER JOIN resenasconcierto \n" +
+                "ON eventos.idEvento = resenasconcierto.idEvento \n" +
+                "where idBanda = ?  and concierto = true \n" +
+                "group by idBanda; ";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idBanda);
+        ResultSet rs = ps.executeQuery();
+        float promedio = 0;
+        while(rs.next()){
+            promedio= rs.getFloat("promedio");
+        }
+        connection.close();
+        ps.close();
+        return promedio;
+    }
+    
 }
