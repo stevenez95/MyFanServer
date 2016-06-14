@@ -29,7 +29,7 @@ public class NewsInfo {
                 "on s.idBanda = n.idBanda \n" +
                 "join bandas b \n" +
                 "on b.idBanda = n.idBanda \n"+
-                "where s.idFan = ? \n" +
+                "where s.idFan = ? and b.activo = 1 \n" +
                 "order by n.fechaCreacion asc;";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idFan);

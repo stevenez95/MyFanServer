@@ -11,7 +11,8 @@ package com.myfan.dto;
  */
 public class Resena {
     private int id,idFan,calificacion;
-    private String comentario;
+    private String comentario, creadoPor;
+    private double fecha;
 
     /**
      * @return the idBanda
@@ -67,5 +68,33 @@ public class Resena {
      */
     public void setComentario(String comentario) {
         this.comentario = comentario;
+    }
+
+    /**
+     * @return the creadoPor
+     */
+    public String getCreadoPor() {
+        return creadoPor;
+    }
+
+    /**
+     * @param creadoPor the creadoPor to set
+     */
+    public void setCreadoPor(String creadoPor) {
+        this.creadoPor = creadoPor;
+    }
+
+    /**
+     * @return the fecha
+     */
+    public double getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(double fecha) {
+        this.fecha = fecha;
     }
 }
