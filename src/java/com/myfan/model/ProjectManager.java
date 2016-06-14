@@ -368,21 +368,21 @@ public class ProjectManager {
         }
     }
     
-//public boolean esSeguidor(int idFan, int idBanda) throws SQLException{
-//        DataBaseConnect database = new DataBaseConnect();
-//        FanInfo fanInfo = new FanInfo();
-//        boolean bandera = false;
-//        try {
-//            bandera = fanInfo.esSeguidor(idFan, idBanda, database.getConnection());
-//        } catch (Exception ex) {
-//            Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
-//        if(bandera)
-//            return true;
-//        else
-//            return false;
-//    }
+public boolean esSeguidor(int idFan, int idBanda) throws SQLException{
+        DataBaseConnect database = new DataBaseConnect();
+        FanInfo fanInfo = new FanInfo();
+        boolean bandera = false;
+        try {
+            bandera = fanInfo.esSeguidor(idFan, idBanda, database.getConnection());
+        } catch (Exception ex) {
+            Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(bandera)
+            return true;
+        else
+            return false;
+    }
     
     public Fan getFanInfo(int idFan)throws SQLException{
         try {

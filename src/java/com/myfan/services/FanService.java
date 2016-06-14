@@ -59,7 +59,7 @@ public class FanService {
             Gson g = new Gson();
             ProjectManager pm = new ProjectManager();
             pm.seguirBanda(idFan, idBanda);
-            return Response.ok(g.toJson(pm.esSeguidor(idFan, idBanda))).build();
+            return Response.ok(pm.esSeguidor(idFan, idBanda)).build();
         } catch (SQLException ex) {
             return Response.serverError().build();
         }
