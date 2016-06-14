@@ -135,6 +135,26 @@ public class BandInfo {
         
     }
     
+        public int getCantidadEventos(int idBanda, Connection connection)throws SQLException{
+        String query ="select count(*) as total\n" +
+                "from eventos e \n" +
+                "join bandas b \n" +
+                "on e.idBanda = b.idBanda\n" +
+                "where e.idBanda = ?;";
+        
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idBanda);
+        
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        int eventos = rs.getInt("total");
+        
+        ps.close();
+        connection.close();
+        return eventos;
+        
+    }
+        
     public ArrayList<Resena> getBandComments(int idBanda, Connection connection)throws SQLException{
         String query = "select comentario, idFan  \n" +
                 "from resenasbanda \n" +

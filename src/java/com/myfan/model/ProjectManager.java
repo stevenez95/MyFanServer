@@ -171,8 +171,14 @@ public class ProjectManager {
     
     public ArrayList<Resena> getBandComments(int idBanda) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
-        BandInfo bandInfo   = new BandInfo();
+        BandInfo bandInfo = new BandInfo();
         return bandInfo.getBandComments(idBanda, database.getConnection());
+    }
+    
+    public int getCantidadEventos(int idBanda) throws Exception{
+        DataBaseConnect database = new DataBaseConnect();
+        BandInfo bandInfo   = new BandInfo();
+        return bandInfo.getCantidadEventos(idBanda, database.getConnection());
     }
     
     public float getBandRate(int idBanda) throws Exception{
