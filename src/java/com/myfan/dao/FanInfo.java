@@ -172,6 +172,27 @@ public class FanInfo {
         
     }
     
+    
+    public boolean esSeguidor (int idFan, int idBanda, Connection connection)throws SQLException{
+        String query = "Select * from seguidos where idfan=? And idbanda=?;";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idFan);
+        ps.setInt(2, idBanda);
+        ResultSet rs = ps.executeQuery();
+        boolean bandera = false;
+        while(rs.next()){
+            bandera = true;
+        }
+        connection.close();
+        ps.close();
+        
+        if(bandera)
+            return true;
+        else
+            return false;
+    }
+        
+        
     public void buscarArtistas(String nombre, String pais, String genero, Connection connection)throws SQLException{}
     
     public void rateBand(Resena resenaBanda, Connection connection)throws SQLException{

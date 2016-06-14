@@ -52,6 +52,19 @@ public class FanService {
         }
     }
     
+    @GET
+    @Path("esSeguidor/{idFan}/{idBanda}")
+    public Response esSeguidor(@PathParam("idFan")int idFan, @PathParam("idBanda")int idBanda){
+        try {
+            Gson g = new Gson();
+            ProjectManager pm = new ProjectManager();
+            pm.seguirBanda(idFan, idBanda);
+            return Response.ok(g.toJson(pm.esSeguidor(idFan, idBanda))).build();
+        } catch (SQLException ex) {
+            return Response.serverError().build();
+        }
+    }
+    
     @DELETE
     @Path("dejarSeguir/{idFan}/{idBanda}")
     public Response dejarSeguirBanda(@PathParam("idFan")int idFan, @PathParam("idBanda")int idBanda){
