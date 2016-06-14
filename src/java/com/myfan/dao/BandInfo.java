@@ -191,6 +191,24 @@ public class BandInfo {
         ps.close();
         return promedio;
     }
+    
+    public float getCalificacionPromedioDiscos(int  idBanda, Connection connection)throws SQLException{
+        String query = "select avg(calificacion) as promedio, idBanda \n" +
+                "from resenasbanda \n" +
+                "where idBanda = ? \n" +
+                "group by idBanda;";
+        
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idBanda);
+        ResultSet rs = ps.executeQuery();
+        float promedio = 0;
+        while(rs.next()){
+            promedio= rs.getFloat("promedio");
+        }
+        connection.close();
+        ps.close();
+        return promedio;
+    }
 
     public Banda getBandInfo(int idBanda, Connection connection) throws SQLException {
         String query = "select b.idBanda, b.username, b.nombreBanda, b.hashtag, b.pais, b.activo, b.anioCreacion,b.integrantes, b.biografia, b.fotoPerfil \n" +

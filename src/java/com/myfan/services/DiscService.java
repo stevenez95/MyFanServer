@@ -229,6 +229,18 @@ public class DiscService {
     }
     
     @GET
+    @Path("getDiscsRate")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDiscsRate() throws Exception{
+        ProjectManager pm = new  ProjectManager();
+        String res = "";
+        Gson gson = new Gson();
+        
+        res = gson.toJson(pm.getDiscsRate());
+        return Response.ok(res).build();
+    }
+    
+    @GET
     @Path("getDiscComments/{idDisco}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDiscComments(@PathParam("idDisco")int idDisco) throws Exception{

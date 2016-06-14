@@ -47,9 +47,18 @@ public class MyFestService {
     @GET
     @Path("getCantidadEventos/{idBanda}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getBandEvents(@PathParam("idBanda")int idBanda) throws Exception{
+    public Response getCantidadEventos(@PathParam("idBanda")int idBanda) throws Exception{
         ProjectManager pm = new  ProjectManager();        
         return Response.ok(pm.getCantidadEventos(idBanda)).build();
     } 
     
+    /*
+    @GET
+    @Path("getCalificacionPromedioDiscos/{idBanda}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCalificacionPromedioDiscos(@PathParam("idBanda")int idBanda) throws Exception{
+        ProjectManager pm = new  ProjectManager();        
+        return Response.ok(pm.getCalificacionPromedioDiscos(idBanda)).build();
+    } 
+    */
 }

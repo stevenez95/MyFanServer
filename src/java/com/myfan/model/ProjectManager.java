@@ -168,7 +168,13 @@ public class ProjectManager {
         BandInfo bandInfo   = new BandInfo();
         return bandInfo.getCantidadSeguidores(idBanda, database.getConnection());
     }
-    
+    /*
+    public int getCalificacionPromedioDiscos(int idBanda) throws Exception{
+        DataBaseConnect database = new DataBaseConnect();
+        BandInfo bandInfo   = new BandInfo();
+        return bandInfo.getCalificacionPromedioDiscos(idBanda, database.getConnection());
+    }
+    */
     public ArrayList<Resena> getBandComments(int idBanda) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         BandInfo bandInfo = new BandInfo();
@@ -336,6 +342,12 @@ public class ProjectManager {
        DataBaseConnect database = new DataBaseConnect();
         DiscInfo discInfo = new DiscInfo();
         return discInfo.getDiscRate(idDisco,database.getConnection());
+    }
+    
+    public float getDiscsRate()throws SQLException, Exception{
+       DataBaseConnect database = new DataBaseConnect();
+       DiscInfo discInfo = new DiscInfo();
+       return discInfo.getDiscsRate(database.getConnection());
     }
     
     public Cancion getSong(int idCancion){
