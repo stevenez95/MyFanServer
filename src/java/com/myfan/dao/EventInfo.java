@@ -35,7 +35,7 @@ public class EventInfo {
                 "on s.idBanda = e.idBanda \n" +
                 "join bandas b \n" +
                 "on b.idBanda = e.idBanda \n"+
-                "where s.idFan = ? and e.cancelado = 0 \n" +
+                "where s.idFan = ? and e.cancelado = 0 and b.activo = 1 \n" +
                 "order by e.fechaCreacion asc;";
         
         PreparedStatement ps = connection.prepareStatement(query);
