@@ -10,6 +10,7 @@ import com.myfan.dto.Fan;
 import com.myfan.dto.Resena;
 import com.myfan.model.ProjectManager;
 import java.sql.SQLException;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -103,9 +104,28 @@ public class FanService {
     
     @POST
     @Path("rateBand")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response rateBand(Resena resenaBanda){
         ProjectManager manager = new ProjectManager();
         manager.rateBand(resenaBanda);
+        return Response.ok().build();
+    }
+    
+    @POST
+    @Path("rateDisc")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response rateDisc(Resena resenaDisco){
+        ProjectManager manager = new ProjectManager();
+        manager.rateDisc(resenaDisco);
+        return Response.ok().build();
+    }
+    
+    @POST
+    @Path("rateEvent")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response rateEvent(Resena resenaEvento) throws Exception{
+        ProjectManager manager = new ProjectManager();
+        manager.rateEvent(resenaEvento);
         return Response.ok().build();
     }
     

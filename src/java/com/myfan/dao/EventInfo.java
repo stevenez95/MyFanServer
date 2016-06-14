@@ -59,17 +59,17 @@ public class EventInfo {
         return eventosFanList;
     }
     
-    public void rateEvent(Resena resenaConcierto, Connection connection)throws SQLException{
-        String query = "insert into resenasconcierto (idEvento,idFan,calificacion,comentario) value (?,?,?,?);";
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, resenaConcierto.getId());
-        ps.setInt(2, resenaConcierto.getIdFan());
-        ps.setInt(3, resenaConcierto.getCalificacion());
-        ps.setString(4, resenaConcierto.getComentario());
-        ps.execute();
-        ps.close();
-        connection.close();
-    }
+//    public void rateEvent(Resena resenaConcierto, Connection connection)throws SQLException{
+//        String query = "insert into resenasconcierto (idEvento,idFan,calificacion,comentario) value (?,?,?,?);";
+//        PreparedStatement ps = connection.prepareStatement(query);
+//        ps.setInt(1, resenaConcierto.getId());
+//        ps.setInt(2, resenaConcierto.getIdFan());
+//        ps.setInt(3, resenaConcierto.getCalificacion());
+//        ps.setString(4, resenaConcierto.getComentario());
+//        ps.execute();
+//        ps.close();
+//        connection.close();
+//    }
     
     /*BANDA*/
     public void crearEvento(Evento evento, Connection connection)throws SQLException{
@@ -134,7 +134,7 @@ public class EventInfo {
     }
     
     public ArrayList<Resena> getEventComments(int idEvento, Connection connection)throws SQLException{
-        String query = "select comentario \n" +
+        String query = "select comentario, idFan \n" +
                 "from resenasconcierto \n" +
                 "where idEvento = ?";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -144,6 +144,7 @@ public class EventInfo {
         while(rs.next()){
             Resena  resenaConcierto = new Resena();
             resenaConcierto.setComentario(rs.getString("comentario"));
+            resenaConcierto.setIdFan(rs.getInt("idFan"));
             comentariosList.add(resenaConcierto);
         }
         connection.close();
@@ -151,16 +152,19 @@ public class EventInfo {
         return comentariosList;
     }
     
-    public int getEventRate(int idEvento, Connection connection)throws SQLException{
+    public float getEventRate(int  idEvento, Connection connection)throws SQLException{
         String query = "select avg(calificacion) as promedio, idEvento \n" +
                 "from resenasconcierto \n" +
                 "where idEvento = ? \n" +
                 "group by idEvento;";
+        
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idEvento);
         ResultSet rs = ps.executeQuery();
-        rs.next();
-        int promedio = rs.getInt("promedio");
+        float promedio = 0;
+        while(rs.next()){
+            promedio= rs.getFloat("promedio");
+        }
         connection.close();
         ps.close();
         return promedio;

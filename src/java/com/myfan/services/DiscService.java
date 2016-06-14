@@ -216,6 +216,30 @@ public class DiscService {
         return Response.ok(pm.getSong(idCancion)).build();
     }
     
+    @GET
+    @Path("getDiscRate/{idDisco}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDiscRate(@PathParam("idDisco")int idDisco) throws Exception{
+        ProjectManager pm = new  ProjectManager();
+        String res = "";
+        Gson gson = new Gson();
+        
+        res = gson.toJson(pm.getDiscRate(idDisco));
+        return Response.ok(res).build();
+    }
+    
+    @GET
+    @Path("getDiscComments/{idDisco}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDiscComments(@PathParam("idDisco")int idDisco) throws Exception{
+        ProjectManager pm = new  ProjectManager();
+        String res = "";
+        Gson gson = new Gson();
+        
+        res = gson.toJson(pm.getDiscComments(idDisco));
+        return Response.ok(res).build();
+    } 
+    
     /*
     Calificar
     obtener calificacion

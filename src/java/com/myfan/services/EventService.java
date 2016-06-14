@@ -122,6 +122,30 @@ public class EventService {
         }
     }
     
+   @GET
+    @Path("getEventRate/{idEvento}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEventRate(@PathParam("idEvento")int idEvento) throws Exception{
+        ProjectManager pm = new  ProjectManager();
+        String res = "";
+        Gson gson = new Gson();
+        
+        res = gson.toJson(pm.getEventRate(idEvento));
+        return Response.ok(res).build();
+    } 
+    
+    @GET
+    @Path("getEventComments/{idEvento}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEventComments(@PathParam("idEvento")int idEvento) throws Exception{
+        ProjectManager pm = new  ProjectManager();
+        String res = "";
+        Gson gson = new Gson();
+        
+        res = gson.toJson(pm.getEventComments(idEvento));
+        return Response.ok(res).build();
+    } 
+    
     /*
     Calificar
     Obtener calificacion

@@ -49,6 +49,17 @@ public class BandService {
         }
     }
     
+    @GET
+    @Path("getBandRate/{idBanda}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBandRate(@PathParam("idBanda")int idBanda) throws Exception{
+        ProjectManager pm = new  ProjectManager();
+        String res = "";
+        Gson gson = new Gson();
+        res = gson.toJson(pm.getBandRate(idBanda));
+        return Response.ok(res).build();
+    }
+    
     @DELETE
     @Path("desactivar/{idBanda}")
     public Response desactivarFan(@PathParam("idBanda")int idBanda){
@@ -85,5 +96,17 @@ public class BandService {
            return Response.serverError().build();
         }
     }
+    
+    @GET
+    @Path("getBandComments/{idBanda}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBandComments(@PathParam("idBanda")int idBanda) throws Exception{
+        ProjectManager pm = new  ProjectManager();
+        String res = "";
+        Gson gson = new Gson();
+        
+        res = gson.toJson(pm.getBandComments(idBanda));
+        return Response.ok(res).build();
+    } 
     
 }

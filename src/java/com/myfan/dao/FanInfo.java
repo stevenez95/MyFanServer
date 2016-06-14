@@ -175,17 +175,41 @@ public class FanInfo {
     public void buscarArtistas(String nombre, String pais, String genero, Connection connection)throws SQLException{}
     
     public void rateBand(Resena resenaBanda, Connection connection)throws SQLException{
-        String query = "insert into resenasbanda (idBanda,idFan,calificacion,comentario) value (?,?,?,?);";
+        String query = "insert into resenasbanda (idBanda,idFan,calificacion,comentario) values (?,?,?,?);";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, resenaBanda.getId());
+            ps.setInt(2, resenaBanda.getIdFan());
+            ps.setInt(3, resenaBanda.getCalificacion());
+            ps.setString(4, resenaBanda.getComentario());
+            ps.execute();
+            connection.close();
+        }
+    }
+    
+      public void rateDisc(Resena resenaDisco, Connection connection)throws SQLException{
+        String query = "insert into resenasdisco (idDisco,idFan,calificacion,comentario) values (?,?,?,?);";
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, resenaBanda.getId());
-        ps.setInt(2, resenaBanda.getIdFan());
-        ps.setInt(3, resenaBanda.getCalificacion());
-        ps.setString(4, resenaBanda.getComentario()); 
+        ps.setInt(1, resenaDisco.getId());
+        ps.setInt(2, resenaDisco.getIdFan());
+        ps.setInt(3, resenaDisco.getCalificacion());
+        ps.setString(4, resenaDisco.getComentario()); 
         ps.execute();
         connection.close();
         ps.close();
     }
     
+      public void rateEvent(Resena resenaEvento, Connection connection)throws SQLException{
+        String query = "insert into resenasconcierto (idEvento,idFan,calificacion,comentario) value (?,?,?,?);";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, resenaEvento.getId());
+        ps.setInt(2, resenaEvento.getIdFan());
+        ps.setInt(3, resenaEvento.getCalificacion());
+        ps.setString(4, resenaEvento.getComentario());
+        ps.execute();
+        ps.close();
+        connection.close();
+    }
+      
     public Fan getFanInfo(int idFan, Connection connection)throws SQLException{
         String query = "select f.idFan,f.username, f.genero, floor(datediff(now(),f.fechaNac)/365) as age, count(s.idFan) as total, f.activo, f.pais,f.nombre,f.apellido,f.fechaNac,f.fotoPerfil \n" +
                 "from fans f \n" +

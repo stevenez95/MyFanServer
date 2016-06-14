@@ -194,22 +194,22 @@ public class DiscInfo {
         connection.close();
     }
     
-    public void rateDisc(Resena resenaDisco, Connection connection)throws SQLException{
-        String query = "insert into resenasdisco (idDisco,idFan,calificacion,comentario) value (?,?,?,?);";
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, resenaDisco.getId());
-        ps.setInt(2, resenaDisco.getIdFan());
-        ps.setInt(3, resenaDisco.getCalificacion());
-        ps.setString(4, resenaDisco.getComentario());
-        ps.execute();
-        ps.close();
-        connection.close();
-    }
+//    public void rateDisc(Resena resenaDisco, Connection connection)throws SQLException{
+//        String query = "insert into resenasdisco (idDisco,idFan,calificacion,comentario) value (?,?,?,?);";
+//        PreparedStatement ps = connection.prepareStatement(query);
+//        ps.setInt(1, resenaDisco.getId());
+//        ps.setInt(2, resenaDisco.getIdFan());
+//        ps.setInt(3, resenaDisco.getCalificacion());
+//        ps.setString(4, resenaDisco.getComentario());
+//        ps.execute();
+//        ps.close();
+//        connection.close();
+//    }
     
     public ArrayList<Resena> getDiscComments(int idDisco, Connection connection)throws SQLException{
-        String query = "select comentario \n" +
+        String query = "select comentario,idFan \n" +
                 "from resenasdisco \n" +
-                "where idDiscografia = ?";
+                "where idDisco = ?";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idDisco);
         ResultSet rs = ps.executeQuery();
@@ -217,6 +217,7 @@ public class DiscInfo {
         while(rs.next()){
             Resena resenaDisco = new Resena();
             resenaDisco.setComentario(rs.getString("comentario"));
+            resenaDisco.setIdFan(rs.getInt("idFan"));
             comentariosList.add(resenaDisco);
         }
         connection.close();
@@ -224,7 +225,7 @@ public class DiscInfo {
         return comentariosList;
     }
     
-    public int getDiscRate(int  idDisco, Connection connection)throws SQLException{
+    public float getDiscRate(int  idDisco, Connection connection)throws SQLException{
         String query = "select avg(calificacion) as promedio, idDisco \n" +
                 "from resenasdisco \n" +
                 "where idDisco = ? \n" +
@@ -233,8 +234,10 @@ public class DiscInfo {
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idDisco);
         ResultSet rs = ps.executeQuery();
-        rs.next();
-        int promedio = rs.getInt("promedio");
+        float promedio = 0;
+        while(rs.next()){
+            promedio= rs.getFloat("promedio");
+        }
         connection.close();
         ps.close();
         return promedio;

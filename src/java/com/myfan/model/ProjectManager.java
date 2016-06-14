@@ -105,6 +105,16 @@ public class ProjectManager {
         }
     }
     
+    public void rateDisc(Resena resenaDisco){
+        DataBaseConnect database = new DataBaseConnect();
+        FanInfo fanInfo = new FanInfo();
+        try {
+            fanInfo.rateDisc(resenaDisco, database.getConnection());
+        } catch (Exception ex) {
+            Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public ArrayList<Evento> getEventosFan(int idFan) throws Exception{
         
         DataBaseConnect database = new DataBaseConnect();
@@ -112,10 +122,10 @@ public class ProjectManager {
         return eventInfo.getEventosFan(idFan, database.getConnection());
     }
     
-    public void rateEvent(Resena resenaConcierto) throws Exception{
+    public void rateEvent(Resena resenaEvento) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
-        EventInfo eventInfo  = new EventInfo();
-        eventInfo.rateEvent(resenaConcierto, database.getConnection());
+        FanInfo fanInfo   = new FanInfo();
+        fanInfo.rateEvent(resenaEvento, database.getConnection());
     }
     
     
@@ -165,7 +175,7 @@ public class ProjectManager {
         return bandInfo.getBandComments(idBanda, database.getConnection());
     }
     
-    public int getBandRate(int idBanda) throws Exception{
+    public float getBandRate(int idBanda) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         BandInfo bandInfo   = new BandInfo();
         return bandInfo.getBandRate(idBanda, database.getConnection());
@@ -196,7 +206,7 @@ public class ProjectManager {
         return eventInfo.getEventComments(idEvento, database.getConnection());
         }
     
-    public int getEventRate(int idEvento) throws Exception{
+    public float getEventRate(int idEvento) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         EventInfo eventInfo = new EventInfo();
         return eventInfo.getEventRate(idEvento, database.getConnection());
@@ -304,11 +314,11 @@ public class ProjectManager {
         discInfo.deleteSong(idCancion,database.getConnection());
     }
     
-    public void rateDisc(Resena resenaDisco)throws SQLException, Exception{
-        DataBaseConnect database = new DataBaseConnect();
-        DiscInfo discInfo = new DiscInfo();
-        discInfo.rateDisc(resenaDisco,database.getConnection());
-    }
+//    public void rateDisc(Resena resenaDisco)throws SQLException, Exception{
+//        DataBaseConnect database = new DataBaseConnect();
+//        DiscInfo discInfo = new DiscInfo();
+//        discInfo.rateDisc(resenaDisco,database.getConnection());
+//    }
     
     public ArrayList<Resena> getDiscComments(int idDisco)throws SQLException, Exception{
         DataBaseConnect database = new DataBaseConnect();
@@ -316,7 +326,7 @@ public class ProjectManager {
         return discInfo.getDiscComments(idDisco,database.getConnection());
     }
     
-    public int getDiscRate(int  idDisco)throws SQLException, Exception{
+    public float getDiscRate(int  idDisco)throws SQLException, Exception{
        DataBaseConnect database = new DataBaseConnect();
         DiscInfo discInfo = new DiscInfo();
         return discInfo.getDiscRate(idDisco,database.getConnection());

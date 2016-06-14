@@ -136,7 +136,7 @@ public class BandInfo {
     }
     
     public ArrayList<Resena> getBandComments(int idBanda, Connection connection)throws SQLException{
-        String query = "select comentario  \n" +
+        String query = "select comentario, idFan  \n" +
                 "from resenasbanda \n" +
                 "where idBanda = ?";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -146,6 +146,7 @@ public class BandInfo {
         while(rs.next()){
             Resena resenabanda = new Resena();
             resenabanda.setComentario(rs.getString("comentario"));
+              resenabanda.setIdFan(rs.getInt("idFan"));
             bandaComentList.add(resenabanda);
         }
         connection.close();
@@ -153,16 +154,19 @@ public class BandInfo {
         return bandaComentList;
     }
     
-    public int getBandRate(int idBanda, Connection connection)throws SQLException{
+    public float getBandRate(int  idBanda, Connection connection)throws SQLException{
         String query = "select avg(calificacion) as promedio, idBanda \n" +
                 "from resenasbanda \n" +
                 "where idBanda = ? \n" +
                 "group by idBanda;";
+        
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idBanda);
         ResultSet rs = ps.executeQuery();
-        rs.next();
-        int promedio = rs.getInt("promedio");
+        float promedio = 0;
+        while(rs.next()){
+            promedio= rs.getFloat("promedio");
+        }
         connection.close();
         ps.close();
         return promedio;
