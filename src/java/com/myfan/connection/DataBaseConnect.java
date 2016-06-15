@@ -22,8 +22,8 @@ public class DataBaseConnect {
             String connectionURL = "jdbc:mysql://localhost:3306/MyFanDB";
             Connection connection = null;
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            connection =  DriverManager.getConnection(connectionURL, "root", "chacon");
-            //connection =  DriverManager.getConnection(connectionURL, "root", "password");
+            //connection =  DriverManager.getConnection(connectionURL, "root", "chacon");
+            connection =  DriverManager.getConnection(connectionURL, "root", "password");
             return connection;
         }
         catch (SQLException e)

@@ -194,22 +194,14 @@ public class DiscInfo {
         connection.close();
     }
     
-//    public void rateDisc(Resena resenaDisco, Connection connection)throws SQLException{
-//        String query = "insert into resenasdisco (idDisco,idFan,calificacion,comentario) value (?,?,?,?);";
-//        PreparedStatement ps = connection.prepareStatement(query);
-//        ps.setInt(1, resenaDisco.getId());
-//        ps.setInt(2, resenaDisco.getIdFan());
-//        ps.setInt(3, resenaDisco.getCalificacion());
-//        ps.setString(4, resenaDisco.getComentario());
-//        ps.execute();
-//        ps.close();
-//        connection.close();
-//    }
-    
     public ArrayList<Resena> getDiscComments(int idDisco, Connection connection)throws SQLException{
-        String query = "select comentario,idFan \n" +
-                "from resenasdisco \n" +
-                "where idDisco = ?";
+        String query = "select r.comentario, f.username, r.fecha\n" +
+                "from resenasdisco r \n" +
+                "join fans f\n" +
+                "on f.idFan = r.idFan\n" +
+                "where r.idDisco = ? \n"
+                + "order by r.fecha desc \n"
+                + "limit 6;";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idDisco);
         ResultSet rs = ps.executeQuery();
@@ -217,7 +209,8 @@ public class DiscInfo {
         while(rs.next()){
             Resena resenaDisco = new Resena();
             resenaDisco.setComentario(rs.getString("comentario"));
-            resenaDisco.setIdFan(rs.getInt("idFan"));
+            resenaDisco.setCreadoPor(rs.getString("username"));
+            resenaDisco.setFecha(rs.getDouble("fecha"));
             comentariosList.add(resenaDisco);
         }
         connection.close();

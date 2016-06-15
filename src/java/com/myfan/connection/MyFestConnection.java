@@ -7,6 +7,7 @@ package com.myfan.connection;
 
 import com.google.gson.Gson;
 import com.myfan.dto.Banda;
+import com.myfan.security.IConstantes;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import org.apache.http.HttpResponse;
@@ -14,6 +15,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.jboss.classfilewriter.constpool.StringEntry;
 
 /**
  *
@@ -23,13 +25,16 @@ public class MyFestConnection {
     
     public boolean enviarArtistas (Banda banda){
     try {
-            String url ="http://172.19.13.148:13291/Odyssey/webresources/TrackService/UploadTrack";
-            HttpPost post = new HttpPost(url);
+            HttpPost post = new HttpPost(IConstantes.MYFEST_URL+"myfan");
             Gson g = new Gson();
             String json = g.toJson(banda);
+            System.out.println(json);
             DefaultHttpClient client = new DefaultHttpClient();
             
-            post.setEntity(new StringEntity(json));
+            StringEntity input = new StringEntity(json);
+            input.setContentType("application/json");
+            
+            post.setEntity(input);
             HttpResponse response = (HttpResponse) client.execute(post);
             
             System.out.println(response.getStatusLine().getStatusCode());
@@ -46,15 +51,16 @@ public class MyFestConnection {
         }    
     }
     
-   public boolean actualizarArtistas (Banda banda){
+   public boolean actualizarArtistas (Banda banda, int idBanda){
     try {
-            String url ="http://172.19.13.148:13291/Odyssey/webresources/TrackService/UploadTrack";
-            HttpPut put = new HttpPut(url);
+            HttpPut put = new HttpPut(IConstantes.MYFEST_URL+"myfest/"+idBanda);
             Gson g = new Gson();
             String json = g.toJson(banda);
             DefaultHttpClient client = new DefaultHttpClient();
             
-            put.setEntity(new StringEntity(json));
+            StringEntity entity = new StringEntity(json);
+            entity.setContentType("application/json");
+            put.setEntity(entity);
             HttpResponse response = (HttpResponse) client.execute(put);       
             System.out.println(response.getStatusLine().getStatusCode());
 

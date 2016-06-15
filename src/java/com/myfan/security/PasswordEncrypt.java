@@ -12,6 +12,8 @@ import org.mindrot.jbcrypt.BCrypt;
  * @author Steven
  */
 public class PasswordEncrypt {
+    
+    private static final String salt = BCrypt.gensalt();
 
     public PasswordEncrypt() {
     }
@@ -26,7 +28,8 @@ public class PasswordEncrypt {
     }
     
     public static final String hashPassword(String password){
-        String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+        String hashed = BCrypt.hashpw(password, salt);
+        
         return hashed;
     }
     

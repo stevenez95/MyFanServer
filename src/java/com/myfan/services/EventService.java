@@ -9,8 +9,6 @@ import com.google.gson.Gson;
 import com.myfan.dto.Evento;
 import com.myfan.model.ProjectManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
@@ -109,7 +107,11 @@ public class EventService {
         }
     }
     
-    
+    /**
+     * Obtiene la informacion de un evento
+     * @param idevent
+     * @return 
+     */
     @GET
     @Path("{idEvent}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -124,14 +126,9 @@ public class EventService {
     
    @GET
     @Path("getEventRate/{idEvento}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getEventRate(@PathParam("idEvento")int idEvento) throws Exception{
-        ProjectManager pm = new  ProjectManager();
-        String res = "";
-        Gson gson = new Gson();
-        
-        res = gson.toJson(pm.getEventRate(idEvento));
-        return Response.ok(res).build();
+        ProjectManager pm = new  ProjectManager();        
+        return Response.ok(pm.getEventRate(idEvento)).build();
     } 
     
     @GET
@@ -146,10 +143,6 @@ public class EventService {
         return Response.ok(res).build();
     } 
     
-    /*
-    Calificar
-    Obtener calificacion
-    Obtener comentarios    
-    */
+    
     
 }

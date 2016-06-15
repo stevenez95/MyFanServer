@@ -244,7 +244,15 @@ public class ProjectManager {
     }
     
     /******/
-    public String login (String username, String password) throws SQLException, Exception{
+    /**
+     * 
+     * @param username
+     * @param password
+     * @return
+     * @throws SQLException
+     * @throws Exception 
+     */
+    public Message login (String username, String password) throws SQLException, Exception{
         DataBaseConnect database = new DataBaseConnect();
         UserInfo project = new UserInfo();
         return project.login(username,password, database.getConnection());

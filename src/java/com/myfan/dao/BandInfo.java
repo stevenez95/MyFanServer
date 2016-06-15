@@ -87,6 +87,7 @@ public class BandInfo {
     }
     
     private void ingresarGenerosBanda(int[] generos, int idBanda, Connection c)throws SQLException{
+        if(generos.length == 0) return;
         String delete = "delete from bandageneros where idBanda = ?;";
         PreparedStatement ps1 = c.prepareStatement(delete);
         ps1.setInt(1, idBanda);
@@ -156,9 +157,14 @@ public class BandInfo {
     }
     
     public ArrayList<Resena> getBandComments(int idBanda, Connection connection)throws SQLException{
-        String query = "select comentario, idFan  \n" +
-                "from resenasbanda \n" +
-                "where idBanda = ?";
+        String query = "select r.comentario, f.username, r.fecha\n" +
+                "from resenasbanda r\n" +
+                "join fans f\n" +
+                "on f.idFan = r.idFan\n" +
+                "where r.idBanda = ? \n"
+                +"order by r.fecha desc \n"
+                + "limit 6;";
+        
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idBanda);
         ResultSet rs = ps.executeQuery();
@@ -166,7 +172,8 @@ public class BandInfo {
         while(rs.next()){
             Resena resenabanda = new Resena();
             resenabanda.setComentario(rs.getString("comentario"));
-            resenabanda.setIdFan(rs.getInt("idFan"));
+            resenabanda.setCreadoPor(rs.getString("username"));
+            resenabanda.setFecha(rs.getDouble("fecha"));
             bandaComentList.add(resenabanda);
         }
         connection.close();
@@ -175,24 +182,6 @@ public class BandInfo {
     }
     
     public float getBandRate(int  idBanda, Connection connection)throws SQLException{
-        String query = "select avg(calificacion) as promedio, idBanda \n" +
-                "from resenasbanda \n" +
-                "where idBanda = ? \n" +
-                "group by idBanda;";
-        
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, idBanda);
-        ResultSet rs = ps.executeQuery();
-        float promedio = 0;
-        while(rs.next()){
-            promedio= rs.getFloat("promedio");
-        }
-        connection.close();
-        ps.close();
-        return promedio;
-    }
-    
-    public float getCalificacionPromedioDiscos(int  idBanda, Connection connection)throws SQLException{
         String query = "select avg(calificacion) as promedio, idBanda \n" +
                 "from resenasbanda \n" +
                 "where idBanda = ? \n" +
@@ -286,7 +275,7 @@ public class BandInfo {
                 "FROM eventos \n" +
                 "INNER JOIN resenasconcierto \n" +
                 "ON eventos.idEvento = resenasconcierto.idEvento \n" +
-                "where idBanda = ?  and concierto = true \n" +
+                "where idBanda = ?  and concierto = true and cancelado = 0\n" +
                 "group by idBanda; ";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idBanda);

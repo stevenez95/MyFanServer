@@ -7,6 +7,7 @@ package com.myfan.dao;
 
 import com.myfan.dto.Banda;
 import com.myfan.dto.Fan;
+import com.myfan.dto.Genero;
 import com.myfan.dto.Resena;
 import com.myfan.security.PasswordEncrypt;
 import java.sql.Connection;
@@ -131,6 +132,7 @@ public class FanInfo {
     }
     
     private void ingresarGenerosFan(int[] generos, int idFan, Connection c)throws SQLException{
+        if(generos.length == 0) return;
         String delete = "delete from fangeneros where idFan = ?;";
         PreparedStatement ps1 = c.prepareStatement(delete);
         ps1.setInt(1, idFan);
@@ -172,7 +174,6 @@ public class FanInfo {
         
     }
     
-    
     public boolean esSeguidor (int idFan, int idBanda, Connection connection)throws SQLException{
         String query = "Select * from seguidos where idfan=? And idbanda=?;";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -190,47 +191,67 @@ public class FanInfo {
             return true;
         else
             return false;
-    }
-        
+    }      
         
     public void buscarArtistas(String nombre, String pais, String genero, Connection connection)throws SQLException{}
     
     public void rateBand(Resena resenaBanda, Connection connection)throws SQLException{
-        String query = "insert into resenasbanda (idBanda,idFan,calificacion,comentario) values (?,?,?,?);";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1, resenaBanda.getId());
-            ps.setInt(2, resenaBanda.getIdFan());
-            ps.setInt(3, resenaBanda.getCalificacion());
-            ps.setString(4, resenaBanda.getComentario());
-            ps.execute();
-            connection.close();
-        }
+        String delete = "delete from resenasbanda where idBanda = ? and idFan = ?";
+        PreparedStatement ps2 = connection.prepareStatement(delete);
+        ps2.setInt(1, resenaBanda.getId());
+        ps2.setInt(2, resenaBanda.getIdFan());
+        ps2.execute();
+        String query = "insert into resenasbanda (idBanda,idFan,calificacion,comentario,fecha) values (?,?,?,?,?);";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, resenaBanda.getId());
+        ps.setInt(2, resenaBanda.getIdFan());
+        ps.setInt(3, resenaBanda.getCalificacion());
+        ps.setString(4, resenaBanda.getComentario());
+        ps.setDouble(5, resenaBanda.getFecha());
+        ps.execute();
+        ps.close();
+        ps2.close();
+        connection.close();   
     }
     
-      public void rateDisc(Resena resenaDisco, Connection connection)throws SQLException{
-        String query = "insert into resenasdisco (idDisco,idFan,calificacion,comentario) values (?,?,?,?);";
+    public void rateDisc(Resena resenaDisco, Connection connection)throws SQLException{
+        String delete = "delete from resenasdisco where idDisco = ? and idFan = ?";
+        PreparedStatement ps2 = connection.prepareStatement(delete);
+        ps2.setInt(1, resenaDisco.getId());
+        ps2.setInt(2, resenaDisco.getIdFan());
+        ps2.execute();
+        String query = "insert into resenasdisco (idDisco,idFan,calificacion,comentario,fecha) values (?,?,?,?,?);";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, resenaDisco.getId());
         ps.setInt(2, resenaDisco.getIdFan());
         ps.setInt(3, resenaDisco.getCalificacion());
-        ps.setString(4, resenaDisco.getComentario()); 
+        ps.setString(4, resenaDisco.getComentario());
+        ps.setDouble(5, resenaDisco.getFecha());
         ps.execute();
         connection.close();
+        ps2.close();
         ps.close();
     }
     
-      public void rateEvent(Resena resenaEvento, Connection connection)throws SQLException{
-        String query = "insert into resenasconcierto (idEvento,idFan,calificacion,comentario) value (?,?,?,?);";
+    public void rateEvent(Resena resenaEvento, Connection connection)throws SQLException{
+        String delete = "delete from resenasconcierto where idEvento = ? and idFan = ?";
+        PreparedStatement ps2 = connection.prepareStatement(delete);
+        ps2.setInt(1, resenaEvento.getId());
+        ps2.setInt(2, resenaEvento.getIdFan());
+        ps2.execute();
+        String query = "insert into resenasconcierto (idEvento,idFan,calificacion,comentario,fecha) value (?,?,?,?,?);";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, resenaEvento.getId());
         ps.setInt(2, resenaEvento.getIdFan());
         ps.setInt(3, resenaEvento.getCalificacion());
         ps.setString(4, resenaEvento.getComentario());
+        ps.setDouble(5, resenaEvento.getFecha());
         ps.execute();
         ps.close();
+        ps2.close();
         connection.close();
     }
-      
+    
     public Fan getFanInfo(int idFan, Connection connection)throws SQLException{
         String query = "select f.idFan,f.username, f.genero, floor(datediff(now(),f.fechaNac)/365) as age, count(s.idFan) as total, f.activo, f.pais,f.nombre,f.apellido,f.fechaNac,f.fotoPerfil \n" +
                 "from fans f \n" +
@@ -259,5 +280,32 @@ public class FanInfo {
         return fan;
         
     }
+    
+    public ArrayList<Genero> getFanGeneros (int idFan, Connection connection)throws SQLException{
+        String query = "select g.nombre,g.idGenero\n" +
+                "from fangeneros bg\n" +
+                "join fan b\n" +
+                "on bg.idFan = b.idFan\n" +
+                "join generos g\n" +
+                "on g.idGenero = bg.idGenero\n" +
+                "where bg.idFan = ?;";
+        
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idFan);
+        
+        ResultSet rs = ps.executeQuery();
+        ArrayList<Genero> generosList = new ArrayList<>();
+        while(rs.next()){
+            Genero genero = new Genero();
+            genero.setIdGenero(rs.getInt("idGenero"));
+            genero.setNombre(rs.getString("nombre"));
+            generosList.add(genero);
+        }
+        
+        connection.close();
+        ps.close();
+        return generosList;
+    }
+
     
 }

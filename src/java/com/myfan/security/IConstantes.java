@@ -18,15 +18,11 @@ public interface IConstantes {
     
     
     /************* ERRORES *****************/
-    JsonParser jsonParser = new JsonParser();
-    public static final String NOT_FOUND = jsonParser.parse("{success:false, error:notFound}").toString();
     
-    public static final String USUARIO_EXISTE=jsonParser.parse("{success:false, error:Usuario_ya_existe}").toString();
-    public static final String USUARIO_INCORRECTO=jsonParser.parse("{success:false, error:usuario_o_contrasena_incorrecto}").toString();
-    public static final String MYFEST_URL="";
-    public static final String SUCCESS= jsonParser.parse("{success:true}").toString();
-    public static final String ERROR = jsonParser.parse("{error:Ocurrio_un_errror_en_el_servidor}").toString();
-    
+    public static final String USUARIO_EXISTE="Usuario ya existe}";
+    public static final String USUARIO_INCORRECTO="Usuario o contrasena incorrecto";
+    public static final String MYFEST_URL="http://192.168.0.15:8080/MyFestServer/api/v1/";
+    public static final String ERROR = "Ocurrio un errror en el servidor";    
     /****** TWITTER *********************/
     public static final String ACCESS_TOKEN = "723371134947749889-A1iGcS04t6Pi8jgiRdmV4FBY6U96zbH";
     public static final String ACCESS_TOKEN_SECRET = "xWHBeSaJyW1pp8rHMY6avgfaIk0OZg01TfJEKKr3gOtVp";

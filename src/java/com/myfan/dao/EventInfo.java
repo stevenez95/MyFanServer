@@ -44,7 +44,7 @@ public class EventInfo {
         ArrayList<Evento> eventosFanList = new ArrayList<>();
         while(rs.next()){
             Evento evento = new Evento();
-            evento.setIdBanda(rs.getInt("idEvento"));
+            evento.setIdEvento(rs.getInt("idEvento"));
             evento.setTitulo(rs.getString("titulo"));
             evento.setContenido(rs.getString("contenido"));
             evento.setFechaCreacion(rs.getDouble("fechaCreacion"));
@@ -58,18 +58,6 @@ public class EventInfo {
         ps.close();
         return eventosFanList;
     }
-    
-//    public void rateEvent(Resena resenaConcierto, Connection connection)throws SQLException{
-//        String query = "insert into resenasconcierto (idEvento,idFan,calificacion,comentario) value (?,?,?,?);";
-//        PreparedStatement ps = connection.prepareStatement(query);
-//        ps.setInt(1, resenaConcierto.getId());
-//        ps.setInt(2, resenaConcierto.getIdFan());
-//        ps.setInt(3, resenaConcierto.getCalificacion());
-//        ps.setString(4, resenaConcierto.getComentario());
-//        ps.execute();
-//        ps.close();
-//        connection.close();
-//    }
     
     /*BANDA*/
     public void crearEvento(Evento evento, Connection connection)throws SQLException{
@@ -134,9 +122,13 @@ public class EventInfo {
     }
     
     public ArrayList<Resena> getEventComments(int idEvento, Connection connection)throws SQLException{
-        String query = "select comentario, idFan \n" +
-                "from resenasconcierto \n" +
-                "where idEvento = ?";
+        String query = "select r.comentario, f.username, r.fecha\n" +
+                "from resenasconcierto r \n" +
+                "join fans f\n" +
+                "on f.idFan = r.idFan\n" +
+                "where r.idEvento = ? \n"
+                + "order by r.fecha desc \n"
+                + "limit 6;";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idEvento);
         ResultSet rs = ps.executeQuery();
@@ -144,7 +136,8 @@ public class EventInfo {
         while(rs.next()){
             Resena  resenaConcierto = new Resena();
             resenaConcierto.setComentario(rs.getString("comentario"));
-            resenaConcierto.setIdFan(rs.getInt("idFan"));
+            resenaConcierto.setCreadoPor(rs.getString("username"));
+            resenaConcierto.setFecha(rs.getDouble("fecha"));
             comentariosList.add(resenaConcierto);
         }
         connection.close();

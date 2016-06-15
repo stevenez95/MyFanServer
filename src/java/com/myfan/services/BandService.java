@@ -6,6 +6,7 @@
 package com.myfan.services;
 
 import com.google.gson.Gson;
+import com.myfan.connection.MyFestConnection;
 import com.myfan.dto.Banda;
 import com.myfan.model.ProjectManager;
 import java.sql.SQLException;
@@ -51,13 +52,9 @@ public class BandService {
     
     @GET
     @Path("getBandRate/{idBanda}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getBandRate(@PathParam("idBanda")int idBanda) throws Exception{
         ProjectManager pm = new  ProjectManager();
-        String res = "";
-        Gson gson = new Gson();
-        res = gson.toJson(pm.getBandRate(idBanda));
-        return Response.ok(res).build();
+        return Response.ok(pm.getBandRate(idBanda)).build();
     }
     
     @DELETE
@@ -78,6 +75,9 @@ public class BandService {
         try {
             ProjectManager pm = new ProjectManager();
             pm.actualizarBanda(banda,idBanda);
+            
+            MyFestConnection connection = new MyFestConnection();
+            connection.actualizarArtistas(banda,idBanda);
             return Response.ok().build();
         } catch (SQLException ex) {
             return Response.serverError().build();
