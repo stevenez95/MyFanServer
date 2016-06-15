@@ -112,7 +112,17 @@ public class FanService {
         }
     }
     
-    //public Response buscarArtistas(){}
+    @GET
+    @Path("buscarArtista/{nombreBanda}/{genero}/{pais}")
+    public Response buscarArtistas(@PathParam("nombreBanda")String nombreBanda, @PathParam("genero")String genero, @PathParam("pais")String pais){
+        try {
+            ProjectManager pm = new ProjectManager();
+            Gson g = new Gson();
+            return Response.ok(g.toJson(pm.buscarArtistas(nombreBanda, pais, genero))).build();
+        } catch (Exception ex) {
+            return Response.serverError().build();
+        }
+    }
     
     @POST
     @Path("rateBand")

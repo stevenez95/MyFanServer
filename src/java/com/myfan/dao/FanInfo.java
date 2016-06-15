@@ -193,7 +193,35 @@ public class FanInfo {
             return false;
     }      
         
-    public void buscarArtistas(String nombre, String pais, String genero, Connection connection)throws SQLException{}
+    public ArrayList<Banda> buscarArtistas(String nombre, String pais, String genero, Connection connection)throws SQLException{
+        String query = "SELECT b.idBanda, b.nombreBanda\n"
+                + "from bandas b\n"
+                + "join (select g.nombre, bg.idBanda\n"
+                + "		from generos g\n"
+                + "		join bandageneros bg\n"
+                + "		on bg.idGenero = g.idGenero) r\n"
+                + "on r.idBanda = b.idBanda\n"
+                + "where b.nombreBanda like '%?%' or b.pais like '%?%' or r.nombre like '%?%'\n"
+                + "group by b.idBanda;";
+        
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setString(1, nombre);
+        ps.setString(2, pais);
+        ps.setString(3, genero);
+        
+        ResultSet rs = ps.executeQuery();
+        ArrayList<Banda> bandas = new ArrayList<>();
+        while(rs.next()){
+            Banda banda = new Banda();
+            banda.setIdBanda(rs.getInt("idBanda"));
+            banda.setNombreBanda(rs.getString("nombreBanda"));
+            bandas.add(banda);
+        }
+        
+        connection.close();
+        ps.close();
+        return bandas;
+    }
     
     public void rateBand(Resena resenaBanda, Connection connection)throws SQLException{
         String delete = "delete from resenasbanda where idBanda = ? and idFan = ?";

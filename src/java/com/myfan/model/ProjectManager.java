@@ -86,14 +86,13 @@ public class ProjectManager {
         }
     }
     
-    public void buscarArtistas(String nombre, String pais, String genero){
+    public ArrayList<Banda> buscarArtistas(String nombre, String pais, String genero) throws SQLException, Exception{
         DataBaseConnect database = new DataBaseConnect();
         FanInfo fanInfo = new FanInfo();
-        try {
-            fanInfo.buscarArtistas(nombre, pais,genero, database.getConnection());
-        } catch (Exception ex) {
-            Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
-        }}
+        
+        return fanInfo.buscarArtistas(nombre, pais,genero, database.getConnection());
+        
+    }
     
     public void rateBand(Resena resenaBanda){
         DataBaseConnect database = new DataBaseConnect();
