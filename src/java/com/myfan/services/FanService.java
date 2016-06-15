@@ -120,6 +120,7 @@ public class FanService {
             Gson g = new Gson();
             return Response.ok(g.toJson(pm.buscarArtistas(nombreBanda, pais, genero))).build();
         } catch (Exception ex) {
+            ex.printStackTrace();
             return Response.serverError().build();
         }
     }
