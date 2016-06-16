@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.myfan.security;
+package com.myfan.connection;
 
 import com.google.gson.JsonParser;
 

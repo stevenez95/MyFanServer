@@ -7,7 +7,7 @@ package com.myfan.services;
 
 import com.google.gson.Gson;
 import com.myfan.model.ProjectManager;
-import com.myfan.security.IConstantes;
+import com.myfan.connection.IConstantes;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.GET;
@@ -32,6 +32,7 @@ public class GenreService {
             Gson g = new Gson();
             return Response.ok(g.toJson(manager.verGeneros())).build();
         } catch (Exception ex) {
+            ex.printStackTrace();
             return Response.serverError().entity(IConstantes.ERROR).build();
         }
     }

@@ -94,24 +94,16 @@ public class ProjectManager {
         
     }
     
-    public void rateBand(Resena resenaBanda){
+    public void rateBand(Resena resenaBanda)throws SQLException, Exception{
         DataBaseConnect database = new DataBaseConnect();
         FanInfo fanInfo = new FanInfo();
-        try {
-            fanInfo.rateBand(resenaBanda, database.getConnection());
-        } catch (Exception ex) {
-            Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        fanInfo.rateBand(resenaBanda, database.getConnection());
     }
     
-    public void rateDisc(Resena resenaDisco){
+    public void rateDisc(Resena resenaDisco) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         FanInfo fanInfo = new FanInfo();
-        try {
-            fanInfo.rateDisc(resenaDisco, database.getConnection());
-        } catch (Exception ex) {
-            Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        fanInfo.rateDisc(resenaDisco, database.getConnection());
     }
     
     public ArrayList<Evento> getEventosFan(int idFan) throws Exception{
@@ -402,15 +394,10 @@ public boolean esSeguidor(int idFan, int idBanda) throws SQLException{
         }
     }
 
-    public Banda getBandInfo(int idBanda){
-        try {
-            BandInfo  bandInfo = new BandInfo();
-            DataBaseConnect baseConnect = new DataBaseConnect();
-            return bandInfo.getBandInfo(idBanda, baseConnect.getConnection());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
+    public Banda getBandInfo(int idBanda) throws Exception{
+        BandInfo  bandInfo = new BandInfo();
+        DataBaseConnect baseConnect = new DataBaseConnect();
+        return bandInfo.getBandInfo(idBanda, baseConnect.getConnection());  
     }
 
     public Evento getEventInfo(int idEvento) throws SQLException, Exception{

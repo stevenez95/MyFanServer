@@ -5,7 +5,6 @@
  */
 package com.myfan.services;
 
-import com.google.gson.Gson;
 import com.myfan.dto.Genero;
 import com.myfan.model.ProjectManager;
 import java.sql.SQLException;
@@ -43,7 +42,6 @@ public class MyFestService {
         }
     }
     
-    
     @GET
     @Path("getCantidadEventos/{idBanda}")
     public Response getCantidadEventos(@PathParam("idBanda")int idBanda) throws Exception{
@@ -71,15 +69,4 @@ public class MyFestService {
         return Response.ok(pm.getConcertRate(idBanda)).build();
     }
     
-    
-    
-    /*
-    @GET
-    @Path("getCalificacionPromedioDiscos/{idBanda}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getCalificacionPromedioDiscos(@PathParam("idBanda")int idBanda) throws Exception{
-        ProjectManager pm = new  ProjectManager();        
-        return Response.ok(pm.getCalificacionPromedioDiscos(idBanda)).build();
-    } 
-    */
 }

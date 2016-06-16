@@ -7,7 +7,6 @@ package com.myfan.connection;
 
 import com.google.gson.Gson;
 import com.myfan.dto.Banda;
-import com.myfan.security.IConstantes;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import org.apache.http.HttpResponse;

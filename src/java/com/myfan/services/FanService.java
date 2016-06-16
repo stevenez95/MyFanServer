@@ -6,10 +6,13 @@
 package com.myfan.services;
 
 import com.google.gson.Gson;
+import com.myfan.connection.TwitterConnect;
 import com.myfan.dto.Fan;
 import com.myfan.dto.Resena;
 import com.myfan.model.ProjectManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Context;
@@ -46,6 +49,8 @@ public class FanService {
         try {
             ProjectManager pm = new ProjectManager();
             pm.seguirBanda(idFan, idBanda);
+            TwitterConnect connect = new TwitterConnect();
+            connect.publicarSeguimiento(idFan, idBanda);
             return Response.ok().build();
         } catch (SQLException ex) {
             return Response.serverError().build();
@@ -129,27 +134,42 @@ public class FanService {
     @Path("rateBand")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response rateBand(Resena resenaBanda){
-        ProjectManager manager = new ProjectManager();
-        manager.rateBand(resenaBanda);
-        return Response.ok().build();
+        try {
+            ProjectManager manager = new ProjectManager();
+            manager.rateBand(resenaBanda);
+            TwitterConnect connect = new TwitterConnect();
+            connect.publicarCalificacion(resenaBanda);
+            return Response.ok().build();
+        } catch (Exception ex) {
+            return Response.serverError().build();
+        }
     }
     
     @POST
     @Path("rateDisc")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response rateDisc(Resena resenaDisco){
-        ProjectManager manager = new ProjectManager();
-        manager.rateDisc(resenaDisco);
-        return Response.ok().build();
+        try {
+            ProjectManager manager = new ProjectManager();
+            manager.rateDisc(resenaDisco);
+            return Response.ok().build();
+        } catch (Exception ex) {
+            Logger.getLogger(FanService.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.serverError().build();
+        }
     }
     
     @POST
     @Path("rateEvent")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response rateEvent(Resena resenaEvento) throws Exception{
-        ProjectManager manager = new ProjectManager();
-        manager.rateEvent(resenaEvento);
-        return Response.ok().build();
+    public Response rateEvent(Resena resenaEvento){
+        try {
+            ProjectManager manager = new ProjectManager();
+            manager.rateEvent(resenaEvento);
+            return Response.ok().build();
+        } catch (Exception ex) {
+            return Response.serverError().build();
+        }
     }
     
     @GET

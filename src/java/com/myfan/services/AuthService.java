@@ -11,7 +11,7 @@ import com.myfan.dto.Banda;
 import com.myfan.dto.Fan;
 import com.myfan.dto.Message;
 import com.myfan.model.ProjectManager;
-import com.myfan.security.IConstantes;
+import com.myfan.connection.IConstantes;
 import java.sql.SQLException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

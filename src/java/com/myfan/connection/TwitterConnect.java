@@ -5,10 +5,14 @@
  */
 package com.myfan.connection;
 
-import static com.myfan.security.IConstantes.ACCESS_TOKEN;
-import static com.myfan.security.IConstantes.ACCESS_TOKEN_SECRET;
-import static com.myfan.security.IConstantes.CONSUMER_KEY;
-import static com.myfan.security.IConstantes.CONSUMER_SECRET;
+import static com.myfan.connection.IConstantes.ACCESS_TOKEN;
+import static com.myfan.connection.IConstantes.ACCESS_TOKEN_SECRET;
+import static com.myfan.connection.IConstantes.CONSUMER_KEY;
+import static com.myfan.connection.IConstantes.CONSUMER_SECRET;
+import com.myfan.dto.Banda;
+import com.myfan.dto.Fan;
+import com.myfan.dto.Resena;
+import com.myfan.model.ProjectManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import twitter4j.Status;
@@ -36,23 +40,30 @@ public class TwitterConnect {
             return cb;
     }
     
-    public void publicarCalificacion(String fan, String banda,String hashtag){
+    public void publicarCalificacion(Resena resenaBanda){
+        
         try {
+            ProjectManager manager = new ProjectManager();
+            Banda banda = manager.getBandInfo(resenaBanda.getId());
+            Fan fan = manager.getFanInfo(resenaBanda.getIdFan());
             TwitterFactory tf = new TwitterFactory(getConfig().build());
             Twitter twitter = tf.getInstance();
-            Status s = twitter.updateStatus(fan +" comenta a "+banda +" " + hashtag);
-        } catch (TwitterException ex) {
+            Status s = twitter.updateStatus(fan.getUsername() +" comenta a "+banda.getNombreBanda() +" " + banda.getHashtag());
+        } catch (Exception ex) {
             Logger.getLogger(TwitterConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     
-    public void publicarSeguimiento(String fan, String banda,String hashtag){
+    public void publicarSeguimiento(int idFan, int idBanda){
         try {
+            ProjectManager manager = new ProjectManager();
+            Banda banda = manager.getBandInfo(idBanda);
+            Fan fan = manager.getFanInfo(idFan);
             TwitterFactory tf = new TwitterFactory(getConfig().build());
             Twitter twitter = tf.getInstance();
-            Status s = twitter.updateStatus(fan +" sigue a "+banda +" " + hashtag);
-        } catch (TwitterException ex) {
+            Status s = twitter.updateStatus(fan.getUsername() +" sigue a "+banda.getNombreBanda() +" " + banda.getHashtag());
+        } catch (Exception ex) {
             Logger.getLogger(TwitterConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
