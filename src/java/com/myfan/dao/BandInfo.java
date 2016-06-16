@@ -29,6 +29,7 @@ public class BandInfo {
     public void registrarBanda(Banda banda,Connection connection) throws SQLException{
         String query = "insert into Bandas (username,password,nombreBanda,anioCreacion,hashtag,biografia,fechaCreacion,pais,integrantes,fotoPerfil) value (?,?,?,?,?,?,?,?,?,?);";
         String password = PasswordEncrypt.hashPassword(banda.getPassword());
+        if(banda.getHashtag().charAt(0) != '#') banda.setHashtag("#"+banda.getHashtag());
         PreparedStatement ps = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, banda.getUsername());
         ps.setString(2, password);
@@ -58,6 +59,7 @@ public class BandInfo {
         String query2 = "update bandas set nombreBanda= ?,hashtag= ?,biografia= ?,integrantes= ?,pais= ?,fotoPerfil= ?, anioCreacion=? where idBanda = ?;";
         PreparedStatement ps;
         String pass="";
+        if(banda.getHashtag().charAt(0) != '#') banda.setHashtag("#"+banda.getHashtag());
         if(banda.getPassword()==null){
             System.out.println("entreeeee");
             ps = connection.prepareStatement(query2);
