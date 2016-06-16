@@ -5,9 +5,12 @@
  */
 package com.myfan.services;
 
+import com.google.gson.Gson;
+import com.myfan.dto.Evento;
 import com.myfan.dto.Genero;
 import com.myfan.model.ProjectManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
@@ -51,10 +54,14 @@ public class MyFestService {
     
     
     @GET
-    @Path("getCantidadEventos/{idBanda}")
+    @Path("getUltimosEventos/{idBanda}")
     public Response getUltimosEventos(@PathParam("idBanda")int idBanda) throws Exception{
-        ProjectManager pm = new  ProjectManager();        
-        return Response.ok(pm.getUltimosEventos(idBanda)).build();
+        ProjectManager pm = new  ProjectManager(); 
+        ArrayList<Evento> eventos = new ArrayList<>();
+        Gson g = new Gson();
+        eventos = pm.getUltimosEventos(idBanda);
+        String json = g.toJson(eventos);
+        return Response.ok(json).build();
     } 
     
       @GET
