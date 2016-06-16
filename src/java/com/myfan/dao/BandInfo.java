@@ -6,6 +6,7 @@
 package com.myfan.dao;
 
 import com.myfan.dto.Banda;
+import com.myfan.dto.Evento;
 import com.myfan.dto.Genero;
 import com.myfan.dto.Resena;
 import com.myfan.security.PasswordEncrypt;
@@ -155,6 +156,33 @@ public class BandInfo {
         return eventos;
         
     }
+    
+     public ArrayList<Evento> getUltimosEventos(int idBanda, Connection connection)throws SQLException{
+        String query ="SELECT count(idBanda) as Eventos, month(fechaEvento) as mes\n" +
+                        " FROM eventos\n" +
+                        " where idBanda = ? and fechaEvento >= date_sub(curdate(), interval 6 month)\n" +
+                        " GROUP BY (month(fechaEvento) )\n" +
+                        " order by fechaEvento desc;";
+
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, idBanda);
+        ArrayList<Evento> eventos = new ArrayList<>();
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            Evento evento = new Evento();
+            evento.setIdBanda(rs.getInt("Eventos"));
+            evento.setFechaEvento(rs.getString("mes"));
+            eventos.add(evento);
+            
+        }
+        ps.close();
+        connection.close();
+        return eventos;
+        
+    }
+    
+    
+    
     
     public ArrayList<Resena> getBandComments(int idBanda, Connection connection)throws SQLException{
         String query = "select r.comentario, f.username, r.fecha\n" +
