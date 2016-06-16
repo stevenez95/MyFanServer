@@ -6,7 +6,6 @@
 package com.myfan.services;
 
 import com.myfan.connection.ImageSaver;
-import com.myfan.connection.MyFestConnection;
 import com.myfan.dto.Banda;
 import com.myfan.dto.Fan;
 import com.myfan.dto.Message;
@@ -52,9 +51,6 @@ public class AuthService {
                 m.setMensaje(IConstantes.ERROR);
                 return Response.status(500).entity(m).build();
             }
-
-            MyFestConnection  connection = new MyFestConnection();
-            connection.enviarArtistas(banda);
             return Response.ok().build();
             
         } catch(SQLException ex){

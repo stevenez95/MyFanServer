@@ -52,7 +52,7 @@ public class MyFestConnection {
     
    public boolean actualizarArtistas (Banda banda, int idBanda){
     try {
-            HttpPut put = new HttpPut(IConstantes.MYFEST_URL+"myfest/"+idBanda);
+            HttpPut put = new HttpPut(IConstantes.MYFEST_URL+"myfan/"+idBanda);
             Gson g = new Gson();
             String json = g.toJson(banda);
             DefaultHttpClient client = new DefaultHttpClient();

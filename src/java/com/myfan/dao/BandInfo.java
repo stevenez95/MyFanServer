@@ -5,6 +5,7 @@
 */
 package com.myfan.dao;
 
+import com.myfan.connection.MyFestConnection;
 import com.myfan.dto.Banda;
 import com.myfan.dto.Evento;
 import com.myfan.dto.Genero;
@@ -43,8 +44,11 @@ public class BandInfo {
         
         ResultSet rs = ps.getGeneratedKeys();
         rs.next();
-        ingresarGenerosBanda(banda.getGeneros(), rs.getInt(1), connection);
-        
+        int id = rs.getInt(1);
+        ingresarGenerosBanda(banda.getGeneros(), id, connection);
+        MyFestConnection  connection1 = new MyFestConnection();
+        banda.setIdBanda(id);
+        connection1.enviarArtistas(banda);
         ps.close();
         connection.close();
     }
@@ -82,6 +86,8 @@ public class BandInfo {
         
         ps.executeUpdate();
         ingresarGenerosBanda(banda.getGeneros(), idBanda, connection);
+        MyFestConnection myFestConnection = new MyFestConnection();
+        myFestConnection.actualizarArtistas(banda, idBanda);
         
         ps.close();
         connection.close();
