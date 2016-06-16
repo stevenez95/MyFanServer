@@ -49,6 +49,14 @@ public class MyFestService {
         return Response.ok(pm.getCantidadEventos(idBanda)).build();
     } 
     
+    
+    @GET
+    @Path("getCantidadEventos/{idBanda}")
+    public Response getUltimosEventos(@PathParam("idBanda")int idBanda) throws Exception{
+        ProjectManager pm = new  ProjectManager();        
+        return Response.ok(pm.getUltimosEventos(idBanda)).build();
+    } 
+    
       @GET
     @Path("getAllDiscRate/{idBanda}")
     public Response getAllDiscRate(@PathParam("idBanda")int idBanda){

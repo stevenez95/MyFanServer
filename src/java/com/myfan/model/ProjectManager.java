@@ -178,6 +178,12 @@ public class ProjectManager {
         return bandInfo.getCantidadEventos(idBanda, database.getConnection());
     }
     
+    public ArrayList<Evento> getUltimosEventos(int idBanda) throws Exception{
+        DataBaseConnect database = new DataBaseConnect();
+        BandInfo bandInfo   = new BandInfo();
+        return bandInfo.getUltimosEventos(idBanda, database.getConnection());
+    }
+    
     public float getBandRate(int idBanda) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         BandInfo bandInfo   = new BandInfo();

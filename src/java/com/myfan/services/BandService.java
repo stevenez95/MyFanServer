@@ -34,7 +34,13 @@ public class BandService {
     public Response getBandInfo(@PathParam("idBanda")int idBanda){
         
         ProjectManager manager = new ProjectManager();
-        return Response.ok(manager.getBandInfo(idBanda)).build();
+        try {
+            return Response.ok(manager.getBandInfo(idBanda)).build();
+        } catch (Exception ex) {
+            Logger.getLogger(BandService.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.serverError().build();
+        }
+        
     }
     
     @GET
