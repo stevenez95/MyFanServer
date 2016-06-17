@@ -180,7 +180,7 @@ public class BandInfo {
         while(rs.next()){
             Evento evento = new Evento();
             evento.setIdBanda(rs.getInt("Eventos"));
-            evento.setFechaEvento(rs.getString("mes"));
+            evento.setContenido(rs.getString("mes"));
             eventos.add(evento);
             
         }
