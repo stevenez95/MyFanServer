@@ -8,7 +8,7 @@ package com.myfan.services;
 import com.google.gson.Gson;
 import com.myfan.dto.Evento;
 import com.myfan.dto.Genero;
-import com.myfan.model.ProjectManager;
+import com.myfan.model.Facade;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -35,7 +35,7 @@ public class MyFestService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newGenero(Genero genero){
          try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.crearGenero(genero);
             return Response.ok().build();
         } catch (SQLException ex) {
@@ -48,7 +48,7 @@ public class MyFestService {
     @GET
     @Path("getCantidadEventos/{idBanda}")
     public Response getCantidadEventos(@PathParam("idBanda")int idBanda) throws Exception{
-        ProjectManager pm = new  ProjectManager();        
+        Facade pm = new  Facade();        
         return Response.ok(pm.getCantidadEventos(idBanda)).build();
     } 
     
@@ -56,7 +56,7 @@ public class MyFestService {
     @GET
     @Path("getUltimosEventos/{idBanda}")
     public Response getUltimosEventos(@PathParam("idBanda")int idBanda) throws Exception{
-        ProjectManager pm = new  ProjectManager(); 
+        Facade pm = new  Facade(); 
         ArrayList<Evento> eventos = new ArrayList<>();
         Gson g = new Gson();
         eventos = pm.getUltimosEventos(idBanda);
@@ -68,7 +68,7 @@ public class MyFestService {
     @Path("getAllDiscRate/{idBanda}")
     public Response getAllDiscRate(@PathParam("idBanda")int idBanda){
         try {
-            ProjectManager pm = new  ProjectManager();
+            Facade pm = new  Facade();
             return Response.ok(pm.getAllDiscRate(idBanda)).build();
         } catch (Exception ex) {
             Logger.getLogger(MyFestService.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,7 +80,7 @@ public class MyFestService {
       @GET
     @Path("getConcertRate/{idBanda}")
     public Response getConcertRate(@PathParam("idBanda")int idBanda) throws Exception{
-        ProjectManager pm = new  ProjectManager();
+        Facade pm = new  Facade();
         return Response.ok(pm.getConcertRate(idBanda)).build();
     }
     

@@ -15,6 +15,20 @@ public class Message {
     private String mensaje, tipo;
     private int id;
 
+    public Message(boolean success, String mensaje, String tipo, int id) {
+        this.success = success;
+        this.mensaje = mensaje;
+        this.tipo = tipo;
+        this.id = id;
+    }
+
+    public Message() {
+    }
+    
+    
+
+    
+    
     /**
      * @return the success
      */

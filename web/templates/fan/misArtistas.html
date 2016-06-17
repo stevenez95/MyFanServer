@@ -1,0 +1,10 @@
+<div class="w3-container w3-card-2 w3-white w3-round w3-margin w3-responsive"><br>
+
+    <ul class="w3-ul w3-border w3-margin " >
+        <li class="w3-green"><h1>Artistas</h1></li>
+        <li ng-repeat="artista in misArtistas" class="w3-padding-large" style="font-family: 'Verdana';">
+            <span class="w3-large w3-btn w3-white" ng-click="verPerfilArtista(artista.idBanda)">{{artista.nombreBanda}}</span>
+            <button class="w3-btn w3-right w3-small w3-red w3-round-xlarge" ng-click="dejarSeguir(artista.idBanda)">Dejar de seguir</button>
+        </li>
+    </ul>
+</div>

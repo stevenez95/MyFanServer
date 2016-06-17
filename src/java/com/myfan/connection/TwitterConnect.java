@@ -12,12 +12,11 @@ import static com.myfan.connection.IConstantes.CONSUMER_SECRET;
 import com.myfan.dto.Banda;
 import com.myfan.dto.Fan;
 import com.myfan.dto.Resena;
-import com.myfan.model.ProjectManager;
+import com.myfan.model.Facade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import twitter4j.Status;
 import twitter4j.Twitter;
-import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -43,7 +42,7 @@ public class TwitterConnect {
     public void publicarCalificacion(Resena resenaBanda){
         
         try {
-            ProjectManager manager = new ProjectManager();
+            Facade manager = new Facade();
             Banda banda = manager.getBandInfo(resenaBanda.getId());
             Fan fan = manager.getFanInfo(resenaBanda.getIdFan());
             TwitterFactory tf = new TwitterFactory(getConfig().build());
@@ -57,7 +56,7 @@ public class TwitterConnect {
     
     public void publicarSeguimiento(int idFan, int idBanda){
         try {
-            ProjectManager manager = new ProjectManager();
+            Facade manager = new Facade();
             Banda banda = manager.getBandInfo(idBanda);
             Fan fan = manager.getFanInfo(idFan);
             TwitterFactory tf = new TwitterFactory(getConfig().build());

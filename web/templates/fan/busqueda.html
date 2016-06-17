@@ -1,6 +1,15 @@
-<form class="w3-center">
-    <input type="text" placeholder="nombre" class="w3-input">
-    <input type="text" placeholder="genero" class="w3-input">
-    <input type="text" placeholder="pais" class="w3-input">
-    <button class="w3-btn w3-green"><i class="fa fa-search w3-margin-right"></i>Buscar</button>
+<h1 class="w3-text-red">{{error}}</h1>
+<form class="w3-container">
+    <input type="search" placeholder="Nombre" class="w3-input w3-col m2 w3-border w3-margin" required="" ng-model="busqueda.nombre">    
+    <input type="search" placeholder="Pais" class="w3-input w3-col m2 w3-border w3-margin" ng-model="busqueda.pais">  
+    <input type="search" placeholder="Genero" class="w3-input w3-col m2 w3-border w3-margin" ng-model="busqueda.genero">  
+    <button class="w3-btn w3-col m3 w3-green w3-margin"  ng-click="buscar()"><i class="fa fa-search w3-margin-right"></i>Buscar</button>
 </form>
+<div class="w3-container w3-card-2 w3-white w3-round w3-margin w3-responsive"><br>
+    <ul class="w3-ul w3-border w3-margin " >
+        <li class="w3-green"><h1>Artistas</h1></li>
+        <li ng-repeat="artista in resBusqueda" class="w3-padding-large" style="font-family: 'Verdana';">
+            <span class="w3-large w3-btn w3-white" ng-click="verPerfilArtista(artista.idBanda)">{{artista.nombreBanda}}</span>
+        </li>
+    </ul>
+</div>

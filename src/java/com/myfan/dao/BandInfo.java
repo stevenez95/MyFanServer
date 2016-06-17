@@ -27,7 +27,7 @@ public class BandInfo {
     public BandInfo() {}
     
     public void registrarBanda(Banda banda,Connection connection) throws SQLException{
-        String query = "insert into Bandas (username,password,nombreBanda,anioCreacion,hashtag,biografia,fechaCreacion,pais,integrantes,fotoPerfil) value (?,?,?,?,?,?,?,?,?,?);";
+        String query = "insert into Bandas (username,password,nombreBanda,anioCreacion,hashtag,biografia,fechaCreacion,idPais,integrantes,fotoPerfil) value (?,?,?,?,?,?,?,?,?,?);";
         String password = PasswordEncrypt.hashPassword(banda.getPassword());
         if(banda.getHashtag().charAt(0) != '#') banda.setHashtag("#"+banda.getHashtag());
         PreparedStatement ps = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
@@ -38,7 +38,7 @@ public class BandInfo {
         ps.setString(5, banda.getHashtag());
         ps.setString(6, banda.getBiografia());
         ps.setDouble(7, banda.getFechaCreacion());
-        ps.setString(8, banda.getPais());
+        ps.setInt(8, banda.getIdPais());
         ps.setString(9, banda.getIntegrantes());
         ps.setString(10, "http://localhost:8080/MyFanServer/uploads/"+banda.getFotoPerfil());
         ps.execute();
@@ -55,8 +55,8 @@ public class BandInfo {
     }
     
     public void actualizarBanda(Banda banda,int idBanda, Connection connection)throws SQLException{
-        String query1 = "update bandas set password = ?,nombreBanda= ?,hashtag= ?,biografia= ?,integrantes= ?,pais= ?,fotoPerfil= ?, anioCreacion=? where idBanda = ?;";
-        String query2 = "update bandas set nombreBanda= ?,hashtag= ?,biografia= ?,integrantes= ?,pais= ?,fotoPerfil= ?, anioCreacion=? where idBanda = ?;";
+        String query1 = "update bandas set password = ?,nombreBanda= ?,hashtag= ?,biografia= ?,integrantes= ?,idPais= ?,fotoPerfil= ?, anioCreacion=? where idBanda = ?;";
+        String query2 = "update bandas set nombreBanda= ?,hashtag= ?,biografia= ?,integrantes= ?,idPais= ?,fotoPerfil= ?, anioCreacion=? where idBanda = ?;";
         PreparedStatement ps;
         String pass="";
         if(banda.getHashtag().charAt(0) != '#') banda.setHashtag("#"+banda.getHashtag());
@@ -67,7 +67,7 @@ public class BandInfo {
             ps.setString(2, banda.getHashtag());
             ps.setString(3, banda.getBiografia());
             ps.setString(4, banda.getIntegrantes());
-            ps.setString(5, banda.getPais());
+            ps.setInt(5, banda.getIdPais());
             ps.setString(6, banda.getFotoPerfil());
             ps.setInt(7, banda.getAnioCreacion());
             ps.setInt(8, idBanda);
@@ -80,7 +80,7 @@ public class BandInfo {
             ps.setString(3, banda.getHashtag());
             ps.setString(4, banda.getBiografia());
             ps.setString(5, banda.getIntegrantes());
-            ps.setString(6, banda.getPais());
+            ps.setInt(6, banda.getIdPais());
             ps.setString(7, banda.getFotoPerfil());
             ps.setInt(8, banda.getAnioCreacion());
             ps.setInt(9, idBanda);
@@ -96,6 +96,7 @@ public class BandInfo {
     }
     
     private void ingresarGenerosBanda(int[] generos, int idBanda, Connection c)throws SQLException{
+        if(generos==null) return;
         if(generos.length == 0) return;
         String delete = "delete from bandageneros where idBanda = ?;";
         PreparedStatement ps1 = c.prepareStatement(delete);
@@ -187,10 +188,7 @@ public class BandInfo {
         connection.close();
         return eventos;
         
-    }
-    
-    
-    
+    } 
     
     public ArrayList<Resena> getBandComments(int idBanda, Connection connection)throws SQLException{
         String query = "select r.comentario, f.username, r.fecha\n" +
@@ -236,8 +234,10 @@ public class BandInfo {
     }
     
     public Banda getBandInfo(int idBanda, Connection connection) throws SQLException {
-        String query = "select b.idBanda, b.username, b.nombreBanda, b.hashtag, b.pais, b.activo, b.anioCreacion,b.integrantes, b.biografia, b.fotoPerfil \n" +
+        String query = "select b.idBanda, b.username, b.nombreBanda, b.hashtag, p.pais, b.activo, b.anioCreacion,b.integrantes, b.biografia, b.fotoPerfil \n" +
                 "from bandas b\n" +
+                "join paises p\n" +
+                "on p.idPais = b.idPais\n"+
                 "where b.idBanda = ?;";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idBanda);

@@ -13,19 +13,20 @@ and open the template in the editor.
             <div class="w3-card-2 w3-round w3-white w3-margin-top">
                 <div class="w3-container">
                     <h4 class="w3-center">Mi Perfil</h4>
-                    <p class="w3-center"><i class="fa fa-user w3-xxlarge secondary-text-color"></i></p>
-                    <p><i class="fa fa-user w3-margin-right secondary-text-color"></i> Nombre de usuario</p>
-                    <p><i class="fa fa-venus-mars w3-margin-right secondary-text-color"></i> Gender</p>
-                    <p><i class="fa fa-birthday-cake w3-margin-right secondary-text-color"></i> Birthday</p>
-                    <p><i class="fa fa-headphones w3-margin-right secondary-text-color"></i>Bandas Seguidas</p>
+                    <p class="w3-center"><img ng-src="{{fanInfo.fotoPerfil}}" width="50" height="50"></p>
+                    <p><i class="fa fa-user w3-margin-right secondary-text-color"></i> {{fanInfo.username}}</p>
+                    <p><i class="fa fa-venus-mars w3-margin-right secondary-text-color"></i> {{fanInfo.genero}}</p>
+                    <p><i class="fa fa-birthday-cake w3-margin-right secondary-text-color"></i> {{fanInfo.edad}}</p>
+                    <p><i class="fa fa-globe w3-margin-right secondary-text-color"></i>{{fanInfo.pais}}</p>
+                    <p><i class="fa fa-headphones w3-margin-right secondary-text-color"></i>Bandas Seguidas {{fanInfo.siguiendo}}</p>
                 </div>
             </div>
             <br>
             
             <div class="w3-card-2 w3-round">
-                <a href="#" class="w3-btn-block dark-primary-color w3-left-align w3-border primary-text-color"><i class="fa fa-music w3-margin-right"></i>Mis Artistas</a>
-                <a href="#" class="w3-btn-block default-primary-color primary-text-color w3-left-align w3-border"><i class="fa fa-pencil w3-margin-right"></i>Editar Perfil</a>
-                <a href="#" class="w3-btn-block light-primary-color primary-text-color w3-left-align w3-border"><i class="fa fa-search w3-margin-right"></i>Descubrir</a>
+                <a ng-click="verMisArtistas()" class="w3-btn-block dark-primary-color w3-left-align w3-border primary-text-color"><i class="fa fa-music w3-margin-right"></i>Mis Artistas</a>
+                <a ng-click="editarPerfil()" class="w3-btn-block default-primary-color primary-text-color w3-left-align w3-border"><i class="fa fa-pencil w3-margin-right"></i>Editar Perfil</a>
+                <a ng-click="verBusqueda()" class="w3-btn-block light-primary-color primary-text-color w3-left-align w3-border"><i class="fa fa-search w3-margin-right"></i>Descubrir</a>
             </div>
             <br>
             
@@ -51,38 +52,32 @@ and open the template in the editor.
         </div>
         
         <!-- Middle Column -->
-        <div class="w3-col m9">
+        <div class="w3-col m9" ng-if="fanInfo.activo">
                         
-            <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
+            <div class="w3-container w3-card-2 w3-white w3-round w3-margin" ng-repeat="news in fanNews"><br>
                 <!--img src="img_avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px"-->
-                <span class="w3-right w3-opacity">12/12/2015</span>
-                <h2>Noticia</h2>
-                <h4>Banda 1</h4><br>
+                <span class="w3-right w3-opacity">{{news.fechaCreacion | date:'dd/MM/yyyy HH:mm'}}</span>
+                <h2>{{news.titulo}}</h2>
+                <h4>{{news.creadoPor}}</h4><br>
                 <hr class="w3-clear">
-                <p>Noticia: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>{{news.contenido}}</p>
             </div>
             
-            <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
+            <div class="w3-container w3-card-2 w3-white w3-round w3-margin" ng-repeat="event in fanEvents"><br>
                 <!--img src="img_avatar5.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px"-->
-                <span class="w3-right w3-opacity">1/12/2015</span>
-                <h2>Evento de firmas</h2>
-                <h4>Banda 2</h4><br>
+                <span class="w3-right w3-opacity">{{event.fechaCreacion | date:'dd/MM/yyyy HH:mm'}}</span>
+                <h2>{{event.titulo}}</h2>
+                <h4>{{event.creadoPor}}</h4><br>
                 <hr class="w3-clear">
-                <p>Fecha y Lugar del evento</p>
-                <p>Evento: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                Fecha del Evento: <b>{{event.fechaEvento | date:'dd/MM/yyyy'}}</b>
+                <p>{{event.contenido}}</p>
+                <button class="w3-btn w3-green w3-right w3-margin" ng-show="event.concierto" ng-click="verConcierto(event.idEvento)">Ver</button>
             </div>  
             
-            <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
-                <span class="w3-right w3-opacity">12/11/2015</span>
-                <h2>Concierto</h2>
-                <h4>Banda 3</h4><br>
-                <hr class="w3-clear">
-                <p>Fecha y Lugar del evento</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                <button class="w3-btn accent-color w3-margin-bottom w3-right">Ver</button>
-            </div> 
-            
-            <!-- End Middle Column -->
+        </div>
+        
+        <div class="w3-col m9 w3-center" ng-hide="fanInfo.activo">
+            <button class="w3-btn w3-xxxlarge w3-round-large w3-green w3-margin" ng-click="desactivarCuenta()">ACTIVAR CUENTA</button>
         </div>
         
         <!-- End Grid -->

@@ -12,9 +12,9 @@ import java.util.ArrayList;
  * @author Steven
  */
 public class Fan {
-    private int idFan, edad, siguiendo;
+    private int idFan, edad, siguiendo,idPais;
     private double fechaCreacion;
-    private String username,password,nombre,apellido,pais,fotoPerfil,genero,fechaNac; 
+    private String username,password,nombre,apellido,fotoPerfil,genero,fechaNac,pais; 
     private boolean activo;
     private int[] generos;
 
@@ -100,20 +100,6 @@ public class Fan {
      */
     public void setApellido(String apellido) {
         this.apellido = apellido;
-    }
-
-    /**
-     * @return the pais
-     */
-    public String getPais() {
-        return pais;
-    }
-
-    /**
-     * @param pais the pais to set
-     */
-    public void setPais(String pais) {
-        this.pais = pais;
     }
 
     /**
@@ -212,5 +198,33 @@ public class Fan {
      */
     public void setGeneros(int[] generos) {
         this.generos = generos;
+    }
+
+    /**
+     * @return the idPais
+     */
+    public int getIdPais() {
+        return idPais;
+    }
+
+    /**
+     * @param idPais the idPais to set
+     */
+    public void setIdPais(int idPais) {
+        this.idPais = idPais;
+    }
+
+    /**
+     * @return the pais
+     */
+    public String getPais() {
+        return pais;
+    }
+
+    /**
+     * @param pais the pais to set
+     */
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 }

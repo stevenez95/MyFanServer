@@ -6,42 +6,42 @@
                 
                 <p>
                     <label>Nombre<sup class="w3-text-red">*</sup></label>
-                    <input class="w3-input w3-validate" type="text" ng-model="newFan.name" required minlength="1" maxlength="30">
+                    <input class="w3-input w3-validate" type="text" ng-model="fanInfo.nombre" required minlength="1" maxlength="30">
                 </p>
                 
                 <p>
                     <label>Apellido<sup class="w3-text-red">*</sup></label>
-                    <input class="w3-input w3-validate" type="text" ng-model="newFan.last" required minlength="1" maxlength="30">
+                    <input class="w3-input w3-validate" type="text" ng-model="fanInfo.apellido" required minlength="1" maxlength="30">
                 </p>
 
                 <p>
                     <label>Nombre Usuario</label>
-                    <input class="w3-input w3-disabled" type="text" ng-model="newFan.username" disabled="">
+                    <input class="w3-input w3-disabled" type="text" ng-model="fanInfo.username" disabled="">
                 </p>
 
                 <p>
                     <label>Contrasena<sup class="w3-text-red">*</sup></label>
-                    <input class="w3-input w3-validate w3-margin-bottom" type="password" ng-model="newFan.passsword" required>
+                    <input class="w3-input w3-validate w3-margin-bottom" type="password" ng-model="fanInfo.passsword" required>
                 </p>
 
                 <p>
                     <label>Genero </label><br>
-                    <input class="w3-radio" type="radio" name="gender" value="M" ng-model="newFan.gender" checked>
+                    <input class="w3-radio" type="radio" name="gender" value="M" ng-model="fanInfo.genero" ng-checked="fanInfo.genero==='M'">
                     <label class="w3-validate">Masculino</label>
     
-                    <input class="w3-radio" type="radio" name="gender" value="F" ng-model="newFan.gender">
+                    <input class="w3-radio" type="radio" name="gender" value="F" ng-model="fanInfo.genero" ng-checked="fanInfo.genero==='F'">
                     <label class="w3-validate">Femenino</label>
                 </p>
 
                 <p>
                     <label>Fecha Nacimiento <sup>*</sup></label>
-                    <input type="text" name="bday" class="w3-input" ng-model="newFan.bday" pattern="(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d
+                    <input type="text" name="bday" class="w3-input" ng-model="fanInfo.fechaNac" pattern="(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d
 " placeholder="dd/mm/yyyy" required>
                 </p>
 
                 <p>
                     <label>Pais</label>
-                    <select class="w3-select" ng-model="newFan.country">
+                    <select class="w3-select" ng-model="fanInfo.pais">
                         <option value="Afganistán">Afganistán</option>
                         <option value="Albania">Albania</option>
                         <option value="Alemania">Alemania</option>
@@ -253,8 +253,8 @@
             </div>
         </div>
              <div class="w3-center">
-                <button class="w3-btn-block w3-red w3-half w3-margin-bottom w3-border w3-round-large">Desactivar Cuenta</button>
-                <button class="w3-btn-block accent-color w3-half  w3-margin-bottom w3-border w3-round-large">Actualizar</button>
+                 <button class="w3-btn-block w3-red w3-half w3-margin-bottom w3-border w3-round-large" ng-click="desactivarCuenta()">Desactivar Cuenta</button>
+                <button class="w3-btn-block accent-color w3-half  w3-margin-bottom w3-border w3-round-large" ng-click="actualizarDatos()">Actualizar</button>
                 
             </div>
     </div>

@@ -11,9 +11,9 @@ package com.myfan.dto;
  */
 public class Banda {
     
-    private int idBanda,seguidores,anioCreacion;
+    private int idBanda,seguidores,anioCreacion,idPais;
     private double fechaCreacion;
-    private String nombreBanda,username,password,hashtag,biografia,integrantes, pais,fotoPerfil;
+    private String nombreBanda,username,password,hashtag,biografia,integrantes,fotoPerfil,pais;
     private boolean activo;
     private int[] generos;
 
@@ -158,20 +158,6 @@ public class Banda {
     }
 
     /**
-     * @return the pais
-     */
-    public String getPais() {
-        return pais;
-    }
-
-    /**
-     * @param pais the pais to set
-     */
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
-
-    /**
      * @return the fotoPerfil
      */
     public String getFotoPerfil() {
@@ -211,6 +197,34 @@ public class Banda {
      */
     public void setGeneros(int[] generos) {
         this.generos = generos;
+    }
+
+    /**
+     * @return the idPais
+     */
+    public int getIdPais() {
+        return idPais;
+    }
+
+    /**
+     * @param idPais the idPais to set
+     */
+    public void setIdPais(int idPais) {
+        this.idPais = idPais;
+    }
+
+    /**
+     * @return the pais
+     */
+    public String getPais() {
+        return pais;
+    }
+
+    /**
+     * @param pais the pais to set
+     */
+    public void setPais(String pais) {
+        this.pais = pais;
     }
     
     

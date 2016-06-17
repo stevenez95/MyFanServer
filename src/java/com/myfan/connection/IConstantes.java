@@ -5,6 +5,8 @@
  */
 package com.myfan.connection;
 
+import com.myfan.dto.Message;
+
 
 /**
  *
@@ -22,6 +24,9 @@ public interface IConstantes {
     public static final String USUARIO_INCORRECTO="Usuario o contrasena incorrecto";
     public static final String MYFEST_URL="http://192.168.0.16:8080/MyFestServer/api/v1/";
     public static final String ERROR = "Ocurrio un errror en el servidor";    
+    public static final Message m = new Message(false,ERROR,"",0);
+    
+
     /****** TWITTER *********************/
     public static final String ACCESS_TOKEN = "723371134947749889-A1iGcS04t6Pi8jgiRdmV4FBY6U96zbH";
     public static final String ACCESS_TOKEN_SECRET = "xWHBeSaJyW1pp8rHMY6avgfaIk0OZg01TfJEKKr3gOtVp";

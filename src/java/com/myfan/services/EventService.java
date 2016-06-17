@@ -7,7 +7,7 @@ package com.myfan.services;
 
 import com.google.gson.Gson;
 import com.myfan.dto.Evento;
-import com.myfan.model.ProjectManager;
+import com.myfan.model.Facade;
 import java.sql.SQLException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -37,7 +37,7 @@ public class EventService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFanEvents(@PathParam("idFan")int idFan){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             Gson gson = new Gson();
             return Response.ok(gson.toJson(pm.getEventosFan(idFan))).build();
         } catch (SQLException ex) {
@@ -57,7 +57,7 @@ public class EventService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBandEvents(@PathParam("idBanda")int idBanda){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             Gson gson = new Gson();
             return Response.ok(gson.toJson(pm.getEventosBanda(idBanda))).build();
         } catch (SQLException ex) {
@@ -77,7 +77,7 @@ public class EventService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createEvent(Evento evento){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.crearEvento(evento);
             return Response.ok().build();
         } catch (SQLException ex) {
@@ -97,7 +97,7 @@ public class EventService {
     @Path("{idEvent}")
     public Response cancelEvent(@PathParam("idEvent")int idEvent){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.cancelEvent(idEvent);
             return Response.ok().build();
         } catch (SQLException ex) {
@@ -117,7 +117,7 @@ public class EventService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEventInfo(@PathParam("idEvent") int idevent){
         try {
-            ProjectManager manager = new ProjectManager();
+            Facade manager = new Facade();
             return Response.ok(manager.getEventInfo(idevent)).build();
         } catch (Exception ex) {
            return Response.serverError().build();
@@ -127,7 +127,7 @@ public class EventService {
    @GET
     @Path("getEventRate/{idEvento}")
     public Response getEventRate(@PathParam("idEvento")int idEvento) throws Exception{
-        ProjectManager pm = new  ProjectManager();        
+        Facade pm = new  Facade();        
         return Response.ok(pm.getEventRate(idEvento)).build();
     } 
     
@@ -135,7 +135,7 @@ public class EventService {
     @Path("getEventComments/{idEvento}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEventComments(@PathParam("idEvento")int idEvento) throws Exception{
-        ProjectManager pm = new  ProjectManager();
+        Facade pm = new  Facade();
         String res = "";
         Gson gson = new Gson();
         

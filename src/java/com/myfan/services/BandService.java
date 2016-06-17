@@ -8,7 +8,7 @@ package com.myfan.services;
 import com.google.gson.Gson;
 import com.myfan.connection.MyFestConnection;
 import com.myfan.dto.Banda;
-import com.myfan.model.ProjectManager;
+import com.myfan.model.Facade;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +33,7 @@ public class BandService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBandInfo(@PathParam("idBanda")int idBanda){
         
-        ProjectManager manager = new ProjectManager();
+        Facade manager = new Facade();
         try {
             return Response.ok(manager.getBandInfo(idBanda)).build();
         } catch (Exception ex) {
@@ -48,7 +48,7 @@ public class BandService {
     public Response getCantSeguidores(@PathParam("idBanda")int idBanda){
         
         try {
-            ProjectManager manager = new ProjectManager();
+            Facade manager = new Facade();
             return Response.ok(manager.getCantidadSeguidores(idBanda)).build();
         } catch (Exception ex) {
             Logger.getLogger(BandService.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,7 +59,7 @@ public class BandService {
     @GET
     @Path("getBandRate/{idBanda}")
     public Response getBandRate(@PathParam("idBanda")int idBanda) throws Exception{
-        ProjectManager pm = new  ProjectManager();
+        Facade pm = new  Facade();
         return Response.ok(pm.getBandRate(idBanda)).build();
     }
     
@@ -67,7 +67,7 @@ public class BandService {
     @Path("desactivar/{idBanda}")
     public Response desactivarFan(@PathParam("idBanda")int idBanda){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.desactivarBanda(idBanda);
             return Response.ok().build();
         } catch (Exception ex) {
@@ -79,7 +79,7 @@ public class BandService {
     @Path("actualizar/{idBanda}")
     public Response actualizarBanda(Banda banda, @PathParam("idBanda")int idBanda){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.actualizarBanda(banda,idBanda);
             
             MyFestConnection connection = new MyFestConnection();
@@ -95,7 +95,7 @@ public class BandService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getGenerosBanda(@PathParam("idBanda") int idBanda){
         try {
-            ProjectManager manager = new ProjectManager();
+            Facade manager = new Facade();
             Gson g = new Gson();
             return Response.ok(g.toJson(manager.getGenerosBanda(idBanda))).build();
         } catch (Exception ex) {
@@ -107,7 +107,7 @@ public class BandService {
     @Path("getBandComments/{idBanda}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBandComments(@PathParam("idBanda")int idBanda) throws Exception{
-        ProjectManager pm = new  ProjectManager();
+        Facade pm = new  Facade();
         String res = "";
         Gson gson = new Gson();
         

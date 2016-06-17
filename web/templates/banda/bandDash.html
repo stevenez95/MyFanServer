@@ -7,19 +7,19 @@
             <div class="w3-card-2 w3-round w3-white w3-margin-top">
                 <div class="w3-container">
                     <h4 class="w3-center">Mi Perfil</h4>           
-                    <p class="w3-center"><i class="fa fa-user w3-xxlarge secondary-text-color"></i></p>
-                    <p><i class="fa fa-user w3-margin-right secondary-text-color"></i>Usuario</p>
-                    <p><i class="fa fa-music w3-margin-right secondary-text-color"></i>Nombre Banda</p>
-                    <p><i class="fa fa-hashtag w3-margin-right secondary-text-color"></i>Hashtag</p>
-                    <p><i class="fa fa-globe w3-margin-right secondary-text-color"></i>Pais</p>
-                    <p><i class="fa fa-users w3-margin-right secondary-text-color"></i>Seguidres</p>
+                    <p class="w3-center"><img ng-src="{{bandInfo.fotoPerfil}}" width="50" height="50"></p>
+                    <p><i class="fa fa-user w3-margin-right secondary-text-color"></i>{{bandInfo.username}}</p>
+                    <p><i class="fa fa-music w3-margin-right secondary-text-color"></i>{{bandInfo.nombreBanda}}</p>
+                    <p><i class="fa fa-hashtag w3-margin-right secondary-text-color"></i>{{bandInfo.hashtag}}</p>
+                    <p><i class="fa fa-globe w3-margin-right secondary-text-color"></i>{{bandInfo.pais}}</p>
+                    <p><i class="fa fa-users w3-margin-right secondary-text-color"></i>{{bandSeg}} Seguidores</p>
                 </div>
             </div>
             <br>
             
-            <div class="w3-card-2 w3-round">
-                <a href="#" class="w3-btn-block default-primary-color primary-text-color w3-left-align w3-border"><i class="fa fa-pencil w3-margin-right"></i>Editar Perfil</a>
-                <a href="#/band/discos" class="w3-btn-block light-primary-color primary-text-color w3-left-align w3-border"><i class="fa fa-microphone w3-margin-right"></i>Discografia</a>
+            <div class="w3-card-2 w3-round" ng-if="bandInfo.activo">
+                <a ng-click="editarPerfil()" class="w3-btn-block default-primary-color primary-text-color w3-left-align w3-border" ng-if="type==='banda'"><i class="fa fa-pencil w3-margin-right"></i>Editar Perfil</a>
+                <a ng-click="verDiscos();" class="w3-btn-block light-primary-color primary-text-color w3-left-align w3-border"><i class="fa fa-microphone w3-margin-right"></i>Discografia</a>
             </div>
             <br>
             
@@ -41,42 +41,52 @@
                     </p>
                 </div>
             </div>
-            <br>                       
+            <br>  
+            
+            <div class="w3-card-2 w3-round w3-white w3-margin-top w3-hide-small">
+                <h4 class="w3-center">Comentarios</h4> 
+                <div class="w3-container" ng-repeat="comment in bandComments">
+                    <span class="w3-right w3-opacity">{{comment.fecha | date:'dd/MM/yyyy HH:mm'}}</span>
+                    <h3>Por: {{comment.creadoPor}}</h3>
+                    <p>{{comment.comentario}}</p>
+                </div>                    
+            </div>
         </div>
         
         <!-- Middle Column -->
-        <div class="w3-right w3-btn-group w3-margin-bottom">
+        <div class="w3-right w3-margin-left w3-large">
+            Calificacion: {{bandRate}}<i class="fa fa-star w3-margin-left"></i>
+        </div>
+        <div class="w3-right w3-btn-group w3-margin-bottom" ng-if="bandInfo.activo && type==='banda'">
             <button class="w3-btn w3-border accent-color w3-round-large" onclick="document.getElementById('newsModal').style.display='block'"><i class="fa fa-plus w3-margin-right"></i>Agregar Noticia</button>    
             <button class="w3-btn w3-border accent-color w3-round-large" onclick="document.getElementById('eventsModal').style.display='block'"><i class="fa fa-calendar-plus-o w3-margin-right"></i>Agregar Evento</button>
         </div>
-        <div class="w3-col m9">
-            <div class="w3-container w3-card-2 w3-white w3-round w3-margin-left"><br>
-                <!--img src="img_avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px"-->
-                <span class="w3-right w3-opacity">1 min</span>
-                <h4>John Doe</h4><br>
-                <hr class="w3-clear">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div class="w3-right w3-btn-group w3-margin-bottom" ng-if="bandInfo.activo && type==='fan'">
+            <button class="w3-btn w3-border accent-color w3-round-large" onclick="document.getElementById('rateModal').style.display='block'">Calificar y Comentar</button>
+            <button class="w3-btn w3-border accent-color w3-round-large" ng-if="!isFollowing" ng-click="seguir()"><i class="fa fa-plus w3-margin-right"></i>Seguir</button>    
+            <button class="w3-btn w3-border accent-color w3-round-large" ng-if="isFollowing" ng-click="dejarSeguir()"><i class="fa fa-minus w3-margin-right"></i>Dejar de Seguir</button>
+        </div>
+        <div class="w3-col m9" ng-if="bandInfo.activo">
+            <div ng-repeat="news in bandNews" class="w3-container w3-card-2 w3-white w3-round w3-margin-left w3-margin-bottom">
+                <br>
+                <span class="w3-right w3-opacity">{{news.fechaCreacion | date:'dd/MM/yyyy HH:mm'}}</span>
+                <h3>{{news.titulo}}</h3>
+                <p>{{news.contenido}}</p> 
+                <button class="w3-btn w3-red w3-right w3-margin" ng-click="borrarNoticia(news.idNoticia)" ng-if="type==='banda'">Borrar</button>
             </div>
-            
-            <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
-                <!--img src="img_avatar5.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px"-->
-                <span class="w3-right w3-opacity">16 min</span>
-                <h4>Jane Doe</h4><br>
-                <hr class="w3-clear">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            </div>  
-            
-            <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
-                <span class="w3-right w3-opacity">32 min</span>
-                <h4>Angie Jane</h4><br>
-                <hr class="w3-clear">
-                <p>Have you seen this?</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                <button class="w3-btn accent-color w3-margin-bottom w3-right">Ver</button>
-                <button class="w3-btn w3-red w3-margin-bottom w3-right">Cancelar</button>
-            </div> 
-            
-            <!-- End Middle Column -->
+            <div ng-repeat="event in bandEvents" class="w3-container w3-card-2 w3-white w3-round w3-margin-left w3-margin-bottom">
+                <br>
+                <span class="w3-right w3-opacity">{{event.fechaCreacion | date:'dd/MM/yyyy HH:mm'}}</span>
+                <h3>{{event.titulo}}</h3> <span class="w3-text-red" ng-show="event.cancelado">CANCELADO</span><br>
+                Fecha del Evento: <b>{{event.fechaEvento | date:'dd/MM/yyyy'}}</b>
+                <p>{{event.contenido}}</p> 
+                <button class="w3-btn w3-green w3-right w3-margin-right w3-margin-bottom" ng-show="event.concierto" ng-disabled="event.cancelado" ng-click="verConcierto(event.idEvento)">Ver</button>
+                <button class="w3-btn w3-red w3-right w3-margin-bottom w3-margin-right" ng-disabled="event.cancelado || isPast(event.fechaEvento)" ng-click="cancelarEvento(event.idEvento)" ng-if="type==='banda'">Cancelar</button>
+            </div>
+        </div>
+        
+        <div class="w3-col m9 w3-center" ng-hide="bandInfo.activo || type==='fan'">
+            <button class="w3-btn w3-xxxlarge w3-round-large w3-green w3-margin" ng-click="desactivarCuenta()">ACTIVAR CUENTA</button>
         </div>
         
         <!-- End Grid -->
@@ -95,12 +105,12 @@
             <div class="w3-container">
                 <form class="w3-section">
                     <label><b>Titulo</b></label>
-                    <input class="w3-input w3-border w3-margin-bottom" type="text">
+                    <input class="w3-input w3-border w3-margin-bottom" type="text" ng-model="newNews.titulo">
                     
                     <label><b>Contenido</b></label>
-                    <textarea class="w3-input w3-border" maxlength="100"></textarea>
+                    <textarea class="w3-input w3-border" maxlength="100" ng-model="newNews.contenido"></textarea>
                     
-                    <button class="w3-btn w3-btn-block w3-green w3-margin-top">Agregar</button>
+                    <button class="w3-btn w3-btn-block w3-green w3-margin-top" ng-click="crearNoticia()">Agregar</button>
                 </form>
             </div>
             
@@ -122,30 +132,84 @@
             <div class="w3-container">
                 <form class="w3-section">
                     <label><b>Titulo</b></label>
-                    <input class="w3-input w3-border w3-margin-bottom" type="text">
+                    <input class="w3-input w3-border w3-margin-bottom" type="text" ng-model="newEvent.titulo">
                         
                     <label><b>Contenido</b></label>
-                    <textarea class="w3-input w3-border w3-margin-bottom" maxlength="100"></textarea>
+                    <textarea class="w3-input w3-border w3-margin-bottom" maxlength="100" ng-model="newEvent.contenido"></textarea>
                         
                     <label><b>Pais</b></label>
-                    <input class="w3-input w3-border w3-margin-bottom" type="text">
+                    <input class="w3-input w3-border w3-margin-bottom" type="text" ng-model="newEvent.ubicacion">
                     
                     <label><b>Fecha del evento</b></label>
-                    <input class="w3-input w3-border w3-margin-bottom" type="text">
+                    <input class="w3-input w3-border w3-margin-bottom" type="text" ng-model="newEvent.fechaEvento">
                     
                     <label><b>Concierto</b></label><br>
-                    <input class="w3-radio" type="radio" name="concierto" value="S" checked>
+                    <input class="w3-radio" type="radio" name="concierto" value="true" checked ng-model="newEvent.concierto" >
                     <label class="w3-validate">Si</label>
     
-                    <input class="w3-radio" type="radio" name="concierto" value="N">
+                    <input class="w3-radio" type="radio" name="concierto" value="false" ng-model="newEvent.concierto">
                     <label class="w3-validate">No</label>
                     
-                    <button class="w3-btn w3-btn-block w3-green w3-margin-top">Crear</button>
+                    <button class="w3-btn w3-btn-block w3-green w3-margin-top" ng-click="crearEvento()">Crear</button>
                 </form>
             </div>
                 
             <div class="w3-container w3-border-top w3-padding-hor-16 w3-light-grey">
                 <button onclick="document.getElementById('eventsModal').style.display='none'" type="button" class="w3-btn w3-red">Cancelar</button>
+            </div>
+                
+        </div>
+    </div>
+    
+    <div id="rateModal" class="w3-modal">
+        <span onclick="document.getElementById('rateModal').style.display='none'" class="w3-closebtn w3-hover-red w3-container w3-padding-hor-8 w3-display-topright">&times;</span>
+        <div class="w3-modal-content w3-card-8 w3-animate-zoom" style="max-width:600px">
+            
+            <header class="w3-center w3-container default-primary-color"><br>
+                <h1 class="w3-xxlarge primary-text-color">Calificar Banda</h1>
+            </header>
+                
+            <div class="w3-container">
+                <form class="w3-section">
+                    <label><b>Calificacion</b></label>
+                    <select class="w3-select" required="" ng-model="newComment.calificacion">
+                        <option disabled="" selected>1-5 estrellas</option>
+                        <option value="1">
+                            &#9733;
+                        </option>
+                        <option value="2">
+                            &#9733;
+                            &#9733;
+                        </option>
+                        <option value="3">
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                        </option>
+                        <option value="4">
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                        </option>
+                        <option value="5">
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                        </option>
+                    </select>
+                    
+                    <label><b>Comentario</b></label>
+                    <textarea class="w3-input w3-border w3-margin-bottom" maxlength="100" ng-model="newComment.comentario"></textarea>
+                        
+                    <button class="w3-btn w3-btn-block w3-green w3-margin-top" ng-click="calificar()">Crear</button>
+                </form>
+            </div>
+                
+            <div class="w3-container w3-border-top w3-padding-hor-16 w3-light-grey">
+                <button onclick="document.getElementById('rateModal').style.display='none'" type="button" class="w3-btn w3-red">Cancelar</button>
             </div>
                 
         </div>

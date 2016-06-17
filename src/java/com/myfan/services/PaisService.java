@@ -6,8 +6,8 @@
 package com.myfan.services;
 
 import com.google.gson.Gson;
-import com.myfan.model.Facade;
 import com.myfan.connection.IConstantes;
+import com.myfan.model.Facade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.GET;
@@ -20,20 +20,18 @@ import javax.ws.rs.core.Response;
  *
  * @author Steven
  */
-@Path("generos")
-public class GenreService {
-    
+@Path("paises")
+public class PaisService {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response verGeneros (){
+    public Response getPaises(){
         try {
             Facade manager = new Facade();
             Gson g = new Gson();
-            return Response.ok(g.toJson(manager.verGeneros())).build();
+            return Response.ok(g.toJson(manager.getPaises())).build();
         } catch (Exception ex) {
-            ex.printStackTrace();
-            return Response.serverError().entity(IConstantes.ERROR).build();
+            return Response.serverError().entity(IConstantes.m).build();
         }
     }
     

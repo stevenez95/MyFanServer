@@ -6,10 +6,11 @@
 package com.myfan.services;
 
 import com.google.gson.Gson;
+import com.myfan.connection.IConstantes;
 import com.myfan.connection.TwitterConnect;
 import com.myfan.dto.Fan;
 import com.myfan.dto.Resena;
-import com.myfan.model.ProjectManager;
+import com.myfan.model.Facade;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,10 +48,8 @@ public class FanService {
     @Path("seguir/{idFan}/{idBanda}")
     public Response seguirBanda(@PathParam("idFan")int idFan, @PathParam("idBanda")int idBanda){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.seguirBanda(idFan, idBanda);
-            TwitterConnect connect = new TwitterConnect();
-            connect.publicarSeguimiento(idFan, idBanda);
             return Response.ok().build();
         } catch (SQLException ex) {
             return Response.serverError().build();
@@ -61,7 +60,7 @@ public class FanService {
     @Path("esSeguidor/{idFan}/{idBanda}")
     public Response esSeguidor(@PathParam("idFan")int idFan, @PathParam("idBanda")int idBanda){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.seguirBanda(idFan, idBanda);
             return Response.ok(pm.esSeguidor(idFan, idBanda)).build();
         } catch (SQLException ex) {
@@ -73,7 +72,7 @@ public class FanService {
     @Path("dejarSeguir/{idFan}/{idBanda}")
     public Response dejarSeguirBanda(@PathParam("idFan")int idFan, @PathParam("idBanda")int idBanda){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.dejarSeguirBanda(idFan, idBanda);
             return Response.ok().build();
         } catch (SQLException ex) {
@@ -85,7 +84,7 @@ public class FanService {
     @Path("desactivar/{idFan}")
     public Response desactivarFan(@PathParam("idFan")int idFan){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.desactivarFan(idFan);
             return Response.ok().build();
         } catch (SQLException ex) {
@@ -97,7 +96,7 @@ public class FanService {
     @Path("actualizar/{idFan}")
     public Response actualizarFan(Fan fan, @PathParam("idFan")int idFan){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.actualizarFan(fan,idFan);
             return Response.ok().build();
         } catch (SQLException ex) {
@@ -109,7 +108,7 @@ public class FanService {
     @Path("verArtistas/{idFan}")
     public Response verMisArtistas(@PathParam("idFan")int idFan){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             Gson g = new Gson();
             return Response.ok(g.toJson(pm.verMisArtistas(idFan))).build();
         } catch (SQLException ex) {
@@ -121,7 +120,7 @@ public class FanService {
     @Path("buscarArtista/{nombreBanda}/{genero}/{pais}")
     public Response buscarArtistas(@PathParam("nombreBanda")String nombreBanda, @PathParam("genero")String genero, @PathParam("pais")String pais){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             Gson g = new Gson();
             return Response.ok(g.toJson(pm.buscarArtistas(nombreBanda, pais, genero))).build();
         } catch (Exception ex) {
@@ -135,10 +134,8 @@ public class FanService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response rateBand(Resena resenaBanda){
         try {
-            ProjectManager manager = new ProjectManager();
+            Facade manager = new Facade();
             manager.rateBand(resenaBanda);
-            TwitterConnect connect = new TwitterConnect();
-            connect.publicarCalificacion(resenaBanda);
             return Response.ok().build();
         } catch (Exception ex) {
             return Response.serverError().build();
@@ -150,12 +147,11 @@ public class FanService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response rateDisc(Resena resenaDisco){
         try {
-            ProjectManager manager = new ProjectManager();
+            Facade manager = new Facade();
             manager.rateDisc(resenaDisco);
             return Response.ok().build();
         } catch (Exception ex) {
-            Logger.getLogger(FanService.class.getName()).log(Level.SEVERE, null, ex);
-            return Response.serverError().build();
+            return Response.serverError().entity(IConstantes.m).build();
         }
     }
     
@@ -164,7 +160,7 @@ public class FanService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response rateEvent(Resena resenaEvento){
         try {
-            ProjectManager manager = new ProjectManager();
+            Facade manager = new Facade();
             manager.rateEvent(resenaEvento);
             return Response.ok().build();
         } catch (Exception ex) {
@@ -177,11 +173,10 @@ public class FanService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFanInfo(@PathParam("idFan")int idFan){
         try {
-            ProjectManager manager = new ProjectManager();
+            Facade manager = new Facade();
             Gson g = new Gson();
             return Response.ok(g.toJson(manager.getFanInfo(idFan))).build();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             return Response.serverError().build();
         }
     }

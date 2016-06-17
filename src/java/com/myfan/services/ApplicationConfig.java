@@ -39,6 +39,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.myfan.services.GenreService.class);
         resources.add(com.myfan.services.MyFestService.class);
         resources.add(com.myfan.services.NewsService.class);
+        resources.add(com.myfan.services.PaisService.class);
     }
     
 }

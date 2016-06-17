@@ -1,25 +1,23 @@
 <div class="w3-container w3-content" style="max-width:1400px;margin-top:10px">    
     <!-- The Grid -->
     <div class="w3-row">
-        <div class="w3-right w3-large">Calificacion: <i class="fa fa-star"></i></div>
-        <div class="w3-right w3-margin-bottom"><button class="w3-btn accent-color" onclick="document.getElementById('commentsModal').style.display='block'">Calificar y comentar </button></div>
+        <div class="w3-right w3-margin-left w3-large">Calificacion: {{eventRate}} <i class="fa fa-star w3-margin-left"></i></div>
+        <div class="w3-right w3-margin-bottom" ng-if="type==='fan' && puedeCalificar"><button class="w3-btn accent-color w3-round-large" onclick="document.getElementById('rateModal').style.display='block'">Calificar y comentar </button></div>
         <div class="w3-col m12">
             <div class="w3-container w3-card-2 w3-white w3-round w3-margin-bottom"><br>
-                <h2>Titulo Evento</h2>
-                <p>Contenido</p>
-                <p>Fecha</p>
-                <p>Lugar</p>
-                <h4>Banda</h4><br>
+                <h2>{{eventInfo.titulo}}</h2>
+                <p>{{eventInfo.contenido}}</p>
+                <p>{{eventInfo.fechaEvento | date: 'dd/MM/yyyy'}}</p>
+                <p>{{eventInfo.pais}}</p>
             </div>
             
-            <div class="w3-card-2 w3-round w3-white">
-                <div class="w3-container">
-                    <h4 class="w3-center">Comentarios</h4>   
-                    <hr class="w3-clear">
-                    <span class="w3-right w3-opacity">12/11/2015</span>
-                    <h2>Por:</h2>
-                    <p>Comentario</p>
-                </div>
+            <div class="w3-card-2 w3-round w3-white w3-margin-top w3-hide-small">
+                <h4 class="w3-center">Comentarios</h4> 
+                <div class="w3-container" ng-repeat="comment in eventComments">
+                    <span class="w3-right w3-opacity">{{comment.fecha | date:'dd/MM/yyyy HH:mm'}}</span>
+                    <h3>Por: {{comment.creadoPor}}</h3>
+                    <p>{{comment.comentario}}</p>
+                </div>                    
             </div>
             
             
@@ -30,37 +28,57 @@
         <!-- End Grid -->
     </div>
     <!-- End Page Container -->
-    <div id="commentsModal" class="w3-modal">
-        <span onclick="document.getElementById('commentsModal').style.display='none'" class="w3-closebtn w3-hover-red w3-container w3-padding-hor-8 w3-display-topright">&times;</span>
+    <div id="rateModal" class="w3-modal">
+        <span onclick="document.getElementById('rateModal').style.display='none'" class="w3-closebtn w3-hover-red w3-container w3-padding-hor-8 w3-display-topright">&times;</span>
         <div class="w3-modal-content w3-card-8 w3-animate-zoom" style="max-width:600px">
             
             <header class="w3-center w3-container default-primary-color"><br>
-                <h1 class="w3-xxlarge primary-text-color">Agregar Resena</h1>
+                <h1 class="w3-xxlarge primary-text-color">Calificar Concierto</h1>
             </header>
-            
+                
             <div class="w3-container">
                 <form class="w3-section">
                     <label><b>Calificacion</b></label>
-                    <select class="w3-select w3-border">
-                        <option disabled="" selected="">1-5 Estrellas</option>
-                        <option value="5">5 Estrellas</option>
-                        <option value="4">4 Estrellas</option>
-                        <option value="3">3 Estrellas</option>
-                        <option value="2">2 Estrellas</option>
-                        <option value="1">1 Estrella</option>
+                    <select class="w3-select" required="" ng-model="newComment.calificacion">
+                        <option disabled="" selected>1-5 estrellas</option>
+                        <option value="1">
+                            &#9733;
+                        </option>
+                        <option value="2">
+                            &#9733;
+                            &#9733;
+                        </option>
+                        <option value="3">
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                        </option>
+                        <option value="4">
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                        </option>
+                        <option value="5">
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                            &#9733;
+                        </option>
                     </select>
                     
                     <label><b>Comentario</b></label>
-                    <textarea class="w3-input w3-border" maxlength="100" placeholder="(opcional)"></textarea>
-                    
-                    <button class="w3-btn w3-btn-block w3-green w3-margin-top">Agregar</button>
+                    <textarea class="w3-input w3-border w3-margin-bottom" maxlength="100" ng-model="newComment.comentario"></textarea>
+                        
+                    <button class="w3-btn w3-btn-block w3-green w3-margin-top" ng-click="calificar()">Crear</button>
                 </form>
             </div>
-            
+                
             <div class="w3-container w3-border-top w3-padding-hor-16 w3-light-grey">
-                <button onclick="document.getElementById('commentsModal').style.display='none'" type="button" class="w3-btn w3-red">Cancelar</button>
+                <button onclick="document.getElementById('rateModal').style.display='none'" type="button" class="w3-btn w3-red">Cancelar</button>
             </div>
-            
+                
         </div>
     </div>
     

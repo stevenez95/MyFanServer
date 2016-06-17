@@ -8,23 +8,23 @@
                 </p>
                 <p>
                     <label>Nombre de la Banda</label>
-                    <input class="w3-input w3-validate" type="text" required ng-model="newBand.name">
+                    <input class="w3-input w3-validate" type="text" required ng-model="bandInfo.nombreBanda">
                 </p>
                 
                 <p>
                     <label>Nombre Usuario</label>
-                    <input class="w3-input w3-validate" type="text" disabled="">
+                    <input class="w3-input w3-validate" type="text" disabled="" ng-model="bandInfo.username">
                         
                         
 
                 <p>
                     <label>Constrasena</label>
-                    <input class="w3-input w3-validate" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}" required ng-model="newBand.password">
+                    <input class="w3-input w3-validate" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}" required ng-model="bandInfo.password">
                 </p>
                 
                 <p>
                     <label>Hashtag</label>
-                    <input type="text" class="w3-input" ng-model="newBand.hashttag">
+                    <input type="text" class="w3-input" ng-model="bandInfo.hashtag" required="">
                 </p>
 
                 <p>
@@ -34,17 +34,17 @@
                 
                 <p>
                     <label>Biografia</label>
-                    <textarea class="w3-input" maxlength="300" cols="30" required ng-model="newBand.bio"></textarea>
+                    <textarea class="w3-input" maxlength="300" cols="30" required ng-model="bandInfo.biografia"></textarea>
                 </p>
                 
                 <p>
                     <label>Integrantes</label>
-                    <textarea class="w3-input" maxlength="300" required ng-model="newBand.integrantes"></textarea>
+                    <textarea class="w3-input" maxlength="300" required ng-model="bandInfo.integrantes"></textarea>
                 </p>
                 
                   <p>
                     <label>Pais</label>
-                    <select class="w3-select" ng-model="newBand.country">
+                    <select class="w3-select" ng-model="bandInfo.pais">
                         <option value="Afganistán">Afganistán</option>
                         <option value="Albania">Albania</option>
                         <option value="Alemania">Alemania</option>
@@ -235,16 +235,13 @@
                 
                 <p>
                     <label>Año de Creacion</label>
-                    <input type="number" class="w3-input" min="0" ng-model="newBand.year">
+                    <input type="number" class="w3-input" min="0" ng-model="bandInfo.anioCreacion">
                 </p>
                 
                 <p>
                     <label>Foto Perfil</label>
                     <input id="fotoB" type="file" accept="image/jpg,image/png,image/gif" class="w3-input" onchange="readURL(this,'#blahB');">
-                </p>
-
-                <input type="submit" value="Registrarse" class="w3-btn-block accent-color w3-margin-bottom" ng-click="registerBand()">
-                
+                </p>                
             </form>
             <div class="w3-center w3-half">
                 <h3>Foto Perfil</h3>
@@ -252,9 +249,8 @@
             </div>
         </div>
              <div class="w3-center">
-                <button class="w3-btn-block w3-red w3-half w3-margin-bottom w3-border w3-round-large">Desactivar Cuenta</button>
-                <button class="w3-btn-block accent-color w3-half  w3-margin-bottom w3-border w3-round-large">Actualizar</button>
-                
+                 <button class="w3-btn-block accent-color w3-half  w3-margin-bottom w3-border w3-round-large" ng-click="actualizarDatos()">Actualizar</button>
+                 <button class="w3-btn-block w3-red w3-half w3-margin-bottom w3-border w3-round-large" ng-click="desactivarCuenta()">Desactivar Cuenta</button>                
             </div>
     </div>
 

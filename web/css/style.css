@@ -4,9 +4,10 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : Apr 12, 2016, 10:17:05 PM
+    Created on : Jun 12, 2016, 6:18:18 PM
     Author     : Steven
 */
+
 body{
     background-color: rgb(242,235,199);
 }
@@ -27,5 +28,3 @@ ul,li{
 .divider-color         	{ border-color: #B6B6B6; }
 .accept-action          { background-color: #4CAF50; }
 .danger                 { background-color: #F44336; }
-
-

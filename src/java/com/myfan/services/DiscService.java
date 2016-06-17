@@ -8,7 +8,7 @@ package com.myfan.services;
 import com.google.gson.Gson;
 import com.myfan.dto.Cancion;
 import com.myfan.dto.Discografia;
-import com.myfan.model.ProjectManager;
+import com.myfan.model.Facade;
 import java.sql.SQLException;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -39,7 +39,7 @@ public class DiscService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDiscs(@PathParam("idBanda")int idBanda){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             Gson gson = new Gson();
             return Response.ok(gson.toJson(pm.getDiscs(idBanda))).build();
         } catch (SQLException ex) {
@@ -61,7 +61,7 @@ public class DiscService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDiscsInfo(@PathParam("idDisco")int idDisco){
        try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             Gson gson = new Gson();
             return Response.ok(gson.toJson(pm.getDiscInfo(idDisco))).build();
         } catch (SQLException ex) {
@@ -80,7 +80,7 @@ public class DiscService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createNewDisc(Discografia discografia){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.createDisc(discografia);
             return Response.ok().build();
         } catch (SQLException ex) {
@@ -101,7 +101,7 @@ public class DiscService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response editDisc(Discografia discografia, @PathParam("idDisco")int idDisco){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.editDisc(discografia, idDisco);
             return Response.ok().build();
         } catch (SQLException ex) {
@@ -122,7 +122,7 @@ public class DiscService {
     @Path("delete/{idDisco}")
     public Response deleteDisc(@PathParam("idDisco")int idDisco){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.deleteDisc(idDisco);
             return Response.ok().build();
         } catch (SQLException ex) {
@@ -143,7 +143,7 @@ public class DiscService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSong(Cancion cancion){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.createSong(cancion);
             return Response.ok().build();
         } catch (SQLException ex) {
@@ -163,7 +163,7 @@ public class DiscService {
     @Path("editSong/{idCancion}")
     public Response editSong(Cancion cancion, @PathParam("idCancion")int idCancion){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.editSong(cancion, idCancion);
             return Response.ok().build();
         } catch (SQLException ex) {
@@ -182,7 +182,7 @@ public class DiscService {
     @Path("deleteSong/{idCancion}")
     public Response deleteSong(@PathParam("idCancion")int idCancion){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.deleteSong(idCancion);
             return Response.ok().build();
         } catch (SQLException ex) {
@@ -197,7 +197,7 @@ public class DiscService {
     public Response getSongs(@PathParam("idDisco")int idDisco){
         try {
             System.out.println("dsfsd");
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             Gson gson = new Gson();
             return Response.ok(gson.toJson(pm.getSongs(idDisco))).build();
         } catch (SQLException ex) {
@@ -212,14 +212,14 @@ public class DiscService {
     @Path("getSong/{idCancion}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSong(@PathParam("idCancion")int idCancion){
-        ProjectManager pm = new  ProjectManager();
+        Facade pm = new  Facade();
         return Response.ok(pm.getSong(idCancion)).build();
     }
     
     @GET
     @Path("getDiscRate/{idDisco}")
     public Response getDiscRate(@PathParam("idDisco")int idDisco) throws Exception{
-        ProjectManager pm = new  ProjectManager();        
+        Facade pm = new  Facade();        
         return Response.ok(pm.getDiscRate(idDisco)).build();
     }
     
@@ -229,7 +229,7 @@ public class DiscService {
     @Path("getDiscComments/{idDisco}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDiscComments(@PathParam("idDisco")int idDisco) throws Exception{
-        ProjectManager pm = new  ProjectManager();
+        Facade pm = new  Facade();
         String res = "";
         Gson gson = new Gson();
         

@@ -3,34 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/* global myMusic */
+
 myMusic.factory('Auth', ["$http","AuthToken",function($http, AuthToken) {
 
 	// create auth factory object
 	var authFactory = {};
 
 	// log a user in
-	authFactory.login = function(username, password) {
-
-		// return the promise object and its data
-//		return $http.post('/api/authenticate', {
-//			username: username,
-//			password: password
-//		})
-//			.success(function(data) {
-//				AuthToken.setToken(data.token);
-//       			return data;
-//			});
-            console.log('loginnnn!!');
+	authFactory.login = function(user) {
+            return $http.post('http://localhost:8080/MyFanServer/api/v1/autenticar/login', user)
+                    .success(function(data) {
+                        AuthToken.setToken(data.mensaje,data.tipo,data.id);
+                return data;
+            });
 	};
 
 	// log a user out by clearing the token
 	authFactory.logout = function() {
-		// clear the token
-		AuthToken.setToken();
+		AuthToken.setToken(null,null,null);
 	};
 
-	// check if a user is logged in
-	// checks if there is a local token
 	authFactory.isLoggedIn = function() {
 		if (AuthToken.getToken()) 
 			return true;
@@ -38,13 +31,6 @@ myMusic.factory('Auth', ["$http","AuthToken",function($http, AuthToken) {
 			return false;	
 	};
 
-	// get the logged in user
-//	authFactory.getUser = function() {
-//		if (AuthToken.getToken())
-//			return $http.get('/api/me', { cache: true });
-//		else
-//			return $q.reject({ message: 'User has no token.' });		
-//	};
 
 
 	// return auth factory object
@@ -60,11 +46,17 @@ myMusic.factory('AuthToken',["$cookies", function($cookies) {
 		return $cookies.getObject('token');
 	};
 
-	authTokenFactory.setToken = function(token) {
-		if (token)
-			$cookies.putObject('token', token);
-	 	else
+	authTokenFactory.setToken = function(token,tipo,id) {
+		if (token){
+                    $cookies.putObject('token', token);
+                    $cookies.putObject('tipo',tipo);
+                    $cookies.putObject('id',id);
+                }
+	 	else{
 			$cookies.remove('token');
+                        $cookies.remove('tipo');
+                        $cookies.remove('id');
+                    }
 	};
 
 	return authTokenFactory;
@@ -80,6 +72,7 @@ myMusic.factory('AuthInterceptor',["$q","$location","AuthToken", function($q, $l
 
 		// grab the token
 		var token = AuthToken.getToken();
+               // console.log("config: " + token);
 
 		// if the token exists, add it to the header as x-access-token
 		if (token) 
@@ -90,12 +83,13 @@ myMusic.factory('AuthInterceptor',["$q","$location","AuthToken", function($q, $l
 
 	// happens on response errors
 	interceptorFactory.responseError = function(response) {
+                        
 
-		// if our server returns a 403 forbidden response
-		if (response.status === 403) {
-			AuthToken.setToken();
-			$location.path('/login');
-		}
+            // if our server returns a 403 forbidden response
+            if (response.status === 403) {
+                AuthToken.setToken(null,null,null);
+                $location.path('/');
+            }
 
 		// return the errors from the server as a promise
 		return $q.reject(response);

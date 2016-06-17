@@ -7,7 +7,7 @@ package com.myfan.services;
 
 import com.google.gson.Gson;
 import com.myfan.dto.Noticia;
-import com.myfan.model.ProjectManager;
+import com.myfan.model.Facade;
 import java.sql.SQLException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -36,7 +36,7 @@ public class NewsService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFanNews(@PathParam("idFan")int idFan){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             Gson gson = new Gson();
             return Response.ok(gson.toJson(pm.getNoticiasFan(idFan))).build();
         } catch (SQLException ex) {
@@ -56,7 +56,7 @@ public class NewsService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBandNews(@PathParam("idBanda")int idBanda){
          try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             Gson gson = new Gson();
             return Response.ok(gson.toJson(pm.getNoticiasBanda(idBanda))).build();
         } catch (SQLException ex) {
@@ -76,7 +76,7 @@ public class NewsService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createNews(Noticia noticia){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.crearNoticia(noticia);
             return Response.ok().build();
         } catch (SQLException ex) {
@@ -95,7 +95,7 @@ public class NewsService {
     @Path("{idNoticia}")
     public Response deleteNews(@PathParam("idNoticia")int idNoticia){
         try {
-            ProjectManager pm = new ProjectManager();
+            Facade pm = new Facade();
             pm.deleteNews(idNoticia);
             return Response.ok().build();
         } catch (SQLException ex) {

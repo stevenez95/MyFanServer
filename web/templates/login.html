@@ -6,6 +6,7 @@ and open the template in the editor.
 -->
 
 <div class="w3-container" ng-cloak>
+    <h2 class="w3-text-red">{{error}}</h2>
     <div class="w3-card-2 w3-round-large w3-white w3-center">
         <div id="Band" class="w3-container">
             <form class="w3-container">
@@ -17,13 +18,12 @@ and open the template in the editor.
 
                 <p>
                     <label>Contrasena</label>
-                    <input class="w3-input w3-validate w3-margin-bottom" ng-model="logUser.pass" type="password" required>
+                    <input class="w3-input w3-validate w3-margin-bottom" ng-model="logUser.password" type="password" required>
                 </p>
 
-                <input type="submit" ng-click="login()" class="w3-btn-block accent-color" value="Ingresar">
+                <input type="submit" ng-click="login()" class="w3-btn-block accent-color w3-margin-bottom" value="Ingresar">
 
             </form>
-            
         </div>
     </div>
 
