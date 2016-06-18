@@ -5,6 +5,8 @@
  */
 
 
+/* global myMusic */
+
 myMusic.controller('mainCtrl', ['$scope','$location','$anchorScroll','Auth','$cookies','$route',function ($scope,$location,$anchorScroll,Auth,$cookies,$route) {
     //alert("working"); 
     //$location.path('/');
@@ -30,10 +32,15 @@ myMusic.controller('mainCtrl', ['$scope','$location','$anchorScroll','Auth','$co
    
    $scope.home();
    
+   $scope.$watch(function(){return Auth.logged;}, function (newValue) {
+        $scope.authenticated = newValue;
+    }, true);
+   
    
    $scope.cerrarSesion = function (){
        Auth.logout();
-       $scope.authenticated = false;
+       Auth.isLoggedIn();
+       
    };
 
 }]);

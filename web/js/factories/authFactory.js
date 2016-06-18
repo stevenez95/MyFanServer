@@ -8,11 +8,13 @@
 myMusic.factory('Auth', ["$http","AuthToken",function($http, AuthToken) {
 
 	// create auth factory object
-	var authFactory = {};
+	var authFactory = {
+            "logged":false
+        };
 
 	// log a user in
 	authFactory.login = function(user) {
-            return $http.post('http://localhost:8080/MyFanServer/api/v1/autenticar/login', user)
+            return $http.post('/MyFanServer/api/v1/autenticar/login', user)
                     .success(function(data) {
                         AuthToken.setToken(data.mensaje,data.tipo,data.id);
                 return data;
@@ -23,12 +25,18 @@ myMusic.factory('Auth', ["$http","AuthToken",function($http, AuthToken) {
 	authFactory.logout = function() {
 		AuthToken.setToken(null,null,null);
 	};
-
+        
 	authFactory.isLoggedIn = function() {
-		if (AuthToken.getToken()) 
-			return true;
-		else
-			return false;	
+            console.log("AUTH: " + this.logged);
+            if (AuthToken.getToken()){
+                this.logged = true;
+                return true;
+            } 
+            else{
+                this.logged = false;
+                return false;	
+            }
+            
 	};
 
 
@@ -47,16 +55,17 @@ myMusic.factory('AuthToken',["$cookies", function($cookies) {
 	};
 
 	authTokenFactory.setToken = function(token,tipo,id) {
-		if (token){
-                    $cookies.putObject('token', token);
-                    $cookies.putObject('tipo',tipo);
-                    $cookies.putObject('id',id);
-                }
-	 	else{
-			$cookies.remove('token');
-                        $cookies.remove('tipo');
-                        $cookies.remove('id');
-                    }
+            if (!token){
+                $cookies.remove('token');
+                $cookies.remove('tipo');
+                $cookies.remove('id');
+            }
+            else if(token.length<60)return;
+            else{
+                $cookies.putObject('token', token);
+                $cookies.putObject('tipo',tipo);
+                $cookies.putObject('id',id);
+            }
 	};
 
 	return authTokenFactory;

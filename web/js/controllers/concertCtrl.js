@@ -7,24 +7,23 @@ myMusic.controller('concertCtrl',["$scope","$routeParams","$http", function ($sc
         
         $scope.newComment;
 
-        var url = 'http://localhost:8080/MyFanServer/api/v1/';
+        var url = '/MyFanServer/api/v1/';
         $scope.eventId=$routeParams.eventId;
         
-        $scope.date2005 = new Date("2016-12-12").getTime(); 
         $scope.today = Date.now();
         
         var getEventInfo = function (){
             $http.get(url+'evento/'+$scope.eventId).then(function mySucces(response) {
                 $scope.eventInfo=response.data;
                 $scope.fechaEv = new Date($scope.eventInfo.fechaEvento).getTime();
-                verificar();
+                $scope.verificar();
             }, function myError(response) {
                 console.log(response);
                 $scope.error = response.mensaje;
             });
         };
         
-        var verificar = function (){
+        $scope.verificar = function (){
             if($scope.today >= $scope.fechaEv + 3600000)
                 $scope.puedeCalificar = true;
             else

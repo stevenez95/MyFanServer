@@ -8,9 +8,10 @@
 myMusic.controller('fanCtrl',["$scope","$location","$routeParams","$http","$route", function ($scope,$location,$routeParams,$http,$route) {
         
         $scope.fanId = $routeParams.fanId;
-        var url = 'http://localhost:8080/MyFanServer/api/v1/';
+        var url = '/MyFanServer/api/v1/';
         
-        $scope.busqueda;
+        $scope.busqueda={};
+        $scope.fanInfo= {};
         
         var getFanInfo = function (){
             $http.get(url+'fan/me/'+$scope.fanId).then(function mySucces(response) {
@@ -105,8 +106,8 @@ myMusic.controller('fanCtrl',["$scope","$location","$routeParams","$http","$rout
                 $scope.error = "Debe ingresar un nombre de banda";
                 return;
             }
-            if(!$scope.busqueda.genero) {$scope.busqueda.genero=""; }
-            if(!$scope.busqueda.pais) { $scope.busqueda.pais = "";}
+            if(!$scope.busqueda.genero) {$scope.busqueda.genero="%20"; }
+            if(!$scope.busqueda.pais) { $scope.busqueda.pais = "%20";}
             $http.get(url+'fan/buscarArtista/'+$scope.busqueda.nombre+'/'+$scope.busqueda.genero+'/'+$scope.busqueda.pais).then(function mySucces(response) {
                 $scope.busqueda='';
                 $scope.resBusqueda = response.data;

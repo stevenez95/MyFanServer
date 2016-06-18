@@ -9,7 +9,7 @@ myMusic.controller('discCtrl',["$scope","$routeParams","$location","$http", func
         $scope.newDisc={};
         $scope.newSong={};
         
-        var url = "http://localhost:8080/MyFanServer/api/v1/";
+        var url = "/MyFanServer/api/v1/";
         
         var viewDiscs = function (){
             $http.get(url+'disco/banda/'+$scope.bandId).then(function mySucces(response) {

@@ -1,12 +1,11 @@
 <div class="w3-container">
-    
     <div class="w3-card-8 w3-round-large w3-white w3-center" ng-init="openLogIn('Fan')">
         <ul class="w3-navbar w3-black w3-margin-top">
             <li class="w3-half w3-border dark-primary-color"><a ng-click="openLogIn('Band')">Banda</a></li>
             <li class="w3-half w3-border dark-primary-color"><a ng-click="openLogIn('Fan')">Fan</a></li>
         </ul>
         <div id="Band" class="w3-container" ng-hide="isFan">
-            <form class="w3-container w3-half">
+            <form class="w3-container w3-half" name="formBanda">
                 <p>
                     <label class="w3-text-red" ng-show="error">{{error}}</label>
                 </p>
@@ -32,8 +31,8 @@
                 </p>
                 
                 <p></p>
-                    <label>Géneros Musicales<sup class="w3-text-red">*</sup></label>
-                    <div ng-repeat="genero in generos">
+                <label>Géneros Musicales<sup class="w3-text-red">*</sup></label><br/>
+                    <div ng-repeat="genero in generos" style="display: inline-block; margin: 5px;">
                     <input class="w3-check" type="checkbox"  ng-click="toggleSelectionB(genero.idGenero)">
                     <label>{{genero.nombre}}</label>
                 </div>
@@ -51,7 +50,7 @@
                 <p>
                     <label>País<sup class="w3-text-red">*</sup></label>
                     <select class="w3-select" ng-model="newBand.idPais">
-                        <option disabled selected>Seleccione un pais</option>
+                        <option selected disabled>Seleccione un pais</option>
                         <option ng-repeat="pais in paises" ng-value="pais.idPais">{{pais.pais}}</option>
                     </select>
                 </p>
@@ -76,7 +75,7 @@
         </div>
         
         <div id="Fan" class="w3-container" ng-show="isFan">
-            <form class="w3-container w3-half w3-right">
+            <form class="w3-container w3-half w3-right" name="formFan">
                 
                 <p>
                     <label>Nombre<sup class="w3-text-red">*</sup></label>

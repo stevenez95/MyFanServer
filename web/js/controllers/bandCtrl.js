@@ -6,22 +6,28 @@
 /* global myMusic */
 
 myMusic.controller('fanBandCtrl',['$scope','$routeParams','$location','$http',function ($scope,$routeParams,$location,$http){
-        var url = 'http://localhost:8080/MyFanServer/api/v1/';
+        var url = '/MyFanServer/api/v1/';
         
         $scope.newComment;
         
         $scope.type='fan';
-        $http.get(url+'fan/esSeguidor/'+$routeParams.fanId+'/'+$routeParams.bandId).then(function mySucces(response) {
-            $scope.isFollowing = response.data;
-        }, function myError(response) {
-            console.log(response);
-            $scope.error = "error";
-        }); 
+        
+        var isFoll = function (){
+            $http.get(url+'fan/esSeguidor/'+$routeParams.fanId+'/'+$routeParams.bandId).then(function mySucces(response) {
+                $scope.isFollowing = response.data;
+            }, function myError(response) {
+                console.log(response);
+                $scope.error = "error";
+            }); 
+        };
+        
+        isFoll();
             
         var getBandInfo = function (){
             $http.get(url+'banda/me/'+$routeParams.bandId).then(function mySucces(response) {
                 $scope.bandInfo = response.data;
                 getCantSeguidores();
+                getBandRate();
             }, function myError(response) {
                 console.log(response);
                 $scope.error = "error";
@@ -31,7 +37,6 @@ myMusic.controller('fanBandCtrl',['$scope','$routeParams','$location','$http',fu
         var getCantSeguidores = function (){
             $http.get(url+'banda/seguidores/'+$routeParams.bandId).then(function mySucces(response) {
                 $scope.bandSeg = response.data;
-                getBandRate();
             }, function myError(response) {
                 console.log(response);
                 $scope.error = "error";
@@ -96,6 +101,7 @@ myMusic.controller('fanBandCtrl',['$scope','$routeParams','$location','$http',fu
         $scope.seguir = function (){
             $http.post(url+'fan/seguir/'+$routeParams.fanId+'/'+$routeParams.bandId,{}).then(function mySucces(response) {
                 $scope.isFollowing = true;
+                getCantSeguidores();
             }, function myError(response) {
                 console.log(response);
                 $scope.error = "error";
@@ -105,6 +111,7 @@ myMusic.controller('fanBandCtrl',['$scope','$routeParams','$location','$http',fu
         $scope.dejarSeguir = function (){
             $http.delete(url+'fan/dejarSeguir/'+$routeParams.fanId+'/'+$routeParams.bandId).then(function mySucces(response) {
                 $scope.isFollowing = false;
+                getCantSeguidores();
             }, function myError(response) {
                 console.log(response);
                 $scope.error = "error";
@@ -126,14 +133,15 @@ myMusic.controller('fanBandCtrl',['$scope','$routeParams','$location','$http',fu
 
 myMusic.controller('bandCtrl',["$scope","$routeParams","$http","$location","$route", function ($scope,$routeParams,$http,$location,$route) {
         
-        var url = 'http://localhost:8080/MyFanServer/api/v1/';
+        var url = '/MyFanServer/api/v1/';
         
         $scope.type='banda';
+        $scope.bandInfo={};
         
         
         
-        var getBandInfo = function (){
-            $http.get(url+'banda/me/'+$routeParams.bandId).then(function mySucces(response) {
+        var getBandInfo = function (id){
+            $http.get(url+'banda/me/'+id).then(function mySucces(response) {
                 $scope.bandInfo = response.data;
                 getCantSeguidores();
             }, function myError(response) {
@@ -152,7 +160,7 @@ myMusic.controller('bandCtrl',["$scope","$routeParams","$http","$location","$rou
             });
         }; //done
         
-        getBandInfo();
+        getBandInfo($routeParams.bandId);
         
         var verNoticias = function (){
             $http.get(url+'noticias/banda/'+$routeParams.bandId).then(function mySucces(response) {
@@ -288,6 +296,43 @@ myMusic.controller('bandCtrl',["$scope","$routeParams","$http","$location","$rou
                 return true;
             else
                 return false;
+        };
+        
+        var getGeneros = function (){
+            $http.get(url+'generos').then(function mySucces(response) {
+                $scope.generos= response.data;
+            }, function myError(response) {
+                $scope.myWelcome = response.statusText;
+            });
+        };
+        
+        var getPaises = function (){
+            $http.get(url+'paises').then(function mySucces(response) {
+                $scope.paises= response.data;
+            }, function myError(response) {
+                $scope.myWelcome = response.statusText;
+            });
+        };
+        
+        getGeneros();
+        getPaises();
+        
+        $scope.genreSelectionB = [];
+        $scope.toggleSelectionB = function toggleSelection(idGenero) {
+            var idx = $scope.genreSelectionB.indexOf(idGenero);
+            
+            // is currently selected
+            if (idx > -1) {
+                $scope.genreSelectionB.splice(idx, 1);
+            }
+            
+            // is newly selected
+            else {
+                $scope.genreSelectionB.push(idGenero);
+            }
+            console.log($scope.genreSelectionB);
+            $scope.bandInfo.generos = $scope.genreSelectionB;
+            console.log($scope.bandInfo);
         };
         
     }]);

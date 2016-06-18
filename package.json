@@ -1,0 +1,30 @@
+{
+  "name": "MyFan",
+  "version": "1.0.0",
+  "keywords": [
+    "util",
+    "functional",
+    "server",
+    "client",
+    "browser"
+  ],
+  "author": "Steven",
+  "contributors": [],
+  "devDependencies": {
+    "angular": "^1.5.7",
+    "angular-base64-upload": "^0.1.19",
+    "angular-cookies": "^1.5.7",
+    "angular-mocks": "^1.5.7",
+    "angular-route": "^1.5.7",
+    "angular-ui-router": "^0.3.1",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-uglify": "^1.5.3",
+    "gulp-util": "^3.0.7",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-spec-reporter": "0.0.26"
+  }
+}
