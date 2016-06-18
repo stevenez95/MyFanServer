@@ -32,6 +32,7 @@ public class FanInfo {
     
     public void seguirBanda(int idFan , int idBanda, Connection connection)throws SQLException{
         String query = "insert into seguidos (idFan, idBanda) value (?,?);";
+        System.out.println("seguir");
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idFan);
         ps.setInt(2, idBanda);
@@ -60,7 +61,6 @@ public class FanInfo {
     }
     
     public void actualizarFan(Fan fan,int idFan, Connection connection)throws SQLException{
-        String query1 = "update fans set password = ?,nombre= ?,apellido= ?,fechaNac= ?,genero= ?,idPais= ?,fotoPerfil= ? where idFan = ?;";
         String query2 = "update fans set nombre= ?,apellido= ?,fechaNac= ?,genero= ?,idPais= ?,fotoPerfil= ? where idFan = ?;";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.sql.Date fecha = null;
@@ -70,29 +70,15 @@ public class FanInfo {
             Logger.getLogger(UserInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
         PreparedStatement ps;
-        String pass="";
-        if(fan.getPassword()==null){
-            ps = connection.prepareStatement(query2);
-            ps.setString(1, fan.getNombre());
-            ps.setString(2, fan.getApellido());
-            ps.setDate(3, fecha);
-            ps.setString(4, fan.getGenero());
-            ps.setInt(5, fan.getIdPais());
-            ps.setString(6, fan.getFotoPerfil());
-            ps.setInt(7, idFan);
-        }
-        else{
-            ps = connection.prepareStatement(query1);
-            pass = PasswordEncrypt.hashPassword(fan.getPassword());
-            ps.setString(1, pass);
-            ps.setString(2, fan.getNombre());
-            ps.setString(3, fan.getApellido());
-            ps.setDate(4, fecha);
-            ps.setString(5, fan.getGenero());
-            ps.setInt(6, fan.getIdPais());
-            ps.setString(7, fan.getFotoPerfil());
-            ps.setInt(8, idFan);
-        }
+        ps = connection.prepareStatement(query2);
+        ps.setString(1, fan.getNombre());
+        ps.setString(2, fan.getApellido());
+        ps.setDate(3, fecha);
+        ps.setString(4, fan.getGenero());
+        ps.setInt(5, fan.getIdPais());
+        ps.setString(6, fan.getFotoPerfil());
+        ps.setInt(7, idFan);
+        
         
         ingresarGenerosFan(fan.getGeneros(), idFan, connection);
         
@@ -132,6 +118,7 @@ public class FanInfo {
     }
     
     private void ingresarGenerosFan(int[] generos, int idFan, Connection c)throws SQLException{
+        if(generos == null)return;
         if(generos.length == 0) return;
         String delete = "delete from fangeneros where idFan = ?;";
         PreparedStatement ps1 = c.prepareStatement(delete);
@@ -153,11 +140,11 @@ public class FanInfo {
     }
     
     public ArrayList<Banda> verMisArtistas(int idFan, Connection connection)throws SQLException{
-        String query = "select b.idBanda, b.nombreBanda \n" +
+        String query = "select b.idBanda, b.nombreBanda,b.fotoPerfil \n" +
                 "from bandas b \n" +
                 "join seguidos s \n" +
                 "on s.idBanda = b.idBanda \n" +
-                "where s.idFan = ?;";
+                "where s.idFan = ? and b.activo=1;";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idFan);
         ResultSet rs = ps.executeQuery();
@@ -166,6 +153,7 @@ public class FanInfo {
             Banda banda = new Banda();
             banda.setIdBanda(rs.getInt("idBanda"));
             banda.setNombreBanda(rs.getString("nombreBanda"));
+            banda.setFotoPerfil(rs.getString("fotoPerfil"));
             artistasList.add(banda);
         }
         connection.close();
@@ -187,10 +175,7 @@ public class FanInfo {
         connection.close();
         ps.close();
         
-        if(bandera)
-            return true;
-        else
-            return false;
+        return bandera;
     }
     
     public ArrayList<Banda> buscarArtistas(String nombre, String pais, String genero, Connection connection)throws SQLException{
@@ -201,7 +186,9 @@ public class FanInfo {
                 + "		join bandageneros bg\n"
                 + "		on bg.idGenero = g.idGenero) r\n"
                 + "on r.idBanda = b.idBanda\n"
-                + "where b.nombreBanda like ? or b.pais like ? or r.nombre like ?\n"
+                + "join paises p\n" +
+                "on p.idPais = b.idPais\n"
+                + "where (b.nombreBanda like ? or p.pais like ? or r.nombre like ?) and b.activo=1\n"
                 + "group by b.idBanda;";
         
         PreparedStatement ps = connection.prepareStatement(query);

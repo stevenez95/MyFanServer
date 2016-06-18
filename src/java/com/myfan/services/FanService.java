@@ -61,7 +61,7 @@ public class FanService {
     public Response esSeguidor(@PathParam("idFan")int idFan, @PathParam("idBanda")int idBanda){
         try {
             Facade pm = new Facade();
-            pm.seguirBanda(idFan, idBanda);
+            pm.esSeguidor(idFan, idBanda);
             return Response.ok(pm.esSeguidor(idFan, idBanda)).build();
         } catch (SQLException ex) {
             return Response.serverError().build();

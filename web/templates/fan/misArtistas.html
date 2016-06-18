@@ -3,6 +3,7 @@
     <ul class="w3-ul w3-border w3-margin " >
         <li class="w3-green"><h1>Artistas</h1></li>
         <li ng-repeat="artista in misArtistas" class="w3-padding-large" style="font-family: 'Verdana';">
+            <img alt="img" ng-src="{{artista.fotoPerfil}}" class="w3-left" style="width: 50px; height: 50px;">
             <span class="w3-large w3-btn w3-white" ng-click="verPerfilArtista(artista.idBanda)">{{artista.nombreBanda}}</span>
             <button class="w3-btn w3-right w3-small w3-red w3-round-xlarge" ng-click="dejarSeguir(artista.idBanda)">Dejar de seguir</button>
         </li>

@@ -22,7 +22,7 @@ public interface IConstantes {
     
     public static final String USUARIO_EXISTE="Usuario ya existe}";
     public static final String USUARIO_INCORRECTO="Usuario o contrasena incorrecto";
-    public static final String MYFEST_URL="http://192.168.0.16:8080/MyFestServer/api/v1/";
+    public static final String MYFEST_URL="http://192.168.1.11:16637/MyFestServer/api/v1/";
     public static final String ERROR = "Ocurrio un errror en el servidor";    
     public static final Message m = new Message(false,ERROR,"",0);
     

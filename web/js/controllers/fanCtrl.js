@@ -120,5 +120,42 @@ myMusic.controller('fanCtrl',["$scope","$location","$routeParams","$http","$rout
         $scope.verBusqueda = function (){
             $location.path('/fan/'+$scope.fanId+'/buscar');
         };
+        
+        var getGeneros = function (){
+            $http.get(url+'generos').then(function mySucces(response) {
+                $scope.generos= response.data;
+            }, function myError(response) {
+                $scope.myWelcome = response.statusText;
+            });
+        };
+        
+        var getPaises = function (){
+            $http.get(url+'paises').then(function mySucces(response) {
+                $scope.paises= response.data;
+            }, function myError(response) {
+                $scope.myWelcome = response.statusText;
+            });
+        };
+        
+        getGeneros();
+        getPaises();
+        
+        $scope.genreSelectionF = [];
+        $scope.toggleSelectionF = function toggleSelection(idGenero) {
+            var idx = $scope.genreSelectionF.indexOf(idGenero);
+            
+            // is currently selected
+            if (idx > -1) {
+                $scope.genreSelectionF.splice(idx, 1);
+            }
+            
+            // is newly selected
+            else {
+                $scope.genreSelectionF.push(idGenero);
+            }
+            console.log($scope.genreSelectionF);
+            $scope.fanInfo.generos = $scope.genreSelectionF;
+            console.log($scope.fanInfo);
+        };
 
 }]);

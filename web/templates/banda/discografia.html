@@ -6,7 +6,7 @@
             <!-- Profile -->
             <div class="w3-card-2 w3-round w3-white w3-margin-top">
                 <div class="w3-container">
-                    <h4 class="w3-center">Discografia</h4> 
+                    <h4 class="w3-center">Discografía</h4> 
                     <button ng-if="type==='banda'" class="w3-btn-block accent-color w3-tiny" onclick="document.getElementById('newDiscModal').style.display='block'">Agregar</button>         
                     <div ng-repeat="disc in discs">
                         <p><a href="" ng-click="viewDiscInfo(disc.idDiscografia)">{{disc.nombre}}</a></p>
@@ -26,14 +26,14 @@
         <div class="w3-col m10" ng-if="discInfo && tipo==='view'">
             
             <div class="w3-container w3-card-2 w3-white w3-round w3-margin w3-responsive"><br>
-                <div class="w3-right w3-large w3-margin-left">Calificacion: {{discRate}}<i class="fa fa-star w3-margin-left"></i></div>
+                <div class="w3-right w3-large w3-margin-left">Calificación: {{discRate}}<i class="fa fa-star w3-margin-left"></i></div>
                 <div class="w3-right"><button class="w3-btn accent-color" onclick="document.getElementById('rateModal').style.display='block'" ng-if="type==='fan'">Calificar y comentar </button></div>
                 <div class="w3-left">
                     <p>Nombre Disco: {{discInfo.nombre}}</p>
-                    <p>Descripcion: {{discInfo.descripcion}} </p>
+                    <p>Descripción: {{discInfo.descripcion}} </p>
                     <p>Sello: {{discInfo.selloDiscografico}}</p>
-                    <p>Genero: {{discInfo.generoMusical}}</p>
-                    <p>Anio: {{discInfo.anioPublicacion}}</p> 
+                    <p>Género: {{discInfo.generoMusical}}</p>
+                    <p>Año: {{discInfo.anioPublicacion}}</p> 
                     <div class="w3-left" ng-if="type==='banda'">
                         <button class="w3-btn w3-red w3-tiny w3-margin" ng-click="deleteDisc(discInfo.idDiscografia)" >Eliminar</button> <!--ngClick-->
                         <button class="w3-btn accent-color w3-tiny w3-margin" ng-click="editDisc(discInfo.idDiscografia)" >Editar</button> <!--href-->
@@ -43,18 +43,18 @@
                     <thead class="dark-primary-color text-primary-color">
                         <tr >
                             <th>Nombre</th>
-                            <th>Duracion</th>
+                            <th>Duración</th>
                             <th>Link</th>
                             <th>En vivo</th>
                             <th>Limitada</th>
                             <th>Bonus</th>
-                            <th colspan="2" class="w3-center" ng-if="type==='banda'">Accion</th>
+                            <th colspan="2" class="w3-center" ng-if="type==='banda'">Acción</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-if="type==='banda'">
                             <td><input class="w3-input w3-border" type="text" ng-model="newSong.nombre" ></td>
-                            <td><input class="w3-input w3-border" type="text" ng-model="newSong.duracion"></td>
+                            <td><input class="w3-input w3-border" placeholder="hh:mm:ss" type="text" ng-model="newSong.duracion"></td>
                             <td><input class="w3-input w3-border" type="text" ng-model="newSong.link"></td>
                             <td><input class="w3-check " type="checkbox" ng-model="newSong.enVivo" name="bool"></td>
                             <td><input class="w3-check" type="checkbox" ng-model="newSong.limitada" name="bool"></td>
@@ -89,10 +89,10 @@
                 <div class="w3-center">
                     <form>
                         <p>Nombre Disco: <input type="text" class="w3-input" ng-model="discInfo.nombre"></p>
-                        <p>Descripcion <input type="text" class="w3-input" ng-model="discInfo.descripcion"></p>
+                        <p>Descripción <input type="text" class="w3-input" ng-model="discInfo.descripcion"></p>
                         <p>Sello <input type="text" class="w3-input" ng-model="discInfo.selloDiscografico"></p>
-                        <p>Genero <input type="text" class="w3-input" ng-model="discInfo.generoMusical"></p>
-                        <p>Anio <input type="number" class="w3-input" ng-model="discInfo.anioPublicacion"></p> 
+                        <p>Género <input type="text" class="w3-input" ng-model="discInfo.generoMusical"></p>
+                        <p>Año <input type="number" class="w3-input" ng-model="discInfo.anioPublicacion"></p> 
                         <button class="w3-btn-block w3-green w3-margin-bottom" ng-click="updateDisc()">Actualizar</button>
                     </form>
                 </div>                
@@ -117,19 +117,19 @@
             
             <div class="w3-container">
                 <form class="w3-section">
-                    <label><b>Nombre Disco</b></label>
+                    <label><b>Nombre Disco<sup class="w3-text-red">*</sup></b></label>
                     <input type="text" class="w3-input" ng-model="newDisc.nombre"/>
                     
-                    <label><b>Descripcion</b></label>
+                    <label><b>Descripción</b></label>
                     <textarea class="w3-input w3-border" maxlength="100" placeholder="(opcional)" ng-model="newDisc.descrpcion"></textarea>
                     
                     <label><b>Sello</b></label>
                     <input type="text" class="w3-input" placeholder="(opcional)" ng-model="newDisc.selloDiscografico"/>
                     
-                    <label><b>Genero</b></label>
+                    <label><b>Género<sup class="w3-text-red">*</sup></b></label>
                     <input type="text" class="w3-input" ng-model="newDisc.generoMusical"/>
                     
-                    <label><b>Anio</b></label>
+                    <label><b>Año<sup class="w3-text-red">*</sup></b></label>
                     <input type="number" min="0" class="w3-input" ng-model="newDisc.anioPublicacion"/>
                     
                     
@@ -154,7 +154,7 @@
                 
             <div class="w3-container">
                 <form class="w3-section">
-                    <label><b>Calificacion</b></label>
+                    <label><b>Calificación</b></label>
                     <select class="w3-select" required="" ng-model="newComment.calificacion">
                         <option disabled="" selected>1-5 estrellas</option>
                         <option value="1">

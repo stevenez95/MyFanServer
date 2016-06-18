@@ -13,22 +13,17 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class PasswordEncrypt {
     
-    private static final String salt = BCrypt.gensalt();
-
     public PasswordEncrypt() {
     }
     
     public static  final boolean validatePassword(String password,String hashed){
         
-        if (BCrypt.checkpw(password, hashed))
-            return true;
-        else
-            return false;
+        return BCrypt.checkpw(password, hashed);
         
     }
     
     public static final String hashPassword(String password){
-        String hashed = BCrypt.hashpw(password, salt);
+        String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
         
         return hashed;
     }

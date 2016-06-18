@@ -4,8 +4,6 @@
 * and open the template in the editor.
 */
 package com.myfan.dao;
-import com.myfan.dto.Banda;
-import com.myfan.dto.Fan;
 import com.myfan.dto.Message;
 import com.myfan.security.JwtManager;
 import com.myfan.security.PasswordEncrypt;
@@ -32,6 +30,8 @@ public class UserInfo {
         Message m = new Message();
         
         if (rs.next()){
+            
+            System.out.println(password);
             if (PasswordEncrypt.validatePassword(password, rs.getString("password"))){
                 m.setSuccess(true);
                 m.setId(rs.getInt("idBanda"));
@@ -54,8 +54,10 @@ public class UserInfo {
             ps2.setString(1, username);
             ResultSet rs2 = ps2.executeQuery();
             if (rs2.next()){
+                System.out.println("database "+rs2.getString("password"));
+                System.out.println("user "+password);
                 if (PasswordEncrypt.validatePassword(password, rs2.getString("password"))){
-                    m.setSuccess(true);
+                    m.setSuccess(true); 
                     m.setId(rs2.getInt("idFan"));
                     m.setTipo("fan");
                     String token = jwtManager.jwtGenerate();

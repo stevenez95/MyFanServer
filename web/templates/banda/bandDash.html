@@ -6,7 +6,7 @@
             <!-- Profile -->
             <div class="w3-card-2 w3-round w3-white w3-margin-top">
                 <div class="w3-container">
-                    <h4 class="w3-center">Mi Perfil</h4>           
+                    <h4 class="w3-center">Mi Perfil</h4>    
                     <p class="w3-center"><img ng-src="{{bandInfo.fotoPerfil}}" width="50" height="50"></p>
                     <p><i class="fa fa-user w3-margin-right secondary-text-color"></i>{{bandInfo.username}}</p>
                     <p><i class="fa fa-music w3-margin-right secondary-text-color"></i>{{bandInfo.nombreBanda}}</p>
@@ -54,6 +54,7 @@
         </div>
         
         <!-- Middle Column -->
+        
         <div class="w3-right w3-margin-left w3-large">
             Calificacion: {{bandRate}}<i class="fa fa-star w3-margin-left"></i>
         </div>
@@ -62,9 +63,10 @@
             <button class="w3-btn w3-border accent-color w3-round-large" onclick="document.getElementById('eventsModal').style.display='block'"><i class="fa fa-calendar-plus-o w3-margin-right"></i>Agregar Evento</button>
         </div>
         <div class="w3-right w3-btn-group w3-margin-bottom" ng-if="bandInfo.activo && type==='fan'">
+            
             <button class="w3-btn w3-border accent-color w3-round-large" onclick="document.getElementById('rateModal').style.display='block'">Calificar y Comentar</button>
             <button class="w3-btn w3-border accent-color w3-round-large" ng-if="!isFollowing" ng-click="seguir()"><i class="fa fa-plus w3-margin-right"></i>Seguir</button>    
-            <button class="w3-btn w3-border accent-color w3-round-large" ng-if="isFollowing" ng-click="dejarSeguir()"><i class="fa fa-minus w3-margin-right"></i>Dejar de Seguir</button>
+            <button class="w3-btn w3-border accent-color w3-round-large" ng-if="isFollowing" ng-click="dejarSeguir()"><i class="fa fa-minus w3-margin-right"></i>sdfdsf de Seguir</button>
         </div>
         <div class="w3-col m9" ng-if="bandInfo.activo">
             <div ng-repeat="news in bandNews" class="w3-container w3-card-2 w3-white w3-round w3-margin-left w3-margin-bottom">

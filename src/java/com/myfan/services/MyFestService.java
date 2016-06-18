@@ -34,6 +34,8 @@ public class MyFestService {
     @Path("new")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newGenero(Genero genero){
+        System.out.println("szdc");
+        System.out.println(genero.getNombre());
          try {
             Facade pm = new Facade();
             pm.crearGenero(genero);

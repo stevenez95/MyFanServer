@@ -55,37 +55,18 @@ public class BandInfo {
     }
     
     public void actualizarBanda(Banda banda,int idBanda, Connection connection)throws SQLException{
-        String query1 = "update bandas set password = ?,nombreBanda= ?,hashtag= ?,biografia= ?,integrantes= ?,idPais= ?,fotoPerfil= ?, anioCreacion=? where idBanda = ?;";
         String query2 = "update bandas set nombreBanda= ?,hashtag= ?,biografia= ?,integrantes= ?,idPais= ?,fotoPerfil= ?, anioCreacion=? where idBanda = ?;";
         PreparedStatement ps;
-        String pass="";
         if(banda.getHashtag().charAt(0) != '#') banda.setHashtag("#"+banda.getHashtag());
-        if(banda.getPassword()==null){
-            System.out.println("entreeeee");
-            ps = connection.prepareStatement(query2);
-            ps.setString(1, banda.getNombreBanda());
-            ps.setString(2, banda.getHashtag());
-            ps.setString(3, banda.getBiografia());
-            ps.setString(4, banda.getIntegrantes());
-            ps.setInt(5, banda.getIdPais());
-            ps.setString(6, banda.getFotoPerfil());
-            ps.setInt(7, banda.getAnioCreacion());
-            ps.setInt(8, idBanda);
-        }
-        else{
-            ps = connection.prepareStatement(query1);
-            pass = PasswordEncrypt.hashPassword(banda.getPassword());
-            ps.setString(1, pass);
-            ps.setString(2, banda.getNombreBanda());
-            ps.setString(3, banda.getHashtag());
-            ps.setString(4, banda.getBiografia());
-            ps.setString(5, banda.getIntegrantes());
-            ps.setInt(6, banda.getIdPais());
-            ps.setString(7, banda.getFotoPerfil());
-            ps.setInt(8, banda.getAnioCreacion());
-            ps.setInt(9, idBanda);
-        }
-        
+        ps = connection.prepareStatement(query2);
+        ps.setString(1, banda.getNombreBanda());
+        ps.setString(2, banda.getHashtag());
+        ps.setString(3, banda.getBiografia());
+        ps.setString(4, banda.getIntegrantes());
+        ps.setInt(5, banda.getIdPais());
+        ps.setString(6, banda.getFotoPerfil());
+        ps.setInt(7, banda.getAnioCreacion());
+        ps.setInt(8, idBanda);
         ps.executeUpdate();
         ingresarGenerosBanda(banda.getGeneros(), idBanda, connection);
         MyFestConnection myFestConnection = new MyFestConnection();
@@ -167,12 +148,15 @@ public class BandInfo {
     }
     
      public ArrayList<Evento> getUltimosEventos(int idBanda, Connection connection)throws SQLException{
-        String query ="SELECT count(idBanda) as Eventos, month(fechaEvento) as mes\n" +
+         String q = "SET lc_time_names = 'es_MX';";
+        String query ="SELECT count(idBanda) as Eventos, monthname(fechaEvento) as mes\n" +
                         " FROM eventos\n" +
-                        " where idBanda = ? and fechaEvento >= date_sub(curdate(), interval 6 month)\n" +
+                        " where idBanda = ? and fechaEvento >= date_sub(curdate(), interval 6 month) and cancelado=0\n" +
                         " GROUP BY (month(fechaEvento) )\n" +
                         " order by fechaEvento desc;";
 
+        PreparedStatement p  = connection.prepareStatement(q);
+        p.execute();
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idBanda);
         ArrayList<Evento> eventos = new ArrayList<>();
@@ -184,6 +168,7 @@ public class BandInfo {
             eventos.add(evento);
             
         }
+        p.close();
         ps.close();
         connection.close();
         return eventos;
@@ -195,7 +180,7 @@ public class BandInfo {
                 "from resenasbanda r\n" +
                 "join fans f\n" +
                 "on f.idFan = r.idFan\n" +
-                "where r.idBanda = ? \n"
+                "where r.idBanda = ? and f.activo=1\n"
                 +"order by r.fecha desc \n"
                 + "limit 6;";
         

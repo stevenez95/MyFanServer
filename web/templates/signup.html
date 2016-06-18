@@ -11,45 +11,45 @@
                     <label class="w3-text-red" ng-show="error">{{error}}</label>
                 </p>
                 <p>
-                    <label>Nombre de la Banda</label>
+                    <label>Nombre de la Banda<sup class="w3-text-red">*</sup></label>
                     <input class="w3-input w3-validate" type="text" required ng-model="newBand.nombreBanda">
                 </p>
                 
                 <p>
-                    <label>Nombre Usuario</label>
+                    <label>Nombre Usuario<sup class="w3-text-red">*</sup></label>
                     <input class="w3-input w3-validate" type="text" required ng-model="newBand.username">
                     
                     
                     
                 <p>
-                    <label>Constrasena</label>
-                    <input class="w3-input w3-validate" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}" required ng-model="newBand.password">
+                    <label>Constraseña<sup class="w3-text-red">*</sup></label>
+                    <input class="w3-input w3-validate w3-margin-bottom" type="password" ng-model="newBand.password" required>
                 </p>
                 
                 <p>
-                    <label>Hashtag</label>
-                    <input type="text" class="w3-input" ng-model="newBand.hashtag">
+                    <label>Hashtag<sup class="w3-text-red">*</sup></label>
+                    <input type="text" class="w3-input" placeholder="#hashtag" ng-model="newBand.hashtag">
                 </p>
                 
                 <p></p>
-                    <label>Generos Musicales</label>
+                    <label>Géneros Musicales<sup class="w3-text-red">*</sup></label>
                     <div ng-repeat="genero in generos">
                     <input class="w3-check" type="checkbox"  ng-click="toggleSelectionB(genero.idGenero)">
                     <label>{{genero.nombre}}</label>
                 </div>
                 
                 <p>
-                    <label>Biografia</label>
-                    <textarea class="w3-input" maxlength="300" cols="30" required ng-model="newBand.biografia"></textarea>
+                    <label>Biografía<sup class="w3-text-red">*</sup></label>
+                    <textarea class="w3-input w3-border" maxlength="300" cols="30" required ng-model="newBand.biografia"></textarea>
                 </p>
                 
                 <p>
-                    <label>Integrantes</label>
-                    <textarea class="w3-input" maxlength="300" required ng-model="newBand.integrantes"></textarea>
+                    <label>Integrantes<sup class="w3-text-red">*</sup></label>
+                    <textarea class="w3-input w3-border" maxlength="300" required ng-model="newBand.integrantes"></textarea>
                 </p>
                 
                 <p>
-                    <label>Pais</label>
+                    <label>País<sup class="w3-text-red">*</sup></label>
                     <select class="w3-select" ng-model="newBand.idPais">
                         <option disabled selected>Seleccione un pais</option>
                         <option ng-repeat="pais in paises" ng-value="pais.idPais">{{pais.pais}}</option>
@@ -57,13 +57,13 @@
                 </p>
                 
                 <p>
-                    <label>Año de Creacion</label>
+                    <label>Año de Creación<sup class="w3-text-red">*</sup></label>
                     <input type="number" class="w3-input" min="0" ng-model="newBand.anioCreacion">
                 </p>
                 
                 <p>
                     <label>Foto Perfil</label>
-                    <input id="inputFileToLoadB" type="file" accept="image/jpg,image/png,image/gif" class="w3-input" onchange="encodeImageFileAsURL();">
+                    <input type="file" ng-model="myfileB" accept="image/jpg,image/png,image/gif" class="w3-input" base-sixty-four-input>
                 </p>
                 
                 <input type="submit" value="Registrarse" class="w3-btn-block accent-color w3-margin-bottom" ng-click="registerBand()">
@@ -71,7 +71,7 @@
             </form>
             <div class="w3-center w3-half">
                 <h3>Foto Perfil</h3>
-                <img id="blahB" src="http://i.imgur.com/G3C6CE0.png" alt=""  style="width: 400px; height: 400px"/>
+                <img id="blahB" ng-src="data:{{myfileB.filetype}};base64,{{myfileB.base64}}" alt=""  style="width: 400px; height: 400px"/>
             </div>       
         </div>
         
@@ -94,12 +94,12 @@
                 </p>
                 
                 <p>
-                    <label>Contrasena<sup class="w3-text-red">*</sup></label>
-                    <input class="w3-input w3-validate w3-margin-bottom" type="password" ng-model="newFan.passsword" required>
+                    <label>Contraseña<sup class="w3-text-red">*</sup></label>
+                    <input class="w3-input w3-validate w3-margin-bottom" type="password" ng-model="newFan.password" required>
                 </p>
                 
                 <p>
-                    <label>Genero </label><br>
+                    <label>Género <sup class="w3-text-red">*</sup></label><br>
                     <input class="w3-radio" type="radio" name="gender" value="M" ng-model="newFan.genero" checked>
                     <label class="w3-validate">Masculino</label>
                     
@@ -108,13 +108,12 @@
                 </p>
                 
                 <p>
-                    <label>Fecha Nacimiento <sup>*</sup></label>
-                    <input type="text" name="bday" class="w3-input" ng-model="newFan.fechaNac" pattern="(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d
-                           " placeholder="dd/mm/yyyy" required>
+                    <label>Fecha Nacimiento <sup class="w3-text-red">*</sup></label>
+                    <input type="text" name="bday" class="w3-input" ng-model="newFan.fechaNac" placeholder="dd/mm/yyyy" required>
                 </p>
                 
                 <p>
-                    <label>Pais</label>
+                    <label>País<sup class="w3-text-red">*</sup></label>
                     <select class="w3-select" ng-model="newFan.idPais">
                         <option disabled selected>Seleccione un pais</option>
                         <option ng-repeat="pais in paises" ng-value="pais.idPais">{{pais.pais}}</option>
@@ -122,15 +121,15 @@
                 </p>
                 
                 <p></p>
-                <label>Generos Musicales Favoritos</label><br/>
-                <div ng-repeat="genero in generos">
+                <label>Géneros Musicales Favoritos<sup class="w3-text-red">*</sup></label><br/>
+                <div ng-repeat="genero in generos" style="display: inline-block; margin: 5px;">
                     <input class="w3-check" type="checkbox"  ng-click="toggleSelectionF(genero.idGenero)">
                     <label>{{genero.nombre}}</label>
                 </div>
                 
                 <p>
                     <label>Foto Perfil</label>
-                    <input type="file" ng-model="myfile" accept="image/jpg,image/png,image/gif" class="w3-input" base-sixty-four-input>
+                    <input type="file" ng-model="myfileF" accept="image/jpg,image/png,image/gif" class="w3-input" base-sixty-four-input>
                 </p>
                 
                 <input type="submit" value="Registrarse" ng-click="registerFan()" class="w3-btn-block accent-color w3-margin-bottom">
@@ -139,7 +138,7 @@
             
             <div class="w3-center w3-half">
                 <h3>Foto Perfil</h3>
-                <img id="blahF" ng-src="data:{{myfile.filetype}};base64,{{myfile.base64}}" alt=""  style="width: 400px; height: 400px"/>
+                <img id="blahF" ng-src="data:{{myfileF.filetype}};base64,{{myfileF.base64}}" alt=""  style="width: 400px; height: 400px"/>
             </div>
         </div>
     </div>
