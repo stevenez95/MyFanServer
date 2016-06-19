@@ -17,15 +17,15 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author Steven
+ * @author ToolMakers
  */
 @Path("autenticar")
 public class AuthService {
     
     /**
      * Registra una nueva banda
-     * @param banda
-     * @return 
+     * @param banda Banda nueva
+     * @return Mensaje de confirmacion
      */
     @POST
     @Path("signUpBanda")
@@ -37,8 +37,8 @@ public class AuthService {
     
     /**
      * Crea un nuevo fan
-     * @param fan
-     * @return 
+     * @param fan Nuevo fanatico
+     * @return Mensaje de confirmacion
      */
     @POST
     @Path("signUpFan")
@@ -50,8 +50,8 @@ public class AuthService {
     
     /**
      * Loguea a los usuarios al sistema
-     * @param fan
-     * @return 
+     * @param fan Informacion del usuario que hace login
+     * @return Mensaje de respuesta
      */
     @POST
     @Path("login")

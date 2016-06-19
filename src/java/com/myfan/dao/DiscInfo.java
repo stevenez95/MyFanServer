@@ -22,6 +22,12 @@ public class DiscInfo {
     
     public DiscInfo() {}
     
+    /**
+     * Se encarga de guardar la discografia recien creada a la BD
+     * @param discografia Discografia a crear
+     * @param connection Conexion de la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void createDisc(Discografia discografia, Connection connection) throws SQLException{
         String query = "insert into discografias (nombre,descripcion,generoMusical,anioPublicacion,selloDiscografico,idBanda)\n" +
                 "value (?,?,?,?,?,?);";
@@ -38,6 +44,13 @@ public class DiscInfo {
         connection.close();
     }
     
+    /**
+     * Obtiene las discografias 
+     * @param idBanda id banda que creo el disoc
+     * @param connection conexion a la BD
+     * @return Arreglo con las discografias
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public ArrayList<Discografia> getDiscs(int idBanda, Connection connection)throws SQLException{
         String query = "select idDiscografia, nombre \n" +
                 "from discografias \n" +
@@ -57,6 +70,13 @@ public class DiscInfo {
         return discosList;
     }
     
+    /**
+     * Obtiene la informacion de un disco
+     * @param idDisco idDisco
+     * @param connection conexion a la BD
+     * @return Informacion del disco
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public Discografia getDiscInfo(int idDisco, Connection connection)throws SQLException{
         String query = "select idDiscografia,nombre,descripcion,generoMusical,anioPublicacion,selloDiscografico \n" +
                 "from discografias \n" +

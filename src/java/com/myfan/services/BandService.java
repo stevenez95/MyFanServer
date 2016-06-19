@@ -6,10 +6,8 @@
 package com.myfan.services;
 
 import com.google.gson.Gson;
-import com.myfan.connection.MyFestConnection;
 import com.myfan.dto.Banda;
 import com.myfan.model.Facade;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.DELETE;
@@ -23,11 +21,16 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author Steven
+ * @author ToolMakers
  */
 @Path("banda")
 public class BandService {
     
+    /**
+     * Obtiene la informacion de una banda
+     * @param idBanda id de una banda en especifico
+     * @return Informacion de la banda
+     */
     @GET
     @Path("me/{idBanda}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -43,6 +46,11 @@ public class BandService {
         
     }
     
+    /**
+     * Obtiena la catidad de seguidores de una banda
+     * @param idBanda id de la banda 
+     * @return Cantidad de seguidores
+     */
     @GET
     @Path("seguidores/{idBanda}")
     public Response getCantSeguidores(@PathParam("idBanda")int idBanda){
@@ -56,13 +64,27 @@ public class BandService {
         }
     }
     
+    /**
+     * Obtiene la caliicacion de una banda
+     * @param idBanda id de la banda
+     * @return calificacion promedio de la banda
+     */
     @GET
     @Path("getBandRate/{idBanda}")
-    public Response getBandRate(@PathParam("idBanda")int idBanda) throws Exception{
-        Facade pm = new  Facade();
-        return Response.ok(pm.getBandRate(idBanda)).build();
+    public Response getBandRate(@PathParam("idBanda")int idBanda){
+        try {
+            Facade pm = new  Facade();
+            return Response.ok(pm.getBandRate(idBanda)).build();
+        } catch (Exception ex) {
+            return Response.serverError().build();
+        }
     }
     
+    /**
+     * Desactiva la cuenta de una banda
+     * @param idBanda id de la banda
+     * @return confirmacion
+     */
     @DELETE
     @Path("desactivar/{idBanda}")
     public Response desactivarFan(@PathParam("idBanda")int idBanda){
@@ -82,6 +104,11 @@ public class BandService {
         return facade.actualizarBanda(banda, idBanda);
     }
     
+    /**
+     * Obtiene los generos de una banda
+     * @param idBanda id de la banda
+     * @return Generos de la banda
+     */
     @GET
     @Path("generos/{idBanda}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -95,6 +122,12 @@ public class BandService {
         }
     }
     
+    /**
+     * Obiene los comentarios realizados a una banda
+     * @param idBanda id de la banda
+     * @return Los comentarios de la banda
+     * @throws Exception en caso de haber un error
+     */
     @GET
     @Path("getBandComments/{idBanda}")
     @Produces(MediaType.APPLICATION_JSON)

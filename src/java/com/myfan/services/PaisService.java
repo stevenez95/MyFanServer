@@ -23,6 +23,10 @@ import javax.ws.rs.core.Response;
 @Path("paises")
 public class PaisService {
     
+    /**
+     * Obtiene los piaises
+     * @return Lista de paises
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPaises(){

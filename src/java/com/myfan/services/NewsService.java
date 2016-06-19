@@ -27,9 +27,9 @@ import javax.ws.rs.core.Response;
 public class NewsService {
     
     /**
-     * Retorna las noticias a un fan
-     * @param idFan
-     * @return 
+     * Retorna las noticias a un fan de las bandas que sigue
+     * @param idFan id del fan
+     * @return Lista de noticias
      */
     @GET
     @Path("/fan/{idFan}")
@@ -48,8 +48,8 @@ public class NewsService {
     
     /**
      * Retorna las noticias a una banda
-     * @param idBanda
-     * @return 
+     * @param idBanda id de la banda
+     * @return Lista de eventos
      */
     @GET
     @Path("/banda/{idBanda}")
@@ -68,8 +68,8 @@ public class NewsService {
     
     /**
      * Crea una nueva noticia
-     * @param noticia
-     * @return 
+     * @param noticia Noticia a crear
+     * @return Confirmacion
      */
     @POST
     @Path("/newNews")
@@ -87,9 +87,9 @@ public class NewsService {
     }
     
     /**
-     * Cancela un evento
-     * @param idNoticia
-     * @return 
+     * Borra una noticia
+     * @param idNoticia id de la noticia
+     * @return confirmacion
      */
     @DELETE
     @Path("{idNoticia}")

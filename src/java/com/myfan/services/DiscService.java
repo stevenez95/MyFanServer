@@ -24,15 +24,15 @@ import javax.ws.rs.core.Response.Status;
 
 /**
  *
- * @author Steven
+ * @author ToolMakers
  */
 @Path("disco")
 public class DiscService {
     
     /**
      * Retorna lista de discos de un artista
-     * @param idBanda
-     * @return 
+     * @param idBanda id de la badna
+     * @return Discos de una banda
      */
     @GET
     @Path("/banda/{idBanda}")
@@ -52,9 +52,9 @@ public class DiscService {
     }
     
     /**
-     * Retorne informacion y canciones de disco
-     * @param idDisco
-     * @return Response
+     * Retorna informacion de un disco
+     * @param idDisco id del disco
+     * @return Informacion del disco
      */
     @GET
     @Path("/{idDisco}")
@@ -72,8 +72,8 @@ public class DiscService {
     
     /**
      * Crea un nuevo disco
-     * @param discografia
-     * @return 
+     * @param discografia Disco a crear
+     * @return Confirmacion
      */
     @POST
     @Path("/new")
@@ -92,9 +92,9 @@ public class DiscService {
     
     /**
      * Actuliza un disco
-     * @param discografia
-     * @param idDisco
-     * @return 
+     * @param discografia Disco a actualizar
+     * @param idDisco id del disco a actualizar
+     * @return Confirmacion
      */
     @PUT
     @Path("edit/{idDisco}")
@@ -115,8 +115,8 @@ public class DiscService {
     
     /**
      * Borra un disco
-     * @param idDisco
-     * @return 
+     * @param idDisco id del disco a borrar
+     * @return Confirmacion
      */
     @DELETE
     @Path("delete/{idDisco}")
@@ -135,8 +135,8 @@ public class DiscService {
     
     /**
      * Crea una cancion
-     * @param cancion
-     * @return 
+     * @param cancion Cancion a crear
+     * @return Confirmacion
      */
     @POST
     @Path("/newSong")
@@ -155,8 +155,8 @@ public class DiscService {
     
     /**
      * Actualiza una cancion
-     * @param cancion
-     * @param idCancion
+     * @param cancion Cancion a aactulizar
+     * @param idCancion id de la cancion a actualizar
      * @return 
      */
     @PUT
@@ -175,8 +175,8 @@ public class DiscService {
     
     /**
      * Borra una cancion de la discografia
-     * @param idCancion
-     * @return 
+     * @param idCancion ide de la cancio a borrar
+     * @return Confirmacion
      */
     @DELETE
     @Path("deleteSong/{idCancion}")
@@ -192,6 +192,11 @@ public class DiscService {
         }
     }
     
+    /**
+     * Obtiene las canciones de un disco
+     * @param idDisco id del disco
+     * @return Lista de canciones
+     */
     @GET
     @Path("getSongs/{idDisco}")
     public Response getSongs(@PathParam("idDisco")int idDisco){
@@ -208,6 +213,11 @@ public class DiscService {
         }
     }
     
+    /**
+     * Obtiene informacion de una cancion
+     * @param idCancion id del cancion
+     * @return Informacion de la cancion
+     */
     @GET
     @Path("getSong/{idCancion}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -223,8 +233,12 @@ public class DiscService {
         return Response.ok(pm.getDiscRate(idDisco)).build();
     }
     
-   
-    
+    /**
+     * Obtiene los comentarios de un disco
+     * @param idDisco id del disco
+     * @return lista de comentarios
+     * @throws Exception en caso de error
+     */
     @GET
     @Path("getDiscComments/{idDisco}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -236,11 +250,5 @@ public class DiscService {
         res = gson.toJson(pm.getDiscComments(idDisco));
         return Response.ok(res).build();
     } 
-    
-    /*
-    Calificar
-    obtener calificacion
-    OBTENER COMENTARIOS
-    */
     
 }

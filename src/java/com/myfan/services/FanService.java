@@ -12,8 +12,6 @@ import com.myfan.dto.Fan;
 import com.myfan.dto.Resena;
 import com.myfan.model.Facade;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Context;
@@ -30,7 +28,7 @@ import javax.ws.rs.core.Response;
 /**
  * REST Web Service
  *
- * @author Steven
+ * @author ToolMakers
  */
 @Path("fan")
 public class FanService {
@@ -44,6 +42,12 @@ public class FanService {
     public FanService() {
     }
 
+    /**
+     * Permite que un fan siga a una banda
+     * @param idFan id del fan
+     * @param idBanda id de la badna
+     * @return confirmacion
+     */
     @POST
     @Path("seguir/{idFan}/{idBanda}")
     public Response seguirBanda(@PathParam("idFan")int idFan, @PathParam("idBanda")int idBanda){
@@ -56,6 +60,12 @@ public class FanService {
         }
     }
     
+    /**
+     * Permite saber si un fan sigue a una banda
+     * @param idFan id del fan
+     * @param idBanda id de la banda
+     * @return true si el fan sigue a la banda, false en caso contrario
+     */
     @GET
     @Path("esSeguidor/{idFan}/{idBanda}")
     public Response esSeguidor(@PathParam("idFan")int idFan, @PathParam("idBanda")int idBanda){
@@ -68,6 +78,12 @@ public class FanService {
         }
     }
     
+    /**
+     * Permite que un fan deje de  seguir a una banda
+     * @param idFan id del fan
+     * @param idBanda id de la badna
+     * @return confirmacion
+     */
     @DELETE
     @Path("dejarSeguir/{idFan}/{idBanda}")
     public Response dejarSeguirBanda(@PathParam("idFan")int idFan, @PathParam("idBanda")int idBanda){
@@ -80,6 +96,11 @@ public class FanService {
         }
     }
     
+    /**
+     * Desactiva la cuenta de un fan
+     * @param idFan id del fan
+     * @return confirmacion
+     */
     @DELETE
     @Path("desactivar/{idFan}")
     public Response desactivarFan(@PathParam("idFan")int idFan){
@@ -92,13 +113,25 @@ public class FanService {
         }
     }
     
+    /**
+     * Actualiza la cuenta de un fan
+     * @param fan informacion del fan
+     * @param idFan id del fan
+     * @return confirmacion
+     */
     @PUT
     @Path("actualizar/{idFan}")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response actualizarFan(Fan fan, @PathParam("idFan")int idFan){
         Facade facade = new Facade();
         return facade.actualizarFan(fan, idFan);
     }
  
+    /**
+     * Obtiene los artistas que el fan esta siguiendo
+     * @param idFan id del fan
+     * @return Lista de artistas que sigue el fan
+     */
     @GET
     @Path("verArtistas/{idFan}")
     public Response verMisArtistas(@PathParam("idFan")int idFan){
@@ -111,6 +144,13 @@ public class FanService {
         }
     }
     
+    /**
+     * Obtiene artistas basado en una serie de parametros
+     * @param nombreBanda Nombre de la banda que se busca
+     * @param genero Genro musical de la banada que se busca
+     * @param pais Pais de la banda que se busca
+     * @return Lista de bandas que cumplan con los parametros de la busqueda
+     */
     @GET
     @Path("buscarArtista/{nombreBanda}/{genero}/{pais}")
     public Response buscarArtistas(@PathParam("nombreBanda")String nombreBanda, @PathParam("genero")String genero, @PathParam("pais")String pais){
@@ -124,6 +164,11 @@ public class FanService {
         }
     }
     
+    /**
+     * Permite al fan calificar y comentar una banda
+     * @param resenaBanda resena creada por el fan
+     * @return confirmacion
+     */
     @POST
     @Path("rateBand")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -137,6 +182,11 @@ public class FanService {
         }
     }
     
+    /**
+     * Permite al fan calificar y comentar un disco
+     * @param resenaDisco resena creada por el fan
+     * @return confirmacion
+     */
     @POST
     @Path("rateDisc")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -150,6 +200,11 @@ public class FanService {
         }
     }
     
+    /**
+     * Permite al fan calificar y comentar un evento
+     * @param resenaEvento creada por el fan
+     * @return confirmacion
+     */
     @POST
     @Path("rateEvent")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -163,6 +218,11 @@ public class FanService {
         }
     }
     
+    /**
+     * Obtiene la informacion de un fan
+     * @param idFan id del fan
+     * @return Informacion del fanatico
+     */
     @GET
     @Path("me/{idFan}")
     @Produces(MediaType.APPLICATION_JSON)

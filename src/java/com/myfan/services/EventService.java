@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 import com.myfan.dto.Evento;
 import com.myfan.model.Facade;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
@@ -22,15 +24,15 @@ import javax.ws.rs.core.Response.Status;
 
 /**
  *
- * @author steve_000
+ * @author ToolMakers
  */
 @Path("evento")
 public class EventService {
     
     /**
      * Retorna los eventos a un fan
-     * @param idFan
-     * @return 
+     * @param idFan id del fan
+     * @return Lista de eventos de las bandas que sigue el fan
      */
     @GET
     @Path("/fan/{idFan}")
@@ -69,8 +71,8 @@ public class EventService {
     
     /**
      * Crea un nuevo evento
-     * @param evento
-     * @return 
+     * @param evento evento a crear
+     * @return confirmacion
      */
     @POST
     @Path("/newEvent")
@@ -90,8 +92,8 @@ public class EventService {
     
     /**
      * Cancela un evento
-     * @param idEvent
-     * @return 
+     * @param idEvent id del evento
+     * @return confirmacion
      */
     @DELETE
     @Path("{idEvent}")
@@ -109,8 +111,8 @@ public class EventService {
     
     /**
      * Obtiene la informacion de un evento
-     * @param idevent
-     * @return 
+     * @param idevent id del evento
+     * @return Informacion del eventp
      */
     @GET
     @Path("{idEvent}")
@@ -124,23 +126,38 @@ public class EventService {
         }
     }
     
+    /**
+     * Obtiene la calificacion de un evento
+     * @param idEvento ide del evento
+     * @returnCalificacion promedio del evento
+     */
    @GET
     @Path("getEventRate/{idEvento}")
-    public Response getEventRate(@PathParam("idEvento")int idEvento) throws Exception{
-        Facade pm = new  Facade();        
-        return Response.ok(pm.getEventRate(idEvento)).build();
+    public Response getEventRate(@PathParam("idEvento")int idEvento){
+        try {
+            Facade pm = new  Facade();
+            return Response.ok(pm.getEventRate(idEvento)).build();
+        } catch (Exception ex) {
+            return Response.serverError().build();
+        }
     } 
     
+    /**
+     * Obtiene los comentarios de un evento
+     * @param idEvento id del evento
+     * @return Lista de comentarios del evento
+     */
     @GET
     @Path("getEventComments/{idEvento}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEventComments(@PathParam("idEvento")int idEvento) throws Exception{
-        Facade pm = new  Facade();
-        String res = "";
-        Gson gson = new Gson();
-        
-        res = gson.toJson(pm.getEventComments(idEvento));
-        return Response.ok(res).build();
+    public Response getEventComments(@PathParam("idEvento")int idEvento){
+        try {
+            Facade pm = new  Facade();
+            Gson gson = new Gson();
+            return Response.ok(gson.toJson(pm.getEventComments(idEvento))).build();
+        } catch (Exception ex) {
+            return Response.serverError().build();
+        }
     } 
     
     
