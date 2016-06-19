@@ -40,7 +40,7 @@ public class TwitterConnect {
     }
     
     public void publicarCalificacion(Resena resenaBanda){
-        
+         
         try {
             Facade manager = new Facade();
             Banda banda = manager.getBandInfo(resenaBanda.getId());

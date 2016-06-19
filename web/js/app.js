@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var myMusic = angular.module('myMusic', ['ngRoute','ngCookies','naif.base64']);
+var myMusic = angular.module('myMusic', ['ngRoute','ngCookies','naif.base64','ngMessages']);
 
 myMusic.config(["$httpProvider",function($httpProvider) {
 

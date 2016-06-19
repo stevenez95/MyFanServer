@@ -19,13 +19,10 @@ module.exports = function(config) {
             './../node_modules/angular-mocks/angular-mocks.js',
             './../node_modules/angular-cookies/angular-cookies.js',
             './../node_modules/angular-route/angular-route.js',
+            "./../node_modules/angular-messages/angular-messages.js",
             './../node_modules/angular-base64-upload/src/angular-base64-upload.js',            
             './js/app.min.js/bundle.js',
-            './tests/testAuthService.js',
-            './tests/testBandCtrl.js',
-            './tests/testConcertCtrl.js',
-            './tests/testDiscCtrl.js',
-            './tests/testFanCtrl.js'
+            './tests/*.js'
         ],
 
 

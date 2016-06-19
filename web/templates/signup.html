@@ -5,31 +5,36 @@
             <li class="w3-half w3-border dark-primary-color"><a ng-click="openLogIn('Fan')">Fan</a></li>
         </ul>
         <div id="Band" class="w3-container" ng-hide="isFan">
-            <form class="w3-container w3-half" name="formBanda">
-                <p>
-                    <label class="w3-text-red" ng-show="error">{{error}}</label>
-                </p>
-                <p>
+            <form class="w3-container w3-half" name="formBanda" novalidate>
+                <p></p>
                     <label>Nombre de la Banda<sup class="w3-text-red">*</sup></label>
-                    <input class="w3-input w3-validate" type="text" required ng-model="newBand.nombreBanda">
-                </p>
+                    <input class="w3-input w3-validate" type="text" name="name" required ng-model="newBand.nombreBanda">
+                    <div class="w3-text-red" ng-messages="formBanda.name.$error" ng-show="formBanda.name.$touched">
+                        <div ng-messages-include="messages.html"></div>
+                    </div>
                 
-                <p>
+                <p></p>
                     <label>Nombre Usuario<sup class="w3-text-red">*</sup></label>
-                    <input class="w3-input w3-validate" type="text" required ng-model="newBand.username">
+                    <input class="w3-input w3-validate" type="text" name="username" required ng-model="newBand.username">
+                    <div class="w3-text-red" ng-messages="formBanda.username.$error" ng-show="formBanda.username.$touched">
+                        <div ng-messages-include="messages.html"></div>
+                    </div>
                     
                     
-                    
-                <p>
+                <p></p>
                     <label>Constraseña<sup class="w3-text-red">*</sup></label>
-                    <input class="w3-input w3-validate w3-margin-bottom" type="password" ng-model="newBand.password" required>
-                </p>
-                
-                <p>
+                    <input class="w3-input w3-validate w3-margin-bottom" type="password" name="pass" ng-model="newBand.password" required>
+                    <div class="w3-text-red" ng-messages="formBanda.pass.$error" ng-show="formBanda.pass.$touched">
+                        <div ng-messages-include="messages.html"></div>
+                    </div>
+                    
+                <p></p>
                     <label>Hashtag<sup class="w3-text-red">*</sup></label>
-                    <input type="text" class="w3-input" placeholder="#hashtag" ng-model="newBand.hashtag">
-                </p>
-                
+                    <input type="text" class="w3-input" placeholder="#hashtag" ng-minlength="2" name="hash" ng-model="newBand.hashtag" required>
+                    <div class="w3-text-red" ng-messages="formBanda.hash.$error" ng-show="formBanda.hash.$touched">
+                        <div ng-messages-include="messages.html"></div>
+                    </div>
+                    
                 <p></p>
                 <label>Géneros Musicales<sup class="w3-text-red">*</sup></label><br/>
                     <div ng-repeat="genero in generos" style="display: inline-block; margin: 5px;">
@@ -37,36 +42,44 @@
                     <label>{{genero.nombre}}</label>
                 </div>
                 
-                <p>
+                <p></p>
                     <label>Biografía<sup class="w3-text-red">*</sup></label>
-                    <textarea class="w3-input w3-border" maxlength="300" cols="30" required ng-model="newBand.biografia"></textarea>
-                </p>
+                    <textarea class="w3-input w3-border" ng-maxlength="300" cols="30" name="bio" required ng-model="newBand.biografia"></textarea>
+                    <div class="w3-text-red" ng-messages="formBanda.bio.$error" ng-show="formBanda.bio.$touched">
+                        <div ng-messages-include="messages.html"></div>
+                    </div>
                 
-                <p>
+                <p></p>
                     <label>Integrantes<sup class="w3-text-red">*</sup></label>
-                    <textarea class="w3-input w3-border" maxlength="300" required ng-model="newBand.integrantes"></textarea>
-                </p>
-                
-                <p>
+                    <textarea class="w3-input w3-border" name="inte" ng-maxlength="300" required ng-model="newBand.integrantes"></textarea>
+                    <div class="w3-text-red" ng-messages="formBanda.inte.$error" ng-show="formBanda.inte.$touched">
+                        <div ng-messages-include="messages.html"></div>
+                    </div>
+                    
+                <p></p>
                     <label>País<sup class="w3-text-red">*</sup></label>
-                    <select class="w3-select" ng-model="newBand.idPais">
+                    <select class="w3-select" ng-model="newBand.idPais" name="pais" required>
                         <option selected disabled>Seleccione un pais</option>
                         <option ng-repeat="pais in paises" ng-value="pais.idPais">{{pais.pais}}</option>
                     </select>
-                </p>
+                    <div class="w3-text-red" ng-messages="formBanda.pais.$error" ng-show="formBanda.pais.$touched">
+                        <div ng-messages-include="messages.html"></div>
+                    </div>
                 
-                <p>
+                <p></p>
                     <label>Año de Creación<sup class="w3-text-red">*</sup></label>
-                    <input type="number" class="w3-input" min="0" ng-model="newBand.anioCreacion">
-                </p>
+                    <input type="number" class="w3-input" min="0" ng-model="newBand.anioCreacion" name="year" required>
+                    <div class="w3-text-red" ng-messages="formBanda.year.$error" ng-show="formBanda.year.$touched">
+                        <div ng-messages-include="messages.html"></div>
+                    </div>
                 
                 <p>
                     <label>Foto Perfil</label>
                     <input type="file" ng-model="myfileB" accept="image/jpg,image/png,image/gif" class="w3-input" base-sixty-four-input>
                 </p>
                 
-                <input type="submit" value="Registrarse" class="w3-btn-block accent-color w3-margin-bottom" ng-click="registerBand()">
-                
+                <button class="w3-btn-block accent-color w3-margin-bottom" ng-click="registerBand()" ng-disabled="formBanda.$invalid">Registrarse</button>
+                <h1 class="w3-text-red">{{error}}</h1>
             </form>
             <div class="w3-center w3-half">
                 <h3>Foto Perfil</h3>
@@ -77,47 +90,62 @@
         <div id="Fan" class="w3-container" ng-show="isFan">
             <form class="w3-container w3-half w3-right" name="formFan">
                 
-                <p>
+                <p></p>
                     <label>Nombre<sup class="w3-text-red">*</sup></label>
-                    <input class="w3-input w3-validate" type="text" ng-model="newFan.nombre" required minlength="1" maxlength="30">
-                </p>
+                    <input class="w3-input w3-validate" type="text" name="name" ng-model="newFan.nombre" required ng-minlength="1" ng-maxlength="30">
+                    <div class="w3-text-red" ng-messages="formFan.name.$error" ng-show="formFan.name.$touched">
+                        <div ng-messages-include="messages.html"></div>
+                    </div>
                 
-                <p>
+                <p></p>
                     <label>Apellido<sup class="w3-text-red">*</sup></label>
-                    <input class="w3-input w3-validate" type="text" ng-model="newFan.apellido" required minlength="1" maxlength="30">
-                </p>
+                    <input class="w3-input w3-validate" type="text" name='apellido' ng-model="newFan.apellido" required ng-minlength="1" ng-maxlength="30">
+                    <div class="w3-text-red" ng-messages="formFan.apellido.$error" ng-show="formFan.apellido.$touched">
+                        <div ng-messages-include="messages.html"></div>
+                    </div>
                 
-                <p>
+                <p></p>
                     <label>Nombre Usuario<sup class="w3-text-red">*</sup></label>
-                    <input class="w3-input w3-validate" type="text" ng-model="newFan.username" required minlength="4" maxlength="12">
-                </p>
+                    <input class="w3-input w3-validate" type="text" name="username" ng-model="newFan.username" required ng-minlength="4" ng-maxlength="12">
+                    <div class="w3-text-red" ng-messages="formFan.username.$error" ng-show="formFan.username.$touched">
+                        <div ng-messages-include="messages.html"></div>
+                    </div>
                 
-                <p>
+                <p></p>
                     <label>Contraseña<sup class="w3-text-red">*</sup></label>
-                    <input class="w3-input w3-validate w3-margin-bottom" type="password" ng-model="newFan.password" required>
-                </p>
+                    <input class="w3-input w3-validate w3-margin-bottom" name="pass" type="password" ng-model="newFan.password" required>
+                    <div class="w3-text-red" ng-messages="formFan.pass.$error" ng-show="formFan.pass.$touched">
+                        <div ng-messages-include="messages.html"></div>
+                    </div>
                 
-                <p>
+                <p></p>
                     <label>Género <sup class="w3-text-red">*</sup></label><br>
-                    <input class="w3-radio" type="radio" name="gender" value="M" ng-model="newFan.genero" checked>
+                    <input class="w3-radio" type="radio" name="gender" value="M" ng-model="newFan.genero" checked required>
                     <label class="w3-validate">Masculino</label>
                     
                     <input class="w3-radio" type="radio" name="gender" value="F" ng-model="newFan.genero">
                     <label class="w3-validate">Femenino</label>
-                </p>
+                    <div class="w3-text-red" ng-messages="formFan.gender.$error" ng-show="formFan.gender.$touched">
+                        <div ng-messages-include="messages.html"></div>
+                    </div>
                 
-                <p>
+                <p></p>
                     <label>Fecha Nacimiento <sup class="w3-text-red">*</sup></label>
                     <input type="text" name="bday" class="w3-input" ng-model="newFan.fechaNac" placeholder="dd/mm/yyyy" required>
-                </p>
+                    <div class="w3-text-red" ng-messages="formFan.bday.$error" ng-show="formFan.bday.$touched">
+                        <div ng-messages-include="messages.html"></div>
+                    </div>
                 
-                <p>
+                
+                <p></p>
                     <label>País<sup class="w3-text-red">*</sup></label>
-                    <select class="w3-select" ng-model="newFan.idPais">
+                    <select class="w3-select" ng-model="newFan.idPais" name="pais" required>
                         <option disabled selected>Seleccione un pais</option>
                         <option ng-repeat="pais in paises" ng-value="pais.idPais">{{pais.pais}}</option>
                     </select>
-                </p>
+                    <div class="w3-text-red" ng-messages="formFan.pais.$error" ng-show="formFan.pais.$touched">
+                        <div ng-messages-include="messages.html"></div>
+                    </div>
                 
                 <p></p>
                 <label>Géneros Musicales Favoritos<sup class="w3-text-red">*</sup></label><br/>
@@ -131,7 +159,7 @@
                     <input type="file" ng-model="myfileF" accept="image/jpg,image/png,image/gif" class="w3-input" base-sixty-four-input>
                 </p>
                 
-                <input type="submit" value="Registrarse" ng-click="registerFan()" class="w3-btn-block accent-color w3-margin-bottom">
+                <button type="submit" ng-click="registerFan()" class="w3-btn-block accent-color w3-margin-bottom" ng-disabled="formFan.$invalid">Registrarse</button>
                 <h1 class="w3-text-red">{{error}}</h1>
             </form>
             

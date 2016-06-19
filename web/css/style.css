@@ -17,6 +17,10 @@ ul,li{
     font-size: 20px;
 }
 
+input{
+    color: black;
+}
+
 .liGreen 		{ background-color: #509173; }
 .dark-primary-color    	{ background: #00796B; }
 .default-primary-color 	{ background: #009688; }
