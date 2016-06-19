@@ -95,13 +95,8 @@ public class FanService {
     @PUT
     @Path("actualizar/{idFan}")
     public Response actualizarFan(Fan fan, @PathParam("idFan")int idFan){
-        try {
-            Facade pm = new Facade();
-            pm.actualizarFan(fan,idFan);
-            return Response.ok().build();
-        } catch (SQLException ex) {
-            return Response.serverError().build();
-        }
+        Facade facade = new Facade();
+        return facade.actualizarFan(fan, idFan);
     }
  
     @GET

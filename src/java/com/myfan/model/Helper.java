@@ -46,6 +46,16 @@ public class Helper {
         bandInfo.registrarBanda(banda, database.getConnection());
     }
     
+    public void actualizarBanda(Banda banda,int idBanda) throws SQLException, Exception{
+        ImageSaver imageSaver = new ImageSaver();
+        String foto = imageSaver.saveImage(banda.getFotoPerfil());
+        if(foto==null) throw new Exception();
+        DataBaseConnect database = new DataBaseConnect();
+        BandInfo bandInfo = new BandInfo();
+        banda.setFotoPerfil(foto);
+        bandInfo.actualizarBanda(banda,idBanda, database.getConnection());
+    }
+    
     public void registarFan(Fan fan) throws SQLException, Exception{
         ImageSaver imageSaver = new ImageSaver();
         String foto = imageSaver.saveImage(fan.getFotoPerfil());
@@ -54,6 +64,16 @@ public class Helper {
         FanInfo fanInfo = new FanInfo();
         fan.setFotoPerfil(foto);
         fanInfo.registrarFan(fan, database.getConnection());
+    }
+    
+    public void actualizarFan(Fan fan, int idFan) throws SQLException, Exception{
+        ImageSaver imageSaver = new ImageSaver();
+        String foto = imageSaver.saveImage(fan.getFotoPerfil());
+        if(foto==null) throw new Exception();
+        DataBaseConnect database = new DataBaseConnect();
+        FanInfo fanInfo = new FanInfo();
+        fan.setFotoPerfil(foto);
+        fanInfo.actualizarFan(fan,idFan, database.getConnection());
     }
     
     public Message logUser(String username, String password) throws SQLException, Exception{

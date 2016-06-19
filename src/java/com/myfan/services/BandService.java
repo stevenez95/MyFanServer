@@ -78,16 +78,8 @@ public class BandService {
     @PUT
     @Path("actualizar/{idBanda}")
     public Response actualizarBanda(Banda banda, @PathParam("idBanda")int idBanda){
-        try {
-            Facade pm = new Facade();
-            pm.actualizarBanda(banda,idBanda);
-            
-            MyFestConnection connection = new MyFestConnection();
-            connection.actualizarArtistas(banda,idBanda);
-            return Response.ok().build();
-        } catch (SQLException ex) {
-            return Response.serverError().build();
-        }
+        Facade facade = new Facade();
+        return facade.actualizarBanda(banda, idBanda);
     }
     
     @GET

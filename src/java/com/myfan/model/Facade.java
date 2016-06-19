@@ -86,13 +86,14 @@ public class Facade {
     }
     
     
-    public void actualizarFan(Fan fan,int idFan) throws SQLException{
+    public Response actualizarFan(Fan fan,int idFan){
         try {
-            DataBaseConnect database = new DataBaseConnect();
-            FanInfo fanInfo = new FanInfo();
-            fanInfo.actualizarFan(fan,idFan, database.getConnection());
+            Helper helper = new Helper();
+            helper.actualizarFan(fan, idFan);
+            return Response.ok().build();
         } catch (Exception ex) {
             Logger.getLogger(Facade.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.serverError().entity(IConstantes.m).build();
         }
     }
     
@@ -170,13 +171,14 @@ public class Facade {
         }
     }
     
-    public void actualizarBanda(Banda banda, int idBanda) throws SQLException{
+    public Response actualizarBanda(Banda banda, int idBanda){
         try {
-            DataBaseConnect database = new DataBaseConnect();
-            BandInfo bandInfo   = new BandInfo();
-            bandInfo.actualizarBanda(banda,idBanda, database.getConnection());
+            Helper helper = new Helper();
+            helper.actualizarBanda(banda, idBanda);
+            return Response.ok().build();
         } catch (Exception ex) {
             Logger.getLogger(Facade.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.serverError().entity(IConstantes.m).build();
         }
     }
     

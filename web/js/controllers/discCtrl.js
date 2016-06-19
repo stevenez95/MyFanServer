@@ -1,5 +1,5 @@
 /* global myMusic */
-myMusic.controller('discCtrl',["$scope","$routeParams","$location","$http", function ($scope,$routeParams,$location,$http) {
+myMusic.controller('discCtrl',["$scope","$routeParams","$http","$sce", function ($scope,$routeParams,$http,$sce) {
         $scope.tipo = 'view';
         if($routeParams.fanId)$scope.type='fan';
         else $scope.type='banda';
@@ -150,6 +150,10 @@ myMusic.controller('discCtrl',["$scope","$routeParams","$location","$http", func
             }, function myError(response) {
                 $scope.error = response.data.mensaje;
             });
+        };
+        
+        $scope.viewVid = function (link){
+            $scope.detailFrame= $sce.trustAsResourceUrl(link);
         };
         
         
