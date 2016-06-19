@@ -11,7 +11,7 @@ package com.myfan.dto;
  */
 public class Cancion {
     private int idCancion, idDisco;
-    private String nombre, link,duracion;
+    private String nombre, linkVid,duracion;
     private boolean enVivo, bonus, limitada;
 
     /**
@@ -56,19 +56,6 @@ public class Cancion {
         this.nombre = nombre;
     }
 
-    /**
-     * @return the link
-     */
-    public String getLink() {
-        return link;
-    }
-
-    /**
-     * @param link the link to set
-     */
-    public void setLink(String link) {
-        this.link = link;
-    }
 
     /**
      * @return the enVivo
@@ -124,6 +111,20 @@ public class Cancion {
      */
     public void setDuracion(String duracion) {
         this.duracion = duracion;
+    }
+
+    /**
+     * @return the linkVid
+     */
+    public String getLinkVid() {
+        return linkVid;
+    }
+
+    /**
+     * @param linkVid the linkVid to set
+     */
+    public void setLinkVid(String linkVid) {
+        this.linkVid = linkVid;
     }
     
     

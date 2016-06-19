@@ -120,7 +120,7 @@ public class Facade {
         Helper helper = new Helper();
         FanInfo fanInfo = new FanInfo();
         fanInfo.rateBand(resenaBanda, database.getConnection());
-        helper.publicarCalifcacion(resenaBanda);
+        helper.publicarCalificacion(resenaBanda);
     }
     
     public void rateDisc(Resena resenaDisco) throws Exception{

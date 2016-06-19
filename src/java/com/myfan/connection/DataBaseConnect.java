@@ -15,6 +15,11 @@ import java.sql.SQLException;
  * @author Steven
  */
 public class DataBaseConnect {
+    /**
+     * Se encarga de la conexion a la BD
+     * @return conexion a la base de datos
+     * @throws Exception 
+     */
     public Connection getConnection() throws Exception
     {
         try

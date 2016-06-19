@@ -27,17 +27,12 @@ describe('Controller: DiscCtrl', function () {
   it('Debe ser de tipo ver', function () {
     expect(scope.tipo).toEqual('view');
   });
-  
-  it('Debe cambier el link', function () {
-      scope.viewVid('linkPrueba')
-    expect(scope.detailFrame).toEqual('linkPrueba');
-  });
 
   
   it('Debe de cambiar el tipo a editar', function () {
       scope.editDisc();
     expect(scope.tipo).toEqual('edit');
-  });
+  }); 
   
   
   

@@ -113,7 +113,7 @@ public class DiscInfo {
         ps.setString(1, cancion.getNombre());
         ps.setBoolean(2, cancion.isEnVivo());
         ps.setBoolean(3, cancion.isBonus());
-        ps.setString(4, cancion.getLink());
+        ps.setString(4, cancion.getLinkVid());
         ps.setBoolean(5, cancion.isLimitada());
         ps.setInt(6, cancion.getIdDisco());
         ps.setString(7, cancion.getDuracion());
@@ -138,7 +138,7 @@ public class DiscInfo {
             cancion.setEnVivo(rs.getBoolean("enVivo"));
             cancion.setBonus(rs.getBoolean("bonus"));
             cancion.setLimitada(rs.getBoolean("limitada"));
-            cancion.setLink(rs.getString("link"));
+            cancion.setLinkVid(rs.getString("link"));
             cancion.setDuracion(rs.getString("duracion"));
             cancionesList.add(cancion);
         }
@@ -161,7 +161,7 @@ public class DiscInfo {
             cancion.setEnVivo(rs.getBoolean("enVivo"));
             cancion.setBonus(rs.getBoolean("bonus"));
             cancion.setLimitada(rs.getBoolean("limitada"));
-            cancion.setLink(rs.getString("link"));
+            cancion.setLinkVid(rs.getString("link"));
             cancion.setDuracion(rs.getString("duracion"));
         }
         return cancion;
@@ -176,7 +176,7 @@ public class DiscInfo {
         ps.setBoolean(2, cancion.isEnVivo());
         ps.setBoolean(3, cancion.isBonus());
         ps.setBoolean(4, cancion.isLimitada());
-        ps.setString(5, cancion.getLink());
+        ps.setString(5, cancion.getLinkVid());
         ps.setString(6, cancion.getDuracion());
         ps.setInt(7, idCancion);
         ps.executeUpdate();

@@ -12,6 +12,8 @@ import static com.myfan.connection.IConstantes.CONSUMER_SECRET;
 import com.myfan.dto.Banda;
 import com.myfan.dto.Fan;
 import com.myfan.dto.Resena;
+import com.myfan.factories.IPublicacion;
+import com.myfan.factories.PublicacionFactory;
 import com.myfan.model.Facade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +31,10 @@ public class TwitterConnect {
     public TwitterConnect() {
     }
     
+    /**
+     * Se encarga de crear la conexion con el sistema externo Twitter
+     * @return La configuracion de la conexion
+     */
     private ConfigurationBuilder getConfig(){
         ConfigurationBuilder cb = new ConfigurationBuilder();
             cb.setDebugEnabled(true)
@@ -39,32 +45,10 @@ public class TwitterConnect {
             return cb;
     }
     
-    public void publicarCalificacion(Resena resenaBanda){
-         
-        try {
-            Facade manager = new Facade();
-            Banda banda = manager.getBandInfo(resenaBanda.getId());
-            Fan fan = manager.getFanInfo(resenaBanda.getIdFan());
-            TwitterFactory tf = new TwitterFactory(getConfig().build());
-            Twitter twitter = tf.getInstance();
-            Status s = twitter.updateStatus(fan.getUsername() +" comenta a "+banda.getNombreBanda() +" " + banda.getHashtag());
-        } catch (Exception ex) {
-            Logger.getLogger(TwitterConnect.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    
-    public void publicarSeguimiento(int idFan, int idBanda){
-        try {
-            Facade manager = new Facade();
-            Banda banda = manager.getBandInfo(idBanda);
-            Fan fan = manager.getFanInfo(idFan);
-            TwitterFactory tf = new TwitterFactory(getConfig().build());
-            Twitter twitter = tf.getInstance();
-            Status s = twitter.updateStatus(fan.getUsername() +" sigue a "+banda.getNombreBanda() +" " + banda.getHashtag());
-        } catch (Exception ex) {
-            Logger.getLogger(TwitterConnect.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void publicar(int idFan, int idBanda, String tipo){
+        PublicacionFactory factory = new PublicacionFactory();
+        IPublicacion publicacion = factory.getPublicacion(tipo);
+        publicacion.publicar(getConfig(), idFan, idBanda);
     }
     
 }

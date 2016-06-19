@@ -28,12 +28,12 @@ public class Helper {
     
     public void publicarSeguimiento(int idFan, int idBanda){
         TwitterConnect twitterConnect = new TwitterConnect();
-        twitterConnect.publicarSeguimiento(idFan, idBanda);
+        twitterConnect.publicar(idFan, idBanda, "seguimiento");
     }
     
-    public void publicarCalifcacion(Resena resena){
+    public void publicarCalificacion(Resena resena){
         TwitterConnect twitterConnect = new TwitterConnect();
-        twitterConnect.publicarCalificacion(resena);
+        twitterConnect.publicar(resena.getIdFan(), resena.getId(), "calificacion");
     }
     
     public void registarBanda(Banda banda) throws SQLException, Exception{

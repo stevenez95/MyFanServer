@@ -14,7 +14,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.jboss.classfilewriter.constpool.StringEntry;
 
 /**
  *
@@ -22,6 +21,11 @@ import org.jboss.classfilewriter.constpool.StringEntry;
  */
 public class MyFestConnection {
     
+    /**
+     * Envia las bandas nuevas a al sistema MyFest
+     * @param banda La banda a enviar al Sistema MyFest
+     * @return True si se envio con exito, false en caso contrario
+     */
     public boolean enviarArtistas (Banda banda){
     try {
             HttpPost post = new HttpPost(IConstantes.MYFEST_URL+"myfan");
@@ -50,6 +54,12 @@ public class MyFestConnection {
         }    
     }
     
+    /**
+     * Se encarga de actualizar la banda en el sistema MyFest
+     * @param banda Banda con valore actulizados
+     * @param idBanda Id de la banda a cambiar
+     * @return true en caso de exito, false en caso contrario
+     */
    public boolean actualizarArtistas (Banda banda, int idBanda){
     try {
             HttpPut put = new HttpPut(IConstantes.MYFEST_URL+"myfan/"+idBanda);

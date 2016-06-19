@@ -103,7 +103,7 @@ myMusic.controller('discCtrl',["$scope","$routeParams","$http","$sce", function 
             });
         }; //done
         
-        $scope.createSong = function (idSong){
+        $scope.createSong = function (){
             $scope.newSong.idDisco = $scope.idDisco;
             $http.post(url+'disco/newSong', $scope.newSong ).then(function mySucces(response) {
                 refresh();

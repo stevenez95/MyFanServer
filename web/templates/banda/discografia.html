@@ -53,9 +53,12 @@
                     </thead>
                     <tbody>
                         <tr ng-if="type==='banda'">
+                            <td colspan="3" class="w3-tiny">Nota: Link debe ser el embebido de YouTube</td>
+                        </tr>
+                        <tr ng-if="type==='banda'">
                             <td><input class="w3-input w3-border" type="text" ng-model="newSong.nombre" ></td>
                             <td><input class="w3-input w3-border" placeholder="hh:mm:ss" type="text" ng-model="newSong.duracion"></td>
-                            <td><input class="w3-input w3-border" type="text" ng-model="newSong.link"></td>
+                            <td><input class="w3-input w3-border" type="text" ng-model="newSong.linkVid"></td>
                             <td><input class="w3-check " type="checkbox" ng-model="newSong.enVivo" name="bool"></td>
                             <td><input class="w3-check" type="checkbox" ng-model="newSong.limitada" name="bool"></td>
                             <td><input class="w3-check" type="checkbox" ng-model="newSong.bonus" name="bool" ></td>
@@ -65,7 +68,7 @@
                         <tr ng-repeat="song in discSongs">
                             <td>{{song.nombre}}</td>
                             <td>{{song.duracion}}</td>
-                            <td><a href="">{{song.link}}</a></td>
+                            <td><a href="" ng-click="viewVid(song.linkVid)">Ver Video</a></td>
                             <td><input class="w3-radio" type="radio" ng-checked="{{song.enVivo}}" disabled></td>
                             <td><input class="w3-radio" type="radio" ng-checked="{{song.limitada}}" disabled></td>
                             <td><input class="w3-radio" type="radio" ng-checked="{{song.bonus}}" disabled></td>

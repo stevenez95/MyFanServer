@@ -24,6 +24,11 @@ public class ImageSaver {
     public ImageSaver() {
     }
     
+    /**
+     * Se encarga de crear y guardar la imagen del usuario
+     * @param base64Img La imagen en base 64
+     * @return El nombre final de la imagen creada
+     */
     public String saveImage(String base64Img){
         FileOutputStream imageOutFile = null;
         try {
