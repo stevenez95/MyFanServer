@@ -30,6 +30,13 @@ public class FanInfo {
     public FanInfo() {
     }
     
+    /**
+     * Un fanatico se hace seguidor de una banda
+     * @param idFan  fanatico que va a seguir a la banda
+     * @param idBanda  que se desea seguir
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void seguirBanda(int idFan , int idBanda, Connection connection)throws SQLException{
         String query = "insert into seguidos (idFan, idBanda) value (?,?);";
         System.out.println("seguir");
@@ -41,6 +48,13 @@ public class FanInfo {
         connection.close();
     }
     
+    /**
+     * Un fanatico deja de seguir una banda
+     * @param idFan  fanatico que va a dejar de seguir a la banda
+     * @param idBanda  que se desea dejar de seguir
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void dejarSeguirBanda(int idFan,  int idBanda, Connection connection)throws SQLException{
         String query = "delete from seguidos where idFan = ? and idBanda = ?;";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -51,6 +65,12 @@ public class FanInfo {
         connection.close();
     }
     
+    /**
+     * Un fanatico desactiva la cuenta
+     * @param idFan  que desea desactivar la cuenta
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void desactivarFan(int idFan, Connection connection)throws SQLException{
         String query = "update fans set activo = not activo where idFan = ?;";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -60,6 +80,12 @@ public class FanInfo {
         connection.close();
     }
     
+    /**
+     * Un fanatico actualiza la informacion de su perfil
+     * @param idFan  fanatico que desea modificar la informacion
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void actualizarFan(Fan fan,int idFan, Connection connection)throws SQLException{
         String query2 = "update fans set nombre= ?,apellido= ?,fechaNac= ?,genero= ?,idPais= ?,fotoPerfil= ? where idFan = ?;";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -78,15 +104,18 @@ public class FanInfo {
         ps.setInt(5, fan.getIdPais());
         ps.setString(6, fan.getFotoPerfil());
         ps.setInt(7, idFan);
-        
-        
         ingresarGenerosFan(fan.getGeneros(), idFan, connection);
-        
         ps.executeUpdate();
         ps.close();
         connection.close();
     }
     
+    /**
+     * Un fanatico desea registrarse en el sistema MyFan
+     * @param fan  fanatico que desea crear cuenta
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void registrarFan(Fan fan,Connection connection) throws SQLException{
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         java.sql.Date fecha = null;
@@ -117,6 +146,13 @@ public class FanInfo {
         connection.close();
     }
     
+    /**
+     * Se encarga de ingresar los generos de un fanatico a la BD
+     * @param generos  que se van ingresar a la BD
+     * @param idFan  que se asignaran los generos musicales
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     private void ingresarGenerosFan(int[] generos, int idFan, Connection c)throws SQLException{
         if(generos == null)return;
         if(generos.length == 0) return;
@@ -139,6 +175,13 @@ public class FanInfo {
         
     }
     
+    /**
+     * Se encarga de obtener los artistas que presenta un fanatico
+     * @param idFan  fanatico que van a obtener los generos
+     * @param connection conexion a la BD
+     * @return Lista de los artistas del fan
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public ArrayList<Banda> verMisArtistas(int idFan, Connection connection)throws SQLException{
         String query = "select b.idBanda, b.nombreBanda,b.fotoPerfil \n" +
                 "from bandas b \n" +
@@ -162,6 +205,14 @@ public class FanInfo {
         
     }
     
+    /**
+     * Se encarga de obtener si un fanatico es seguidor de una banda o no
+     * @param idFan  fanatico que se va a realizar la consulta
+     * @param idBanda  que se va a verificar si es seguidor
+     * @param connection conexion a la BD
+     * @return boolean si es seguidor o no
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public boolean esSeguidor (int idFan, int idBanda, Connection connection)throws SQLException{
         String query = "Select * from seguidos where idfan=? And idbanda=?;";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -178,6 +229,15 @@ public class FanInfo {
         return bandera;
     }
     
+    /**
+     * Se encarga de obtener la lista de artistas que cumplan con las condiciones
+     * @param nombre  nombre de la banda que se desea buscar
+     * @param pais  pais de la banda que se desea buscar
+     * @param genero   genero de la banda que se desea buscar
+     * @param connection conexion a la BD
+     * @return Lista de resultados
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public ArrayList<Banda> buscarArtistas(String nombre, String pais, String genero, Connection connection)throws SQLException{
         String query = "SELECT b.idBanda, b.nombreBanda\n"
                 + "from bandas b\n"
@@ -210,6 +270,12 @@ public class FanInfo {
         return bandas;
     }
     
+    /**
+     * Se encarga de realizar una reseña a una banda
+     * @param resenaBanda  que se le aplicara a la banda correspondiente
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void rateBand(Resena resenaBanda, Connection connection)throws SQLException{
         String delete = "delete from resenasbanda where idBanda = ? and idFan = ?";
         PreparedStatement ps2 = connection.prepareStatement(delete);
@@ -229,6 +295,12 @@ public class FanInfo {
         connection.close();
     }
     
+    /**
+     * Se encarga de realizar la reseña al disco correspondiente
+     * @param resenaDisco  que se le aplicara a la banda
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void rateDisc(Resena resenaDisco, Connection connection)throws SQLException{
         String delete = "delete from resenasdisco where idDisco = ? and idFan = ?";
         PreparedStatement ps2 = connection.prepareStatement(delete);
@@ -248,6 +320,12 @@ public class FanInfo {
         ps.close();
     }
     
+    /**
+     * Se encarga de realizar la reseña al evento correspondiente
+     * @param resenaEvento  que se le aplicara a la banda
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void rateEvent(Resena resenaEvento, Connection connection)throws SQLException{
         String delete = "delete from resenasconcierto where idEvento = ? and idFan = ?";
         PreparedStatement ps2 = connection.prepareStatement(delete);
@@ -267,6 +345,14 @@ public class FanInfo {
         connection.close();
     }
     
+    
+    /**
+     * Obtiene la informacion personal de un fanatico
+     * @param idFan  fanatico que va a obtener la informacion
+     * @param connection conexion a la BD
+     * @return Informacion del fanatico
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public Fan getFanInfo(int idFan, Connection connection)throws SQLException{
         String query = "select f.idFan,f.username, f.genero, floor(datediff(now(),f.fechaNac)/365) as age, count(s.idFan) as total, f.activo, p.pais,f.nombre,f.apellido,f.fechaNac,f.fotoPerfil \n" +
                 "from fans f \n" +
@@ -298,6 +384,13 @@ public class FanInfo {
         
     }
     
+    /**
+     * Se obtienen los generos de un fanatico
+     * @param idFan  fanatico que va a obtener los generos
+     * @param connection conexion a la BD
+     * @return Lista de los generos de un fan
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public ArrayList<Genero> getFanGeneros (int idFan, Connection connection)throws SQLException{
         String query = "select g.nombre,g.idGenero\n" +
                 "from fangeneros bg\n" +

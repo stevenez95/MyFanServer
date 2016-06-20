@@ -45,7 +45,7 @@ public class DiscInfo {
     }
     
     /**
-     * Obtiene las discografias 
+     * Obtiene las discografias
      * @param idBanda id banda que creo el disoc
      * @param connection conexion a la BD
      * @return Arreglo con las discografias
@@ -100,6 +100,13 @@ public class DiscInfo {
         return discografia;
     }
     
+    
+    /**
+     * Se encarga de editar la informacion de un disco
+     * @param idDisco idDisco que se va modificar
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void editDisc(Discografia discografia, int idDisco, Connection connection)throws SQLException{
         String query ="update discografias \n" +
                 "set nombre=?,descripcion=?,generoMusical=?,anioPublicacion=?,selloDiscografico=? \n" +
@@ -116,6 +123,12 @@ public class DiscInfo {
         connection.close();
     }
     
+    /**
+     * Se encarga de eliminar un disco
+     * @param idDisco idDisco que se va eliminar
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void deleteDisc(int idDisco, Connection connection)throws SQLException{
         String query = "delete from discografias \n" +
                 "where idDiscografia = ?;";
@@ -126,7 +139,13 @@ public class DiscInfo {
         connection.close();
     }
     
-    public void createSong(Cancion cancion, Connection connection)throws SQLException{   
+    /**
+     * Se encarga de crear una cancion en un disco
+     * @param cancion cancion que se va insertar en la BD
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
+    public void createSong(Cancion cancion, Connection connection)throws SQLException{
         String query = "insert into canciones ( nombre, enVivo, bonus, link, limitada, idDisco, duracion)\n" +
                 "value (?,?,?,?,?,?,?);";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -142,6 +161,13 @@ public class DiscInfo {
         connection.close();
     }
     
+    /**
+     * Obtiene las canciones de un disco
+     * @param idDisco idDisco que se quiere obtener las canciones
+     * @param connection conexion a la BD
+     * @return canciones de un disco
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public ArrayList<Cancion> getSongs(int idDisco, Connection connection)throws SQLException{
         String query = "select idCancion,nombre, enVivo,bonus,limitada,link,duracion \n" +
                 "from canciones \n" +
@@ -167,6 +193,13 @@ public class DiscInfo {
         return cancionesList;
     }
     
+    /**
+     * Obtiene la informacion de una cancion de un disco
+     * @param idCancion  que se quiere obtener la informacion
+     * @param connection conexion a la BD
+     * @return informacion de una cancion
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public Cancion getSong(int idCancion, Connection connection)throws SQLException{
         String query = "select idCancion,nombre, enVivo,bonus,limitada,link,duracion \n" +
                 "from canciones \n" +
@@ -187,6 +220,13 @@ public class DiscInfo {
         return cancion;
     }
     
+    /**
+     * Se modifica la informacion de una cancion de un disco.
+     * @param cancion objeto que se quiere modificar
+     * @param idCancion  que se quiere modificar 
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void editSong(Cancion cancion,int idCancion, Connection connection)throws SQLException{
         String query = "update canciones \n" +
                 "set nombre=?,enVivo=?,bonus=?,limitada=?,link=?, duracion=? \n" +
@@ -204,6 +244,12 @@ public class DiscInfo {
         connection.close();
     }
     
+      /**
+     * Se elimina una cancion de un disco.
+     * @param idCancion  que se quiere eliminar 
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void deleteSong(int idCancion, Connection connection)throws SQLException{
         String query = "delete from canciones \n" +
                 "where idCancion = ?;";
@@ -214,6 +260,12 @@ public class DiscInfo {
         connection.close();
     }
     
+    /**
+     * Se obtiene los comentarios de un disco.
+     * @param idDisco  que se desea obtener los comentarios
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public ArrayList<Resena> getDiscComments(int idDisco, Connection connection)throws SQLException{
         String query = "select r.comentario, f.username, r.fecha\n" +
                 "from resenasdisco r \n" +
@@ -238,6 +290,12 @@ public class DiscInfo {
         return comentariosList;
     }
     
+    /**
+     * Se obtiene la calificacion promedio general de todos los discos
+     * @param idDisco  que se desea obtener la calificacion
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public float getDiscRate(int  idDisco, Connection connection)throws SQLException{
         String query = "select avg(calificacion) as promedio, idDisco \n" +
                 "from resenasdisco \n" +

@@ -32,6 +32,12 @@ public class Facade {
     
     /*fan*/
     
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase Helper encargada
+     * de procesar registrar fan
+     * @param fan que se va a crear
+     * @return Respuesta si se creo el fan correctamente
+     */
     public Response registrarFan(Fan fan){
         Message message = new Message();
         try {
@@ -53,6 +59,13 @@ public class Facade {
         }
     }
     
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase fanInfo y
+     * realizar la solicitud a la clase Helper de procesar la publicacion en Twitter
+     * @param idFan que va a seguir
+     * @param idBanda  a la que va seguir
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void seguirBanda(int idFan , int idBanda) throws SQLException{
         DataBaseConnect database = new DataBaseConnect();
         Helper helper = new Helper();
@@ -65,6 +78,12 @@ public class Facade {
         }
     }
     
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase fanInfo
+     * @param idFan  fan que quiere dejar de seguir
+     * @param idBanda  Banda que se va a dejar de seguir
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void dejarSeguirBanda(int idFan,  int idBanda) throws SQLException{
         try {
             DataBaseConnect database = new DataBaseConnect();
@@ -75,6 +94,11 @@ public class Facade {
         }
     }
     
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase fanInfo
+     * @param idFan  fan que quiere desactivar la cuenta
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void desactivarFan(int idFan) throws SQLException{
         try {
             DataBaseConnect database = new DataBaseConnect();
@@ -85,7 +109,12 @@ public class Facade {
         }
     }
     
-    
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase Helper
+     * @param fan  que desea actualizar sus datos
+     * @param idFan  fan que quiere actualizar sus datos
+     * @return mensaje si se logro correctamente
+     */
     public Response actualizarFan(Fan fan,int idFan){
         try {
             Helper helper = new Helper();
@@ -97,6 +126,12 @@ public class Facade {
         }
     }
     
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase fanInfo
+     * @param idFan  fan que desea observar sus artistas
+     * @throws SQLException En caso de haber un error en la BD
+     * @return lista de artistas
+     */
     public ArrayList<Banda> verMisArtistas(int idFan) throws SQLException{
         try {
             DataBaseConnect database = new DataBaseConnect();
@@ -107,14 +142,26 @@ public class Facade {
         }
     }
     
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase fanInfo
+     * @param nombre  de la banda que se desea buscar
+     * @param pais de la banda que se desea buscar
+     * @param genero de la banda que se desea buscar
+     * @throws SQLException En caso de haber un error en la BD
+     * @return lista de artistas
+     */
     public ArrayList<Banda> buscarArtistas(String nombre, String pais, String genero) throws SQLException, Exception{
         DataBaseConnect database = new DataBaseConnect();
         FanInfo fanInfo = new FanInfo();
-        
         return fanInfo.buscarArtistas(nombre, pais,genero, database.getConnection());
-        
     }
     
+     /**
+     * Se encarga de redigirir la solicitud del cliente a la clase Helper para 
+     * realizar la publicacion en Twitter
+     * @param resenaBanda de la que se realizar y publicar  
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void rateBand(Resena resenaBanda)throws SQLException, Exception{
         DataBaseConnect database = new DataBaseConnect();
         Helper helper = new Helper();
@@ -123,25 +170,48 @@ public class Facade {
         helper.publicarCalificacion(resenaBanda);
     }
     
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase Helper para 
+     * realizar la publicacion en Twitter
+     * @param resenaDisco  de la que se realizar y publicar  
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void rateDisc(Resena resenaDisco) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         FanInfo fanInfo = new FanInfo();
         fanInfo.rateDisc(resenaDisco, database.getConnection());
     }
     
-    public ArrayList<Evento> getEventosFan(int idFan) throws Exception{
-        
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase eventInfo
+     * @param idFan que se desea obtener los eventos 
+     * @throws SQLException En caso de haber un error en la BD
+     * @return lista de los eventos del fan
+     */
+    public ArrayList<Evento> getEventosFan(int idFan) throws Exception{  
         DataBaseConnect database = new DataBaseConnect();
         EventInfo eventInfo  = new EventInfo();
         return eventInfo.getEventosFan(idFan, database.getConnection());
     }
     
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase Helper para 
+     * realizar la publicacion en Twitter
+     * @param resenaEvento  de la que se realizar y publicar  
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void rateEvent(Resena resenaEvento) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         FanInfo fanInfo   = new FanInfo();
         fanInfo.rateEvent(resenaEvento, database.getConnection());
     }
     
+     /**
+     * Se encarga de redigirir la solicitud del cliente a la clase NewsInfo
+     * @param idFan que se desea obtener las noticias
+     * @throws SQLException En caso de haber un error en la BD
+     * @return lista de las noticias del fan
+     */
     public ArrayList<Noticia> getNoticiasFan(int idFan) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         NewsInfo  newsInfo  = new NewsInfo();
@@ -149,7 +219,12 @@ public class Facade {
     }
     
     /*banda*/
-    
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase Helper encargada
+     * de procesar registrar fan
+     * @param banda  que se va a crear
+     * @return Respuesta si se creo la banda correctamente
+     */
     public Response registrarBanda(Banda banda){
         Message message = new Message();
         try {
@@ -171,6 +246,12 @@ public class Facade {
         }
     }
     
+     /**
+     * Se encarga de redigirir la solicitud del cliente a la clase Helper
+     * @param banda que desea actualizar sus datos
+     * @param idBanda  banda que quiere actualizar sus datos
+     * @return mensaje si se logro correctamente
+     */
     public Response actualizarBanda(Banda banda, int idBanda){
         try {
             Helper helper = new Helper();
@@ -182,17 +263,29 @@ public class Facade {
         }
     }
     
+     /**
+     * Se encarga de redigirir la solicitud del cliente a la clase BandInfo
+     * @param idBanda  banda que quiere desactivar
+     * @throws Exception En caso de haber un error 
+     */
     public void desactivarBanda(int idBanda) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         BandInfo bandInfo   = new BandInfo();
         bandInfo.desactivarBanda(idBanda, database.getConnection());
     }
     
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase BandInfo
+     * @param idBanda  banda que quiere obtener cantidad de seguidores
+     * @throws Exception En caso de haber un error 
+     * @return cantidad de seguidores
+     */
     public int getCantidadSeguidores(int idBanda) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         BandInfo bandInfo   = new BandInfo();
         return bandInfo.getCantidadSeguidores(idBanda, database.getConnection());
     }
+    
     /*
     public int getCalificacionPromedioDiscos(int idBanda) throws Exception{
     DataBaseConnect database = new DataBaseConnect();
@@ -200,24 +293,49 @@ public class Facade {
     return bandInfo.getCalificacionPromedioDiscos(idBanda, database.getConnection());
     }
     */
+    
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase BandInfo
+     * @param idBanda  banda que quiere obtener los comentarios
+     * @return lista con los comentarios de la banda
+     * @throws Exception En caso de haber un error 
+     */
     public ArrayList<Resena> getBandComments(int idBanda) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         BandInfo bandInfo = new BandInfo();
         return bandInfo.getBandComments(idBanda, database.getConnection());
     }
     
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase BandInfo
+     * @param idBanda  banda que quiere obtener la cantidad de eventos
+     * @return cantidad de eventos de la banda
+     * @throws Exception En caso de haber un error 
+     */
     public int getCantidadEventos(int idBanda) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         BandInfo bandInfo   = new BandInfo();
         return bandInfo.getCantidadEventos(idBanda, database.getConnection());
     }
     
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase BandInfo
+     * @param idBanda  banda que quiere obtener los ultimos eventos
+     * @return lista con los ultimos eventos de la banda
+     * @throws Exception En caso de haber un error 
+     */
     public ArrayList<Evento> getUltimosEventos(int idBanda) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         BandInfo bandInfo   = new BandInfo();
         return bandInfo.getUltimosEventos(idBanda, database.getConnection());
     }
     
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase BandInfo
+     * @param idBanda  banda que quiere obtener la calificacion
+     * @return califiacion de la banda
+     * @throws Exception En caso de haber un error 
+     */
     public float getBandRate(int idBanda) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         BandInfo bandInfo   = new BandInfo();
@@ -225,36 +343,69 @@ public class Facade {
         
     }
     
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase EventInfo
+     * @param evento que se desea crear
+     * @throws Exception En caso de haber un error 
+     */
     public void crearEvento(Evento evento) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         EventInfo eventInfo = new EventInfo();
         eventInfo.crearEvento(evento, database.getConnection());
     }
     
+    /**
+     * Se encarga de redigirir la solicitud del cliente a la clase EventInfo
+     * @param idBanda  banda que quiere obtener los eventos
+     * @return lista con los eventos de la banda
+     * @throws Exception En caso de haber un error 
+     */
     public ArrayList<Evento> getEventosBanda(int idBanda) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         EventInfo eventInfo = new EventInfo();
         return eventInfo.getEventosBanda(idBanda, database.getConnection());
     }
     
+     /**
+     * Se encarga de redigirir la solicitud del cliente a la clase EventInfo
+     * @param idEvento  que se quiere cancelar
+     * @throws Exception En caso de haber un error 
+     */
     public void cancelEvent(int idEvento) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         EventInfo eventInfo = new EventInfo();
         eventInfo.cancelEvent(idEvento, database.getConnection());
     }
     
+     /**
+     * Se encarga de redigirir la solicitud del cliente a la clase EventInfo
+     * @param idEvento  que se quiere obtener los comentarios
+     * @return lista con los comentarios de eventos de la banda
+     * @throws Exception En caso de haber un error 
+     */
     public ArrayList<Resena> getEventComments(int idEvento) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         EventInfo eventInfo = new EventInfo();
         return eventInfo.getEventComments(idEvento, database.getConnection());
     }
     
+     /**
+     * Se encarga de redigirir la solicitud del cliente a la clase EventInfo
+     * @param idEvento  que se quiere obtener la calificacion
+     * @return calificacion del evento de la banda
+     * @throws Exception En caso de haber un error 
+     */
     public float getEventRate(int idEvento) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         EventInfo eventInfo = new EventInfo();
         return eventInfo.getEventRate(idEvento, database.getConnection());
     }
     
+     /**
+     * Se encarga de redigirir la solicitud del cliente a la clase NewsInfo
+     * @param noticia  que se quiere crear
+     * @throws Exception En caso de haber un error 
+     */
     public void crearNoticia(Noticia noticia) throws Exception{
         DataBaseConnect database = new DataBaseConnect();
         NewsInfo newsInfo = new NewsInfo();

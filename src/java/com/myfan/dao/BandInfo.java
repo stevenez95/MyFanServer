@@ -26,6 +26,12 @@ public class BandInfo {
     
     public BandInfo() {}
     
+    /**
+     * Se encarga de crear una nueva banda en la BD
+     * @param banda Banda que se va a crear
+     * @param connection Conexion de la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void registrarBanda(Banda banda,Connection connection) throws SQLException{
         String query = "insert into Bandas (username,password,nombreBanda,anioCreacion,hashtag,biografia,fechaCreacion,idPais,integrantes,fotoPerfil) value (?,?,?,?,?,?,?,?,?,?);";
         String password = PasswordEncrypt.hashPassword(banda.getPassword());
@@ -54,6 +60,13 @@ public class BandInfo {
         connection.close();
     }
     
+    /**
+     * Se encarga de actualizar los datos de una banda en la BD
+     * @param banda Objeto banda que se desea modificar
+     * @param idBanda de la banda que se quiere modificar
+     * @param connection Conexion de la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void actualizarBanda(Banda banda,int idBanda, Connection connection)throws SQLException{
         String query2 = "update bandas set nombreBanda= ?,hashtag= ?,biografia= ?,integrantes= ?,idPais= ?,fotoPerfil= ?, anioCreacion=? where idBanda = ?;";
         PreparedStatement ps;
@@ -76,6 +89,13 @@ public class BandInfo {
         connection.close();
     }
     
+    /**
+     * Se encarga de ingresar nuevos generos a la banda solicitada en la BD
+     * @param generos Genero que se desea ingresar a la BD
+     * @param idBanda de la banda que se quiere modificar
+     * @param connection Conexion de la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     private void ingresarGenerosBanda(int[] generos, int idBanda, Connection c)throws SQLException{
         if(generos==null) return;
         if(generos.length == 0) return;
@@ -92,12 +112,17 @@ public class BandInfo {
             ps2.execute();
             ps2.close();
         }
-        
         ps1.close();
         c.close();
         
     }
     
+    /**
+     * Se encarga de desactivar la cuenta de una banda en la BD
+     * @param idBanda de la banda que se quiere desactivar
+     * @param connection Conexion de la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void desactivarBanda(int idBanda,Connection connection)throws SQLException{
         String query = "update bandas set activo = not activo where idBanda = ?;";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -107,6 +132,13 @@ public class BandInfo {
         connection.close();
     }
     
+    /**
+     * Se encarga de obtener la cantidad de seguidores que posee una banda
+     * @param idBanda de la banda que se quiere obtener el numero de seguidores
+     * @param connection Conexion de la BD
+     * @return cantidad de seguidores
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public int getCantidadSeguidores(int idBanda, Connection connection)throws SQLException{
         String query ="select count(*) as total\n" +
                 "from seguidos s \n" +
@@ -127,6 +159,13 @@ public class BandInfo {
         
     }
     
+    /**
+     * Se encarga de obtener la cantidad de eventos que posee una banda
+     * @param idBanda de la banda que se quiere obtener el numero de eventos
+     * @param connection Conexion de la BD
+     * @return cantidad de eventos de una banda
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public int getCantidadEventos(int idBanda, Connection connection)throws SQLException{
         String query ="select count(*) as total\n" +
                 "from eventos e \n" +
@@ -147,14 +186,22 @@ public class BandInfo {
         
     }
     
-     public ArrayList<Evento> getUltimosEventos(int idBanda, Connection connection)throws SQLException{
-         String q = "SET lc_time_names = 'es_MX';";
+    /**
+     * Se encarga de obtener la cantidad de eventos que posee una banda
+     * en los ultimos seis meses
+     * @param idBanda de la banda que se quiere obtener los eventos
+     * @param connection Conexion de la BD
+     * @return eventos de los ultimos 6 meses
+     * @throws SQLException En caso de haber un error en la BD
+     */
+    public ArrayList<Evento> getUltimosEventos(int idBanda, Connection connection)throws SQLException{
+        String q = "SET lc_time_names = 'es_MX';";
         String query ="SELECT count(idBanda) as Eventos, monthname(fechaEvento) as mes\n" +
-                        " FROM eventos\n" +
-                        " where idBanda = ? and fechaEvento >= date_sub(curdate(), interval 6 month) and cancelado=0\n" +
-                        " GROUP BY (month(fechaEvento) )\n" +
-                        " order by fechaEvento desc;";
-
+                " FROM eventos\n" +
+                " where idBanda = ? and fechaEvento >= date_sub(curdate(), interval 6 month) and cancelado=0\n" +
+                " GROUP BY (month(fechaEvento) )\n" +
+                " order by fechaEvento desc;";
+        
         PreparedStatement p  = connection.prepareStatement(q);
         p.execute();
         PreparedStatement ps = connection.prepareStatement(query);
@@ -173,8 +220,15 @@ public class BandInfo {
         connection.close();
         return eventos;
         
-    } 
+    }
     
+    /**
+     * Se encarga de obtener los comentarios que posee una banda
+     * @param idBanda de la banda que se quiere obtener los comentarios
+     * @param connection Conexion de la BD
+     * @return comentarios sobre la banda
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public ArrayList<Resena> getBandComments(int idBanda, Connection connection)throws SQLException{
         String query = "select r.comentario, f.username, r.fecha\n" +
                 "from resenasbanda r\n" +
@@ -200,6 +254,13 @@ public class BandInfo {
         return bandaComentList;
     }
     
+    /**
+     * Se encarga de obtener la calificacion promedio que posee una banda
+     * @param idBanda de la banda que se quiere obtener la calificacion
+     * @param connection Conexion de la BD
+     * @return promedio de calificacion de la banda
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public float getBandRate(int  idBanda, Connection connection)throws SQLException{
         String query = "select avg(calificacion) as promedio, idBanda \n" +
                 "from resenasbanda \n" +
@@ -218,6 +279,13 @@ public class BandInfo {
         return promedio;
     }
     
+    /**
+     * Se encarga de obtener la informacion de una banda
+     * @param idBanda de la banda que se quiere obtener la informacion
+     * @param connection Conexion de la BD
+     * @return informacion de la banda
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public Banda getBandInfo(int idBanda, Connection connection) throws SQLException {
         String query = "select b.idBanda, b.username, b.nombreBanda, b.hashtag, p.pais, b.activo, b.anioCreacion,b.integrantes, b.biografia, b.fotoPerfil \n" +
                 "from bandas b\n" +
@@ -246,6 +314,13 @@ public class BandInfo {
         
     }
     
+    /**
+     * Se encarga de obtener los generos musicales que posee una banda
+     * @param idBanda de la banda que se quiere obtener los generos
+     * @param connection Conexion de la BD
+     * @return lista de generos de la banda
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public ArrayList<Genero> getBandGeneros (int idBanda, Connection connection)throws SQLException{
         String query = "select g.nombre,g.idGenero\n" +
                 "from bandageneros bg\n" +
@@ -257,7 +332,6 @@ public class BandInfo {
         
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, idBanda);
-        
         ResultSet rs = ps.executeQuery();
         ArrayList<Genero> generosList = new ArrayList<>();
         while(rs.next()){
@@ -266,12 +340,18 @@ public class BandInfo {
             genero.setNombre(rs.getString("nombre"));
             generosList.add(genero);
         }
-        
         connection.close();
         ps.close();
         return generosList;
     }
     
+    /**
+     * Se encarga de obtener el promedio general de todos los discos de una banda
+     * @param idBanda de la banda que se quiere obtener el promedio general
+     * @param connection Conexion de la BD
+     * @return promedio de calificacion de los discos
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public float getAllDiscRate(int idBanda, Connection connection)throws SQLException{
         String query = "SELECT avg(resenasdisco.calificacion) as promedio, idBanda \n" +
                 " FROM discografias \n" +
@@ -291,6 +371,13 @@ public class BandInfo {
         return promedio;
     }
     
+    /**
+     * Se encarga de obtener el promedio de calificacion de un concierto de una banda
+     * @param idBanda de la banda que se quiere obtener el promedio de calificacion
+     * @param connection Conexion de la BD
+     * @return promedio de calificacion
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public float getConcertRate(int idBanda, Connection connection)throws SQLException{
         String query = "SELECT avg(resenasconcierto.calificacion) as promedio, idBanda \n" +
                 "FROM eventos \n" +

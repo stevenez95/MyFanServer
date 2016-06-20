@@ -20,6 +20,12 @@ import twitter4j.conf.ConfigurationBuilder;
 public class Seguimiento implements IPublicacion{
 
     @Override
+    /**
+     * Se encarga de realizar la publicacion de una reseña en Twitter
+     * @param cb 
+     * @param idFan que realizó la reseña
+     * @param idBanda que sobre la que se realizó la reseña
+     */
     public void publicar(ConfigurationBuilder cb, int idFan, int idBanda) {
         Facade facade = new Facade();
         try {

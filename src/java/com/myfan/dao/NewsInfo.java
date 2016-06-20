@@ -22,6 +22,14 @@ public class NewsInfo {
     }
     
     /*FAN*/
+    
+    /**
+     * Se obtienen las noticias de un fanatico
+     * @param idFan  fanatico que va a obtener las noticias
+     * @param connection conexion a la BD
+     * @return Lista de las noticias de un fan
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public ArrayList<Noticia> getNoticiasFan(int idFan, Connection connection)throws SQLException{
         String query = "select n.idNoticia , n.titulo, n.contenido, n.fechaCreacion, b.nombreBanda \n" +
                 "from noticias n \n" +
@@ -50,6 +58,13 @@ public class NewsInfo {
     }
     
     /*BANDA*/
+    
+    /**
+     * Se crean las noticias de una banda
+     * @param noticia que se va a ingresar a la BD
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void crearNoticia(Noticia noticia, Connection connection)throws SQLException{
         String query = "insert into noticias (titulo,contenido,fechaCreacion,idBanda) \n" +
                 "value (?,?,?,?);";
@@ -63,6 +78,14 @@ public class NewsInfo {
         connection.close();
     }
     
+    
+    /**
+     * Se obtienen las noticias de una banda
+     * @param idBanda   fanatico que va a obtener las noticias
+     * @param connection conexion a la BD
+     * @return Lista de las noticias de una banda
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public ArrayList<Noticia> getNoticiasBanda(int idBanda, Connection connection)throws SQLException{
         String query = "select idNoticia , titulo, contenido, fechaCreacion \n" +
                 "from noticias \n" +
@@ -86,6 +109,13 @@ public class NewsInfo {
         
     }
     
+    
+    /**
+     * Se elimnan las noticias de una banda
+     * @param idNoticia que se desea borrar
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void deleteNews(int idNoticia, Connection connection)throws SQLException{
         String query = "delete from noticias \n" +
                 "where idNoticia = ?;";

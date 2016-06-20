@@ -21,6 +21,15 @@ public class UserInfo {
     public UserInfo() {
     }
     
+    
+    /**
+     * Se verifica que el usuario exista en el sistema y sus datos sean correctos
+     * @param username que se va a verificar
+     * @param password  que se va a verificar
+     * @param connection conexion a la BD
+     * @return mensaje de que validacion fue correcta
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public Message login(String username, String password, Connection connection) throws SQLException {
         JwtManager jwtManager = new JwtManager();
         String query = "select idBanda,username, password from Bandas where username = ?";
@@ -57,7 +66,7 @@ public class UserInfo {
                 System.out.println("database "+rs2.getString("password"));
                 System.out.println("user "+password);
                 if (PasswordEncrypt.validatePassword(password, rs2.getString("password"))){
-                    m.setSuccess(true); 
+                    m.setSuccess(true);
                     m.setId(rs2.getInt("idFan"));
                     m.setTipo("fan");
                     String token = jwtManager.jwtGenerate();
@@ -79,5 +88,5 @@ public class UserInfo {
         }
     }
     
-
+    
 }

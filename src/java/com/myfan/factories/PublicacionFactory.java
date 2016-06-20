@@ -14,6 +14,11 @@ public class PublicacionFactory {
     public PublicacionFactory() {
     }
     
+    /**
+     * Patron Factory que se encarga de crear una publicacion en Twitter de seguimiento
+     * o califiacion dependiendo de la accion del cliente
+     * @param tipo de publicacion que se desea realizar 
+     */
     public IPublicacion getPublicacion(String tipo){
         if(tipo == null)return null;
         switch(tipo){

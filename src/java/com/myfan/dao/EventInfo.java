@@ -26,8 +26,15 @@ public class EventInfo {
     public EventInfo() {
     }
     
-    
     /*FAN*/
+    
+    /**
+     * Se obtiene los eventos de un fanatico
+     * @param idFan  que se desea obtener los eventos
+     * @param connection conexion a la BD
+     * @return Arreglo con eventos del fan
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public ArrayList<Evento> getEventosFan(int idFan, Connection connection)throws SQLException{
         String query = "select e.idEvento, e.titulo, e.contenido, e.fechaCreacion,e.fechaEvento,e.concierto,e.ubicacion,b.nombreBanda \n" +
                 "from eventos e \n" +
@@ -60,6 +67,13 @@ public class EventInfo {
     }
     
     /*BANDA*/
+    
+    /**
+     * Se crea un nuevo evento en la BD
+     * @param evento  que se desea crear
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void crearEvento(Evento evento, Connection connection)throws SQLException{
         String query = "insert into eventos (titulo,contenido,fechaCreacion,fechaEvento,concierto,ubicacion,idBanda)\n" +
                 "value (?,?,?,?,?,?,?)";
@@ -83,6 +97,13 @@ public class EventInfo {
         connection.close();
     }
     
+    /**
+     * Se obtiene los eventos de una banda
+     * @param idBanda  que se desea obtener los eventos
+     * @param connection conexion a la BD
+     * @return Arreglo con eventos de la banda
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public ArrayList<Evento> getEventosBanda(int idBanda, Connection connection)throws SQLException{
         String query = "select idEvento, titulo, contenido, fechaCreacion,fechaEvento,concierto,ubicacion,cancelado \n" +
                 "from eventos \n" +
@@ -110,6 +131,12 @@ public class EventInfo {
         return eventosFanList;
     }
     
+    /**
+     * Se cancela un evento de una banda
+     * @param idEvento  que se desea obtener los eventos
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public void cancelEvent(int idEvento, Connection connection)throws SQLException{
         String query = "update eventos \n" +
                 "set cancelado = not cancelado \n" +
@@ -121,6 +148,13 @@ public class EventInfo {
         connection.close();
     }
     
+    /**
+     * Se obtiene los comentarios de los eventos de un fanatico
+     * @param idEvento  que se desea obtener los comentarios
+     * @param connection conexion a la BD
+     * @return Arreglo con comentarios de un evento
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public ArrayList<Resena> getEventComments(int idEvento, Connection connection)throws SQLException{
         String query = "select r.comentario, f.username, r.fecha\n" +
                 "from resenasconcierto r \n" +
@@ -145,6 +179,13 @@ public class EventInfo {
         return comentariosList;
     }
     
+    /**
+     * Se obtiene la calificacion general de los eventos 
+     * @param idEvento  que se desea obtener la calificacion
+     * @param connection conexion a la BD
+     * @return calificacion general de los eventos
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public float getEventRate(int  idEvento, Connection connection)throws SQLException{
         String query = "select avg(calificacion) as promedio, idEvento \n" +
                 "from resenasconcierto \n" +
@@ -163,6 +204,13 @@ public class EventInfo {
         return promedio;
     }
     
+    /**
+     * Se obtiene la informacion de un evento
+     * @param idEvento  que se desea obtener la informacion
+     * @param connection conexion a la BD
+     * @return Informacion del evento
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public Evento getEventInfo(int idEvento, Connection connection)throws SQLException{
         String query = "select idEvento, titulo, contenido,fechaEvento,ubicacion \n" +
                 "from eventos \n" +

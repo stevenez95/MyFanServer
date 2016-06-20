@@ -1,8 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package com.myfan.dao;
 
 import com.myfan.dto.Pais;
@@ -18,6 +18,13 @@ import java.util.ArrayList;
  */
 public class PaisesInfo {
     
+    
+    /**
+     * Se obtienen los paises disponibles en el sistema
+     * @param connection conexion a la BD
+     * @return Lista de los paises disponibles
+     * @throws SQLException En caso de haber un error en la BD
+     */
     public ArrayList<Pais> getPaises(Connection connection)throws SQLException{
         String query = "select idPais, pais\n" +
                 "from paises;";
@@ -33,7 +40,7 @@ public class PaisesInfo {
         }
         ps.close();
         connection.close();
-        return listaPaises;                
+        return listaPaises;
     }
     
 }
