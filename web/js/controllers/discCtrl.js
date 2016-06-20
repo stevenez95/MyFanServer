@@ -156,6 +156,14 @@ myMusic.controller('discCtrl',["$scope","$routeParams","$http","$sce", function 
             $scope.detailFrame= $sce.trustAsResourceUrl(link);
         };
         
+        $scope.borrarComentario = function (){
+            $http.delete(url+'fan/deleteRate/'+$scope.idDisco+'/'+$routeParams.fanId+'/disco').then(function mySucces(response) {
+                getDiscRate();
+            }, function myError(response) {
+                $scope.error = response.data.mensaje;
+            });
+        };
+        
         
         
     }]);

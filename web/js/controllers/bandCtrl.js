@@ -129,6 +129,14 @@ myMusic.controller('fanBandCtrl',['$scope','$routeParams','$location','$http',fu
                 $scope.error = response.data.mensaje;
             });
         };
+        
+        $scope.borrarComentario = function (){
+            $http.delete(url+'fan/deleteRate/'+$routeParams.bandId+'/'+$routeParams.fanId+'/banda').then(function mySucces(response) {
+                getBandRate();
+            }, function myError(response) {
+                $scope.error = response.data.mensaje;
+            });
+        };
     }]);
 
 myMusic.controller('bandCtrl',["$scope","$routeParams","$http","$location","$route", function ($scope,$routeParams,$http,$location,$route) {

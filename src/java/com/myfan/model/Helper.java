@@ -82,4 +82,22 @@ public class Helper {
         return project.login(username,password, database.getConnection());
     }
     
+    public void deleteRate(int id, int idFan, String tipo) throws SQLException, Exception{
+        FanInfo fanInfo = new FanInfo();
+        DataBaseConnect baseConnect = new DataBaseConnect();
+        switch(tipo){
+            case "banda":
+                fanInfo.deleteRateBand(idFan, id, baseConnect.getConnection());
+                break;
+            case "disco":
+                fanInfo.deleteRateDisc(idFan, id, baseConnect.getConnection());
+                break;
+            case "concierto":
+                fanInfo.deleteRateConcert(idFan, id, baseConnect.getConnection());
+                break;
+            default:
+                break;
+        }
+    }
+    
 }

@@ -635,4 +635,9 @@ public class Facade {
         DataBaseConnect baseConnect = new DataBaseConnect();
         return g.toJson(bandInfo.getTopBandas(baseConnect.getConnection()));
     }
+    
+    public void deleteRate(int id, int  idFan, String tipo) throws Exception{
+        Helper h = new Helper();
+        h.deleteRate(id, idFan, tipo);
+    }
 }

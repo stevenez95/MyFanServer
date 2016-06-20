@@ -417,5 +417,65 @@ public class FanInfo {
         return generosList;
     }
     
+    /**
+     * Borra la calificacion de una banda
+     * @param idFan  id del fan
+     * @param id id de la banda
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
+    public void deleteRateBand (int idFan,int id, Connection connection)throws SQLException{
+        String query = "delete from resenasbanda where idBanda = ? and idFan = ?;";
+        
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, id);
+        ps.setInt(2, idFan);
+        
+        ps.execute();
+        
+        connection.close();
+        ps.close();
+    }
+    
+    /**
+     * Borra la calificacion de un concierto
+     * @param idFan  id del fan
+     * @param id id del concierto
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
+    public void deleteRateConcert (int idFan,int id, Connection connection)throws SQLException{
+        String query = "delete from resenasconcierto where idBanda = ? and idFan = ?;";
+        
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, id);
+        ps.setInt(2, idFan);
+        
+        ps.execute();
+        
+        connection.close();
+        ps.close();
+    }
+    
+    
+    /**
+     * Borra la calificacion de un disco
+     * @param idFan  id del fan
+     * @param id id del disco
+     * @param connection conexion a la BD
+     * @throws SQLException En caso de haber un error en la BD
+     */
+    public void deleteRateDisc (int idFan,int id, Connection connection)throws SQLException{
+        String query = "delete from resenasdisco where idBanda = ? and idFan = ?;";
+        
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, id);
+        ps.setInt(2, idFan);
+        
+        ps.execute();
+        
+        connection.close();
+        ps.close();
+    }
     
 }

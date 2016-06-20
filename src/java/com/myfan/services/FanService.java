@@ -12,6 +12,8 @@ import com.myfan.dto.Fan;
 import com.myfan.dto.Resena;
 import com.myfan.model.Facade;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Context;
@@ -232,6 +234,26 @@ public class FanService {
             Gson g = new Gson();
             return Response.ok(g.toJson(manager.getFanInfo(idFan))).build();
         } catch (SQLException ex) {
+            return Response.serverError().build();
+        }
+    }
+    
+    /**
+     * Permite al fan eliminar su calificacion
+     * @param id id del evento, banda o disco
+     * @param idFan id del fan
+     * @param tipo tipo de resena a eliminar
+     * @return confirmacion
+     */
+    @DELETE
+    @Path("deleteRate/{id}/{idFan}/{tipo}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteRate(@PathParam("id") int id,@PathParam("idFan") int idFan,@PathParam("tipo") String tipo){
+        try {
+            Facade f = new Facade();
+            f.deleteRate(id, idFan, tipo);
+            return  Response.ok().build();
+        } catch (Exception ex) {
             return Response.serverError().build();
         }
     }

@@ -65,7 +65,14 @@ myMusic.controller('concertCtrl',["$scope","$routeParams","$http", function ($sc
                 $scope.error = response.data.mensaje;
             });
         };
-                
+        
+        $scope.borrarComentario = function (){
+            $http.delete(url+'fan/deleteRate/'+$scope.eventId+'/'+$routeParams.fanId+'/concierto').then(function mySucces(response) {
+                getBandRate();
+            }, function myError(response) {
+                $scope.error = response.data.mensaje;
+            });
+        };
         
 }]);
 
