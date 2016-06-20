@@ -77,6 +77,10 @@ myMusic.controller('authCtrl',["$scope", "$http","$location","Auth", function ($
                 $scope.error = "No puede seleccionar mas de 5 generos";
                 return;
             }
+            if(($scope.myFileF.filesize/1024/1024)>2){
+                $scope.error = "Imagen muy grande";
+                return;
+            }
             $scope.newBand.fotoPerfil = "data:"+$scope.myfileB.filetype+";base64,"+$scope.myfileB.base64;
             $scope.newBand.fechaCreacion = Date.now();
             console.log($scope.newBand);
@@ -91,6 +95,10 @@ myMusic.controller('authCtrl',["$scope", "$http","$location","Auth", function ($
         $scope.registerFan = function (){
             if($scope.newBand.generos.length >= 5 ){
                 $scope.error = "No puede seleccionar mas de 5 generos";
+                return;
+            }
+            if(($scope.myFileF.filesize/1024/1024)>2){
+                $scope.error = "Imagen muy grande";
                 return;
             }
             $scope.newFan.fotoPerfil = "data:"+$scope.myfileF.filetype+";base64,"+$scope.myfileF.base64;

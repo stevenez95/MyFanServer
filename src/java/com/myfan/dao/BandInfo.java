@@ -397,4 +397,28 @@ public class BandInfo {
         return promedio;
     }
     
+    public ArrayList<Banda> getTopBandas(Connection connection) throws SQLException{
+        String query = "select count(*) as total, b.nombreBanda, b.idBanda\n" +
+                "from seguidos s \n" +
+                "join fans f\n" +
+                "on s.idFan = f.idFan\n" +
+                "join bandas b \n" +
+                "on b.idBanda = s.idBanda\n" +
+                "where f.activo = 1\n" +
+                "group by b.idBanda\n" +
+                "order by total desc;";
+        
+        PreparedStatement ps = connection.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+        
+        ArrayList<Banda> listaTop = new ArrayList<>();
+        while(rs.next()){
+            Banda b = new Banda();
+            b.setNombreBanda(rs.getString("nombreBanda"));
+            b.setIdBanda(rs.getInt("total"));
+            listaTop.add(b);
+        }
+        return listaTop;
+    }
+    
 }

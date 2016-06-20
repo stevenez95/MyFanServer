@@ -66,13 +66,16 @@ myMusic.controller('fanCtrl',["$scope","$location","$routeParams","$http","$rout
         }; //done
         
         $scope.desactivarCuenta = function () {
-            $http.delete(url+'fan/desactivar/'+$scope.fanId).then(function mySucces(response) {
-                $location.path("/fan/"+$scope.fanId);
-                $route.reload();
-            }, function myError(response) {
-                console.log(response);
-                $scope.error = "error";
-            });
+            if (confirm('¿Esta seguro que desea activar/desactivar su cuenta?')) {
+                $http.delete(url+'fan/desactivar/'+$scope.fanId).then(function mySucces(response) {
+                    $location.path("/fan/"+$scope.fanId);
+                    $route.reload();
+                }, function myError(response) {
+                    console.log(response);
+                    $scope.error = "error";
+                });
+            }
+            else{}
         }; // done
         
         var verArtistas = function (){

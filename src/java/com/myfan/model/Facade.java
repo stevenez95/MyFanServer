@@ -5,6 +5,7 @@
 */
 package com.myfan.model;
 
+import com.google.gson.Gson;
 import com.myfan.dao.UserInfo;
 import com.myfan.dao.DiscInfo;
 import com.myfan.dao.GenreInfo;
@@ -626,5 +627,12 @@ public class Facade {
         PaisesInfo info = new PaisesInfo();
         DataBaseConnect baseConnect = new DataBaseConnect();
         return info.getPaises(baseConnect.getConnection());
+    }
+    
+    public String getTopBands() throws Exception{
+        Gson g = new Gson();
+        BandInfo bandInfo = new BandInfo();
+        DataBaseConnect baseConnect = new DataBaseConnect();
+        return g.toJson(bandInfo.getTopBandas(baseConnect.getConnection()));
     }
 }

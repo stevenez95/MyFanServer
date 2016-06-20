@@ -22,7 +22,8 @@ describe('Factory: Auth', function() {
     expect(Auth.logout).toBeDefined(); 
   }); 
    
-  it('Should return false', function() {
+  it('Debe retornar falso', function() {
     expect(Auth.isLoggedIn()).toEqual(false); 
   }); 
+ 
 });

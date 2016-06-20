@@ -254,13 +254,17 @@ myMusic.controller('bandCtrl',["$scope","$routeParams","$http","$location","$rou
         }; //done
         
         $scope.desactivarCuenta = function () {
-            $http.delete(url+'banda/desactivar/'+$routeParams.bandId).then(function mySucces(response) {
-                $location.path("/band/"+$routeParams.bandId);
-                $route.reload();
-            }, function myError(response) {
-                console.log(response);
-                $scope.error = "error";
-            });
+            if (confirm('¿Esta seguro que desea activar/desactivar su cuenta?')) {
+                // Save it!
+                $http.delete(url+'banda/desactivar/'+$routeParams.bandId).then(function mySucces(response) {
+                    $location.path("/band/"+$routeParams.bandId);
+                    $route.reload();
+                }, function myError(response) {
+                    console.log(response);
+                    $scope.error = "error";
+                });
+            }
+            else{}
         }; //done
         
         $scope.verConcierto = function (idEvento){

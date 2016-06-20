@@ -111,4 +111,17 @@ public class MyFestService {
         return Response.ok(pm.getConcertRate(idBanda)).build();
     }
     
+    @GET
+    @Path("top")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTopBands(){
+        try {
+            Facade f = new Facade();
+            return Response.ok(f.getTopBands()).build();
+        } catch (Exception ex) {
+            return Response.serverError().build();
+        }
+        
+    }
+    
 }
